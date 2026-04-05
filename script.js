@@ -432,6 +432,337 @@ window.addEventListener('scroll', () => {
   });
 });
 
+// --- Number count-up animation ---
+// Any .count-up element counts from 0 to data-count when scrolled into view.
+// Elements with data-defer are skipped here (another controller runs them).
+const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+function animateCount(el, duration = 1500) {
+  if (el.dataset.counted) return;
+  el.dataset.counted = '1';
+  const target = parseFloat(el.dataset.count) || 0;
+  const start = performance.now();
+  const hasDecimal = target % 1 !== 0;
+  function tick(now) {
+    const p = Math.min(1, (now - start) / duration);
+    const val = target * easeOut(p);
+    el.textContent = hasDecimal
+      ? val.toFixed(1)
+      : Math.round(val).toLocaleString();
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+(function initCountUp() {
+  const els = document.querySelectorAll('.count-up:not([data-defer])');
+  if (!els.length) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && !entry.target.dataset.counted) {
+        animateCount(entry.target, 1400 + Math.random() * 400);
+      }
+    });
+  }, { threshold: 0.4 });
+  els.forEach((el) => io.observe(el));
+})();
+
+// --- Pricing reveal sequence ---
+// 1) Card shows just "$1,000" (timer, save, monthly all hidden)
+// 2) Orange strike draws across the $1,000
+// 3) $1,000 shrinks and scoots to the side
+// 4) $400 pops in
+// 5) Timer, save, divider, and monthly block fade in
+(function initPriceSequence() {
+  const card = document.querySelector('.pricing-card');
+  if (!card) return;
+
+  const sequencedItem = card.querySelector('.price-item-sequenced');
+  if (!sequencedItem) return;
+
+  const oldEl = sequencedItem.querySelector('.price-old');
+  const newEl = sequencedItem.querySelector('.price-current.price-reveal');
+  const saveEl = sequencedItem.querySelector('.price-save.reveal-late');
+  // Everything else that should appear AFTER the pop (timer, divider, monthly)
+  const afterEls = Array.from(card.querySelectorAll('.reveal-late'))
+    .filter((el) => el !== saveEl);
+
+  let played = false;
+
+  function play() {
+    if (played) return;
+    played = true;
+
+    // Hold for a beat so $1,000 registers, then strike
+    setTimeout(() => oldEl.classList.add('strike'), 700);
+
+    // Strike finishes (~500ms draw) → shrink old, pop new, fade save
+    setTimeout(() => {
+      oldEl.classList.add('shrunk');
+      newEl.classList.add('revealed');
+      if (saveEl) saveEl.classList.add('revealed');
+    }, 1250);
+
+    // After the pop, reveal the timer + divider + monthly (staggered)
+    afterEls.forEach((el, i) => {
+      setTimeout(() => el.classList.add('revealed'), 1850 + i * 160);
+    });
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) play(); });
+  }, { threshold: 0.3 });
+  io.observe(card);
+})();
+
+// --- Word-by-word hero reveal ---
+// Splits the hero h1 into words and staggers them in
+(function initHeroReveal() {
+  const h1 = document.querySelector('.hero-content h1');
+  if (!h1) return;
+
+  // Walk the h1 and wrap text nodes into word spans (preserve .ink-underline + <br>)
+  function wrapWords(node) {
+    const children = Array.from(node.childNodes);
+    children.forEach((child) => {
+      if (child.nodeType === Node.TEXT_NODE) {
+        const text = child.textContent;
+        if (!text.trim()) return;
+        const frag = document.createDocumentFragment();
+        text.split(/(\s+)/).forEach((part) => {
+          if (/^\s+$/.test(part)) {
+            frag.appendChild(document.createTextNode(part));
+          } else if (part.length) {
+            const span = document.createElement('span');
+            span.className = 'word-reveal';
+            span.textContent = part;
+            frag.appendChild(span);
+          }
+        });
+        node.replaceChild(frag, child);
+      } else if (child.nodeType === Node.ELEMENT_NODE && child.tagName !== 'BR') {
+        // wrap the contents of inline elements too (like .ink-underline)
+        child.classList.add('word-reveal');
+      }
+    });
+  }
+  wrapWords(h1);
+
+  const words = h1.querySelectorAll('.word-reveal');
+  words.forEach((w, i) => {
+    w.style.animationDelay = (0.1 + i * 0.08) + 's';
+  });
+  h1.classList.add('words-ready');
+})();
+
+// --- Magnetic buttons ---
+// Big CTA buttons gently pull toward the cursor
+(function initMagneticButtons() {
+  if (window.innerWidth <= 768) return; // skip on touch
+  const buttons = document.querySelectorAll('.btn-lg:not(.btn-wiggle), .btn-accent:not(.btn-wiggle)');
+  buttons.forEach((btn) => {
+    let rafId = null;
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        btn.style.transform = `translate(${x * 0.25}px, ${y * 0.35}px)`;
+        const span = btn.querySelector('span');
+        if (span) span.style.transform = `translate(${x * 0.15}px, ${y * 0.2}px)`;
+      });
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+      const span = btn.querySelector('span');
+      if (span) span.style.transform = '';
+    });
+  });
+})();
+
+// --- Service card 3D tilt ---
+(function initCardTilt() {
+  if (window.innerWidth <= 968) return;
+  const cards = document.querySelectorAll('.service-card');
+  cards.forEach((card) => {
+    const baseWobble = getComputedStyle(card).getPropertyValue('--wobble') || '0deg';
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      card.style.transform = `perspective(800px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg) translateY(-8px)`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+})();
+
+// --- Multi-step form controller ---
+(function initLaunchForm() {
+  const form = document.getElementById('launchForm');
+  if (!form) return;
+
+  const steps = form.querySelectorAll('.form-step');
+  const dots = form.querySelectorAll('.form-step-dot');
+  const progressFill = document.getElementById('formProgressFill');
+  const prevBtn = document.getElementById('formPrev');
+  const nextBtn = document.getElementById('formNext');
+  const submitBtn = document.getElementById('formSubmit');
+  const successBox = document.getElementById('formSuccess');
+  const totalSteps = steps.length;
+  let current = 1;
+
+  function validateStep(n) {
+    const required = form.querySelectorAll(`[data-step-field="${n}"][required]`);
+    let ok = true;
+    required.forEach((field) => {
+      if (field.type === 'radio') {
+        const group = form.querySelectorAll(`[name="${field.name}"]`);
+        const checked = Array.from(group).some((r) => r.checked);
+        if (!checked) {
+          ok = false;
+          group.forEach((r) => r.closest('.vibe-card, .color-swatch')?.classList.add('error'));
+        } else {
+          group.forEach((r) => r.closest('.vibe-card, .color-swatch')?.classList.remove('error'));
+        }
+      } else if (!field.value.trim()) {
+        ok = false;
+        field.classList.add('error');
+      } else {
+        field.classList.remove('error');
+      }
+    });
+    if (!ok) {
+      form.classList.remove('shake');
+      void form.offsetWidth;
+      form.classList.add('shake');
+    }
+    return ok;
+  }
+
+  function goToStep(n, skipValidate = false) {
+    if (n > current && !skipValidate && !validateStep(current)) return;
+    current = Math.max(1, Math.min(totalSteps, n));
+
+    steps.forEach((s) => {
+      const sn = parseInt(s.dataset.step, 10);
+      s.classList.toggle('active', sn === current);
+    });
+    dots.forEach((d) => {
+      const sn = parseInt(d.dataset.step, 10);
+      d.classList.toggle('active', sn <= current);
+      d.classList.toggle('current', sn === current);
+    });
+
+    progressFill.style.width = ((current - 1) / (totalSteps - 1)) * 100 + '%';
+
+    prevBtn.disabled = current === 1;
+    if (current === totalSteps) {
+      nextBtn.style.display = 'none';
+      submitBtn.style.display = '';
+    } else {
+      nextBtn.style.display = '';
+      submitBtn.style.display = 'none';
+    }
+
+    // focus first field in new step
+    setTimeout(() => {
+      const firstInput = steps[current - 1].querySelector('input:not([type=radio]):not([type=hidden]), textarea, select');
+      if (firstInput) firstInput.focus({ preventScroll: true });
+    }, 350);
+  }
+
+  nextBtn.addEventListener('click', () => goToStep(current + 1));
+  prevBtn.addEventListener('click', () => goToStep(current - 1, true));
+
+  // Enter key advances (unless in textarea)
+  form.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+      if (current < totalSteps) {
+        e.preventDefault();
+        goToStep(current + 1);
+      }
+    }
+  });
+
+  // Live ROI calculator
+  const avgInput = document.getElementById('avgCustomerValue');
+  const cpmInput = document.getElementById('customersPerMonth');
+  const roiText = document.getElementById('roiText');
+  const roiBox = document.getElementById('roiBox');
+
+  function updateROI() {
+    const avg = parseFloat(avgInput.value) || 0;
+    if (avg <= 0) {
+      roiBox.classList.remove('active');
+      roiText.innerHTML = 'enter your numbers above and watch the magic →';
+      return;
+    }
+    roiBox.classList.add('active');
+
+    const setupCost = 400;
+    const monthlyCost = 39;
+    const clientsForSetup = Math.max(1, Math.ceil(setupCost / avg));
+    const clientsForMonthly = Math.max(1, Math.ceil(monthlyCost / avg));
+
+    let html = `if your new site brings in just <strong>${clientsForSetup} new customer${clientsForSetup > 1 ? 's' : ''}</strong>, it pays for itself. `;
+    html += `<strong>${clientsForMonthly} customer${clientsForMonthly > 1 ? 's' : ''} a month</strong> covers hosting forever.`;
+
+    const cpm = parseFloat(cpmInput.value) || 0;
+    if (cpm > 0) {
+      const newCustomers = Math.max(1, Math.round(cpm * 0.1));
+      const extraRevenue = newCustomers * avg;
+      html += `<br/><br/>and here's the fun part: if your site brings you just <strong>10% more customers</strong>, that's <strong>${newCustomers} extra ${newCustomers > 1 ? 'people' : 'person'} a month</strong>. at $${avg.toLocaleString()} each, that's an extra <strong>$${extraRevenue.toLocaleString()}/mo</strong> in your pocket.`;
+    }
+    roiText.innerHTML = html;
+  }
+
+  if (avgInput) avgInput.addEventListener('input', updateROI);
+  if (cpmInput) cpmInput.addEventListener('input', updateROI);
+
+  // Vibe/color card clicks animate
+  form.querySelectorAll('.vibe-card input, .color-swatch input').forEach((input) => {
+    input.addEventListener('change', () => {
+      const parent = input.closest('.vibe-card, .color-swatch');
+      parent.classList.remove('pop');
+      void parent.offsetWidth;
+      parent.classList.add('pop');
+    });
+  });
+
+  // Submit via fetch so we can show a success state without leaving the page
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validateStep(current)) return;
+
+    const formData = new FormData(form);
+    const body = new URLSearchParams();
+    formData.forEach((v, k) => body.append(k, v));
+
+    submitBtn.disabled = true;
+    submitBtn.querySelector('span').textContent = 'launching...';
+
+    try {
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString(),
+      });
+      form.style.display = 'none';
+      successBox.classList.add('visible');
+      successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.querySelector('span').textContent = 'send it →';
+      alert('something went wrong — please try again or email us directly.');
+    }
+  });
+
+  // init
+  goToStep(1, true);
+})();
+
 // --- Countdown timer to April 30, 2026 ---
 (function initCountdown() {
   const deadline = new Date('2026-04-30T23:59:59').getTime();
