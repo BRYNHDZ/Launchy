@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/HdzBr/AppData/Roaming/**)",
+      "Read(//c/Users/HdzBr/AppData/Local/Claude/**)",
+      "Read(//c/Users/HdzBr/AppData/**)"
+    ]
+  }
+}
