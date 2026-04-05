@@ -273,11 +273,17 @@ h3 { font-size: 1.2rem; }
   object-fit: contain;
 }
 
-.logo-text {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  font-size: 1.5rem;
-  letter-spacing: -0.04em;
+/* Wordmark image — sized to match old text logo's visual weight (~28px tall) */
+.logo-wordmark {
+  height: 32px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Footer version a touch larger for emphasis */
+.footer .logo-wordmark {
+  height: 38px;
 }
 
 .nav-links {
@@ -361,10 +367,13 @@ h3 { font-size: 1.2rem; }
 
 /* ===== Hero ===== */
 .hero {
+  /* 100svh respects iOS Safari's URL bar so the hero doesn't jump when it collapses.
+     Falls back to 100vh on browsers that don't support svh. */
   min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
-  padding: 120px 0 80px;
+  padding: 110px 0 60px;
   position: relative;
   z-index: 1;
 }
@@ -445,6 +454,31 @@ h3 { font-size: 1.2rem; }
   /* JS drives all transforms — no CSS animation */
   will-change: transform;
   transition: none;
+}
+
+/* Banana leads, mascot chases — positioned above/ahead of the monkey
+   so the zero-g drift reads as a target the monkey is flying after */
+.floating-banana {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  top: -4%;
+  right: -2%;
+  z-index: 3;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+  animation: banana-drift 6s ease-in-out infinite;
+  will-change: transform;
+  object-fit: contain;
+}
+
+/* Fleeing drift — banana bobs and spins like it keeps slipping out of reach */
+@keyframes banana-drift {
+  0%, 100% { transform: translate(0, 0) rotate(-6deg); }
+  20%      { transform: translate(-10px, -14px) rotate(6deg); }
+  45%      { transform: translate(8px, -8px) rotate(14deg); }
+  70%      { transform: translate(12px, 4px) rotate(-2deg); }
+  85%      { transform: translate(-4px, 10px) rotate(-10deg); }
 }
 
 /* Ink splatters around mascot */
@@ -2193,6 +2227,7 @@ h3 { font-size: 1.2rem; }
   .mascot { width: 200px; height: 200px; }
   .orbit-1 { width: 260px; height: 260px; }
   .orbit-2 { width: 300px; height: 300px; }
+  .floating-banana { width: 90px; height: 90px; top: -6%; right: -2%; }
 
   .services-grid { grid-template-columns: repeat(2, 1fr); }
 
