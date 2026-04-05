@@ -313,83 +313,99 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 });
 
 // --- Mascot zero-gravity physics ---
-// The monkey floats like he's in space. Scroll velocity throws him around.
-// Mouse nudges him gently. He always drifts back to center with soft spring physics.
+// Smooth floating with proper delta time to avoid jitter on any device.
 (function initMascotPhysics() {
   const mascot = document.querySelector('.mascot');
   if (!mascot) return;
 
+  const isMobile = window.innerWidth <= 768;
+
   // State
-  let x = 0, y = 0;           // current offset from rest position
-  let vx = 0, vy = 0;         // velocity
-
-  // Mouse position (normalized to center of viewport)
+  let x = 0, y = 0;
+  let vx = 0, vy = 0;
   let mouseNX = 0, mouseNY = 0;
-
-  // Scroll tracking
-  let lastScrollY = window.scrollY;
-  let scrollVelocity = 0;
-
-  // Physics constants
-  const SPRING = 0.006;        // gentle pull back to center
-  const DAMPING = 0.98;        // low friction — floaty
-  const SCROLL_FORCE = 0.15;   // scroll gives a soft nudge, not a throw
-  const MOUSE_FORCE = 0.225;   // gentle mouse influence
-  const MAX_OFFSET = 40;       // max pixels from rest
-  const IDLE_DRIFT_AMP = 24;   // noticeable idle floating — first thing you see
-
-  // Ambient drift — gentle sine-based floating even when nothing happens
   let time = 0;
+  let lastFrame = performance.now();
+
+  // Physics — mobile gets bigger drift
+  const SPRING = 0.006;
+  const DAMPING = 0.98;
+  const MOUSE_FORCE = 0.225;
+  const MAX_OFFSET = 40;
+  const IDLE_DRIFT_AMP = isMobile ? 32 : 24;
+
+  // Smooth target for mouse (lerp to avoid jitter)
+  let mouseTargetX = 0, mouseTargetY = 0;
+  let mouseSmoothX = 0, mouseSmoothY = 0;
 
   document.addEventListener('mousemove', (e) => {
-    mouseNX = (e.clientX / window.innerWidth - 0.5) * 2;  // -1 to 1
-    mouseNY = (e.clientY / window.innerHeight - 0.5) * 2;
+    mouseTargetX = (e.clientX / window.innerWidth - 0.5) * 2;
+    mouseTargetY = (e.clientY / window.innerHeight - 0.5) * 2;
   });
 
-  window.addEventListener('scroll', () => {
-    const currentScrollY = window.scrollY;
-    scrollVelocity = currentScrollY - lastScrollY;
-    lastScrollY = currentScrollY;
+  // Touch support — treat touch position like mouse
+  document.addEventListener('touchmove', (e) => {
+    const t = e.touches[0];
+    mouseTargetX = (t.clientX / window.innerWidth - 0.5) * 2;
+    mouseTargetY = (t.clientY / window.innerHeight - 0.5) * 2;
+  }, { passive: true });
+
+  document.addEventListener('touchend', () => {
+    mouseTargetX = 0;
+    mouseTargetY = 0;
   });
 
-  function tick() {
-    time += 0.016;
+  function tick(now) {
+    // Delta time in seconds, capped to avoid huge jumps on tab switch
+    const dt = Math.min((now - lastFrame) / 1000, 0.05);
+    lastFrame = now;
 
-    // Ambient drift (always present — gentle floating)
-    const driftX = Math.sin(time * 0.35) * IDLE_DRIFT_AMP * 0.4;
-    const driftY = Math.sin(time * 0.2 + 1.5) * IDLE_DRIFT_AMP;
-    const driftRot = Math.sin(time * 0.25 + 0.7) * 2.5; // very gentle tilt, no spin
+    time += dt;
 
-    // Mouse nudge — gentle push
-    vx += mouseNX * MOUSE_FORCE;
-    vy += mouseNY * MOUSE_FORCE * 0.5;
+    // Smooth mouse input (lerp — eliminates jitter from raw input)
+    mouseSmoothX += (mouseTargetX - mouseSmoothX) * 0.08;
+    mouseSmoothY += (mouseTargetY - mouseSmoothY) * 0.08;
 
-    // Spring force — pull back to center
-    vx -= x * SPRING;
-    vy -= y * SPRING;
+    // Ambient drift — multiple sine waves for organic feel
+    const driftX = Math.sin(time * 0.35) * IDLE_DRIFT_AMP * 0.4
+                 + Math.sin(time * 0.7 + 2.0) * IDLE_DRIFT_AMP * 0.1;
+    const driftY = Math.sin(time * 0.2 + 1.5) * IDLE_DRIFT_AMP
+                 + Math.sin(time * 0.55 + 0.3) * IDLE_DRIFT_AMP * 0.15;
+    const driftRot = Math.sin(time * 0.25 + 0.7) * 2.5;
 
-    // Apply damping (space drag — very floaty)
-    vx *= DAMPING;
-    vy *= DAMPING;
+    // Scale physics by dt (frame-rate independent)
+    const dtScale = dt * 60; // normalized to 60fps
+
+    // Mouse nudge
+    vx += mouseSmoothX * MOUSE_FORCE * dtScale;
+    vy += mouseSmoothY * MOUSE_FORCE * 0.5 * dtScale;
+
+    // Spring
+    vx -= x * SPRING * dtScale;
+    vy -= y * SPRING * dtScale;
+
+    // Damping
+    const damp = Math.pow(DAMPING, dtScale);
+    vx *= damp;
+    vy *= damp;
 
     // Integrate
-    x += vx;
-    y += vy;
+    x += vx * dtScale;
+    y += vy * dtScale;
 
     // Clamp
     x = Math.max(-MAX_OFFSET, Math.min(MAX_OFFSET, x));
     y = Math.max(-MAX_OFFSET, Math.min(MAX_OFFSET, y));
 
-    // Combine physics + ambient drift — no spin, just gentle tilt from drift
     const finalX = x + driftX;
     const finalY = y + driftY;
 
-    mascot.style.transform = `translate(${finalX}px, ${finalY}px) rotate(${driftRot}deg)`;
+    mascot.style.transform = `translate(${finalX.toFixed(1)}px, ${finalY.toFixed(1)}px) rotate(${driftRot.toFixed(2)}deg)`;
 
     requestAnimationFrame(tick);
   }
 
-  tick();
+  requestAnimationFrame(tick);
 })();
 
 // --- Parallax on scroll for decorative elements ---
