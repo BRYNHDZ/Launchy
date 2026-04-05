@@ -273,17 +273,17 @@ h3 { font-size: 1.2rem; }
   object-fit: contain;
 }
 
-/* Wordmark image — sized to match old text logo's visual weight (~28px tall) */
-.logo-wordmark {
-  height: 32px;
-  width: auto;
-  display: block;
-  object-fit: contain;
+.logo-text {
+  font-family: 'Cherry Bomb One', cursive;
+  font-size: 1.6rem;
+  color: var(--accent);
+  text-decoration: none;
+  text-transform: lowercase;
+  line-height: 1;
 }
 
-/* Footer version a touch larger for emphasis */
-.footer .logo-wordmark {
-  height: 38px;
+.footer .logo-text {
+  font-size: 1.8rem;
 }
 
 .nav-links {
