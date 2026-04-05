@@ -13,7 +13,6 @@
   let constellations = [];
   let shootingStars = [];
   let mouseX = 0, mouseY = 0;
-  let scrollY = 0;
 
   function resize() {
     w = canvas.width = window.innerWidth;
@@ -103,7 +102,7 @@
     ctx.clearRect(0, 0, w, h);
 
     const viewH = window.innerHeight;
-    const scrollOffset = scrollY;
+    const scrollOffset = window.scrollY;
 
     // Mouse parallax offset (subtle)
     const mx = (mouseX - w / 2) * 0.01;
@@ -223,11 +222,6 @@
     mouseY = e.clientY;
   });
 
-  // Track scroll
-  window.addEventListener('scroll', () => {
-    scrollY = window.scrollY;
-  });
-
   resize();
   draw();
 
@@ -265,11 +259,51 @@ const dividerObserver = new IntersectionObserver(
 );
 document.querySelectorAll('.ink-divider').forEach((el) => dividerObserver.observe(el));
 
-// --- Navbar scroll ---
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
-});
+// --- Consolidated scroll handler (rAF-throttled, passive) ---
+// Handles nav state + decorative parallax in ONE coalesced frame.
+// Caches all element lists once so we don't DOM-walk on every scroll event.
+(function initScrollFx() {
+  const nav = document.getElementById('nav');
+  const splatters = document.querySelectorAll('.ink-splatter');
+  const orbits = document.querySelectorAll('.orbit');
+  const smudges = document.querySelectorAll('.ink-smudge');
+  let ticking = false;
+
+  function update() {
+    const sy = window.scrollY;
+
+    if (nav) nav.classList.toggle('scrolled', sy > 40);
+
+    // translate3d pushes to GPU compositor layer — no layout, no paint
+    splatters.forEach((el, i) => {
+      const speed = 0.03 + i * 0.015;
+      el.style.transform = `translate3d(0, ${(sy * speed).toFixed(1)}px, 0)`;
+    });
+
+    orbits.forEach((el, i) => {
+      const skew = Math.sin(sy * 0.001 + i) * 2;
+      const rot = sy * (i === 0 ? 0.02 : -0.015);
+      el.style.transform = `rotate(${rot.toFixed(2)}deg) skew(${skew.toFixed(2)}deg)`;
+    });
+
+    smudges.forEach((el, i) => {
+      const speed = 0.01 + (i % 3) * 0.008;
+      const dir = i % 2 === 0 ? 1 : -1;
+      el.style.transform = `translate3d(0, ${(sy * speed * dir).toFixed(1)}px, 0)`;
+    });
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  update(); // initial paint
+})();
 
 // --- Mobile menu ---
 const mobileToggle = document.getElementById('mobileToggle');
@@ -407,30 +441,6 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 
   requestAnimationFrame(tick);
 })();
-
-// --- Parallax on scroll for decorative elements ---
-window.addEventListener('scroll', () => {
-  const sy = window.scrollY;
-
-  // Ink splatters drift
-  document.querySelectorAll('.ink-splatter').forEach((el, i) => {
-    const speed = 0.03 + i * 0.015;
-    el.style.transform = `translateY(${sy * speed}px)`;
-  });
-
-  // Orbit rings respond to scroll
-  document.querySelectorAll('.orbit').forEach((el, i) => {
-    const skew = Math.sin(sy * 0.001 + i) * 2;
-    el.style.transform = `rotate(${sy * (i === 0 ? 0.02 : -0.015)}deg) skew(${skew}deg)`;
-  });
-
-  // Ink smudges drift with scroll (subtle parallax)
-  document.querySelectorAll('.ink-smudge').forEach((el, i) => {
-    const speed = 0.01 + (i % 3) * 0.008;
-    const dir = i % 2 === 0 ? 1 : -1;
-    el.style.marginTop = `${sy * speed * dir}px`;
-  });
-});
 
 // --- Number count-up animation ---
 // Any .count-up element counts from 0 to data-count when scrolled into view.
