@@ -1010,6 +1010,7 @@ h3 { font-size: 1.2rem; }
   height: 1.5px;
   background: rgba(245, 240, 232, 0.08);
   filter: url(#rougher);
+  pointer-events: none;
 }
 
 .faq-question {
@@ -1028,6 +1029,8 @@ h3 { font-size: 1.2rem; }
   justify-content: space-between;
   gap: 16px;
   transition: var(--transition);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .faq-question:hover { color: var(--accent); }
@@ -1045,11 +1048,12 @@ h3 { font-size: 1.2rem; }
 .faq-answer {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.4s ease;
+  transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Generous max — longest answer on a narrow phone tops out around 320px; 600px gives headroom */
 .faq-item.open .faq-answer {
-  max-height: 200px;
+  max-height: 600px;
   padding-bottom: 24px;
 }
 
@@ -2222,14 +2226,49 @@ h3 { font-size: 1.2rem; }
   .ink-smudge { display: none; }
 
   /* Form mobile */
-  .launch-form { padding: 32px 22px 28px; }
-  .form-step-title { font-size: 1.3rem; }
+  .launch-form {
+    padding: 28px 18px 24px;
+    box-shadow: 4px 4px 0 var(--ink);
+    scroll-margin-top: 100px;
+  }
+  .form-step-tag { font-size: 0.68rem; }
+  .form-step-title { font-size: 1.3rem; line-height: 1.2; }
+  .form-step-sub { font-size: 0.88rem; margin-bottom: 22px; }
+  .form-progress { margin-bottom: 28px; }
+  .form-step-dot { width: 28px; height: 28px; font-size: 0.66rem; }
+  .form-label { font-size: 0.78rem; }
+  .form-field { margin-bottom: 18px; }
+  .form-field input[type="text"],
+  .form-field input[type="email"],
+  .form-field input[type="tel"],
+  .form-field input[type="number"],
+  .form-field textarea,
+  .form-field select {
+    padding: 12px 16px;
+    font-size: 16px; /* >= 16px prevents iOS auto-zoom on focus */
+  }
   .vibe-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
   .color-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .vibe-card { padding: 14px 10px; }
+  .vibe-emoji { font-size: 1.5rem; }
+  .vibe-name { font-size: 0.8rem; }
+  .color-swatch { padding: 14px 8px; }
+  .color-name { font-size: 0.7rem; }
   .roi-box { padding: 18px; flex-direction: column; gap: 12px; }
   .roi-icon { width: 36px; height: 36px; }
-  .form-nav { flex-wrap: wrap; }
-  .form-nav .btn { padding: 12px 20px; font-size: 0.88rem; }
+  .roi-text { font-size: 0.88rem; }
+
+  /* Keep back + next on ONE line on mobile, tighter padding so they both fit */
+  .form-nav { gap: 10px; flex-wrap: nowrap; }
+  .form-nav .btn { padding: 11px 18px; font-size: 0.82rem; }
+  .form-nav .btn span { white-space: nowrap; }
+
+  /* Success state mobile */
+  .form-success { padding: 44px 24px; }
+  .success-stamp { width: 68px; height: 68px; }
+  .success-stamp svg { width: 40px; height: 40px; }
+  .form-success h3 { font-size: 1.5rem; }
+  .form-success p { font-size: 0.9rem; }
 
   /* Sequenced price shrink — go a little smaller on mobile */
   .price-old { font-size: 2.4rem; }

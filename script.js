@@ -676,11 +676,16 @@ function animateCount(el, duration = 1500) {
       submitBtn.style.display = 'none';
     }
 
-    // focus first field in new step
-    setTimeout(() => {
-      const firstInput = steps[current - 1].querySelector('input:not([type=radio]):not([type=hidden]), textarea, select');
-      if (firstInput) firstInput.focus({ preventScroll: true });
-    }, 350);
+    // Focus the first field of the new step — but ONLY on desktop.
+    // On mobile, focusing a field opens the keyboard, which resizes the viewport
+    // and reads as an unexpected "scroll up" jump. Let the user tap when ready.
+    const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+    if (!isTouch) {
+      setTimeout(() => {
+        const firstInput = steps[current - 1].querySelector('input:not([type=radio]):not([type=hidden]), textarea, select');
+        if (firstInput) firstInput.focus({ preventScroll: true });
+      }, 350);
+    }
   }
 
   nextBtn.addEventListener('click', () => goToStep(current + 1));
