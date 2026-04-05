@@ -3,7 +3,9 @@
     "allow": [
       "Read(//c/Users/HdzBr/AppData/Roaming/**)",
       "Read(//c/Users/HdzBr/AppData/Local/Claude/**)",
-      "Read(//c/Users/HdzBr/AppData/**)"
+      "Read(//c/Users/HdzBr/AppData/**)",
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)"
     ]
   }
 }
