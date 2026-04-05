@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>launchy — launch your business online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- SVG Filters for ink/stamp roughness -->
+  <svg class="svg-filters" aria-hidden="true">
+    <defs>
+      <filter id="rough">
+        <feTurbulence type="turbulence" baseFrequency="0.04" numOctaves="4" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+      <filter id="rougher">
+        <feTurbulence type="turbulence" baseFrequency="0.035" numOctaves="3" result="noise" />
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.5" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Ink star field canvas -->
+  <canvas id="starfield"></canvas>
+
+  <!-- Paper texture overlay -->
+  <div class="paper-texture"></div>
+  <div class="paper-edge paper-edge-left"></div>
+  <div class="paper-edge paper-edge-right"></div>
+
+  <!-- Scattered ink smudges — positioned throughout the page -->
+  <div class="ink-smudge smudge-1" aria-hidden="true"></div>
+  <div class="ink-smudge smudge-2" aria-hidden="true"></div>
+  <div class="ink-smudge smudge-3" aria-hidden="true"></div>
+  <div class="ink-smudge smudge-4" aria-hidden="true"></div>
+  <div class="ink-smudge smudge-5" aria-hidden="true"></div>
+  <div class="ink-smudge smudge-6" aria-hidden="true"></div>
+  <div class="ink-smudge smudge-7" aria-hidden="true"></div>
+  <div class="ink-smudge smudge-8" aria-hidden="true"></div>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner container">
+      <a href="#" class="logo">
+        <img src="23493A84-E3C4-4219-BBD9-9E237121B502.png" alt="launchy mascot" class="logo-img" />
+        <span class="logo-text">launchy</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#services">services</a></li>
+        <li><a href="#pricing">pricing</a></li>
+        <li><a href="#process">process</a></li>
+        <li><a href="#contact" class="btn btn-sm"><span>grab your spot</span></a></li>
+      </ul>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="#services">services</a></li>
+        <li><a href="#pricing">pricing</a></li>
+        <li><a href="#process">process</a></li>
+        <li><a href="#contact" class="btn"><span>grab your spot</span></a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="stamp-badge animate-in">
+          <span class="badge-dot"></span> now accepting new clients
+        </div>
+        <h1 class="animate-in delay-1">
+          your business<br />deserves a
+          <span class="ink-underline">launchpad</span>
+        </h1>
+        <p class="hero-sub animate-in delay-2">
+          we build websites for local businesses that actually look good
+          and bring in customers. no tech headaches, no runaround — just
+          a site you're proud to hand out.
+        </p>
+        <div class="hero-cta animate-in delay-3">
+          <a href="#contact" class="btn btn-lg"><span>let's build yours</span></a>
+          <a href="#pricing" class="btn btn-outline btn-lg"><span>see pricing</span></a>
+        </div>
+        <p class="trust-line animate-in delay-4">trusted by real local businesses ready to grow</p>
+      </div>
+      <div class="hero-visual animate-in delay-2">
+        <div class="mascot-container">
+          <div class="ink-splatter splatter-1"></div>
+          <div class="ink-splatter splatter-2"></div>
+          <div class="ink-splatter splatter-3"></div>
+          <img src="23493A84-E3C4-4219-BBD9-9E237121B502.png" alt="launchy space monkey" class="mascot" />
+          <div class="orbit orbit-1"></div>
+          <div class="orbit orbit-2"></div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <div class="ink-drip"></div>
+    </div>
+  </section>
+
+  <!-- Ink divider -->
+  <div class="ink-divider">
+    <svg viewBox="0 0 1200 12" preserveAspectRatio="none">
+      <path d="M0,6 C150,2 300,10 450,5 C600,0 750,11 900,4 C1050,-1 1150,9 1200,6" stroke="#1A1A1A" stroke-width="2.5" fill="none" style="filter:url(#rough)" />
+    </svg>
+  </div>
+
+  <!-- Services -->
+  <section class="services section" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag animate-on-scroll">* what you get *</span>
+        <h2 class="animate-on-scroll">the whole package. <span class="ink-underline">no catch.</span></h2>
+        <p class="section-sub animate-on-scroll">everything your business needs to look legit online — bundled up and ready to go.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card animate-on-scroll" style="--wobble: -0.8deg">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>custom website</h3>
+          <p>designed around your business, not a template. looks great on phones, tablets, desktops — everywhere your customers are.</p>
+        </div>
+        <div class="service-card animate-on-scroll" style="--wobble: 0.5deg">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3>hosting & domain</h3>
+          <p>your own domain name, fast hosting, SSL security — all included. we set it up, we keep it running, you never think about it.</p>
+        </div>
+        <div class="service-card animate-on-scroll" style="--wobble: 1.1deg">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>lite branding</h3>
+          <p>colors that match, fonts that pair, and a clean simple logo. enough to look put-together from day one without breaking the bank.</p>
+        </div>
+        <div class="service-card animate-on-scroll" style="--wobble: -0.4deg">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <h3>unlimited edits</h3>
+          <p>need something tweaked? just hit us up. unlimited small changes are baked into your monthly plan — we never nickel and dime you.</p>
+        </div>
+        <div class="service-card animate-on-scroll" style="--wobble: 0.7deg">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>SEO ready</h3>
+          <p>built so google can actually find you. when someone searches for what you do in your area, you'll be there.</p>
+        </div>
+        <div class="service-card animate-on-scroll" style="--wobble: -1.2deg">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          </div>
+          <h3>live in under a week</h3>
+          <p>your site goes live in less than 7 days. we don't drag things out — you've got a business to run.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured work callout -->
+  <section class="featured section-slim">
+    <div class="container">
+      <div class="featured-callout animate-on-scroll">
+        <span class="featured-label">* recent work *</span>
+        <a href="https://amigolandscaping.com" target="_blank" rel="noopener" class="featured-link">
+          <span class="featured-name">amigolandscaping.com</span>
+          <span class="featured-arrow">&rarr;</span>
+        </a>
+        <span class="featured-desc">a full website + branding for a local landscaping company</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ink divider -->
+  <div class="ink-divider flip">
+    <svg viewBox="0 0 1200 12" preserveAspectRatio="none">
+      <path d="M0,6 C200,10 350,1 500,7 C650,13 800,2 950,8 C1100,3 1180,10 1200,6" stroke="#1A1A1A" stroke-width="2.5" fill="none" style="filter:url(#rough)" />
+    </svg>
+  </div>
+
+  <!-- Pricing -->
+  <section class="pricing section section-dark" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag animate-on-scroll">* pricing *</span>
+        <h2 class="animate-on-scroll">one plan. <span class="ink-underline-light">no confusion.</span></h2>
+        <p class="section-sub animate-on-scroll">simple pricing. no packages to compare, no surprise invoices.</p>
+      </div>
+      <div class="pricing-card animate-on-scroll">
+        <div class="pricing-stamp">price goes up soon</div>
+        <div class="pricing-header">
+          <h3>launch package</h3>
+          <p>everything you need to go live — website, branding, hosting.</p>
+        </div>
+        <div class="pricing-body">
+          <!-- Countdown timer -->
+          <div class="countdown-wrap">
+            <span class="countdown-label">this price expires in</span>
+            <div class="countdown" id="countdown">
+              <div class="countdown-block"><span class="countdown-num" id="cd-days">00</span><span class="countdown-unit">days</span></div>
+              <span class="countdown-sep">:</span>
+              <div class="countdown-block"><span class="countdown-num" id="cd-hours">00</span><span class="countdown-unit">hrs</span></div>
+              <span class="countdown-sep">:</span>
+              <div class="countdown-block"><span class="countdown-num" id="cd-mins">00</span><span class="countdown-unit">min</span></div>
+              <span class="countdown-sep">:</span>
+              <div class="countdown-block"><span class="countdown-num" id="cd-secs">00</span><span class="countdown-unit">sec</span></div>
+            </div>
+          </div>
+          <div class="price-row">
+            <div class="price-item">
+              <span class="price-label">one-time setup</span>
+              <div class="price-amount">
+                <span class="price-old">$1,000</span>
+                <span class="price-current">$400</span>
+              </div>
+              <span class="price-save">save $600</span>
+            </div>
+            <div class="price-divider"></div>
+            <div class="price-item">
+              <span class="price-label">monthly hosting</span>
+              <div class="price-amount">
+                <span class="price-current price-monthly">$39<span class="price-mo">/mo</span></span>
+              </div>
+              <span class="price-save">hosting + support</span>
+            </div>
+          </div>
+          <ul class="pricing-features">
+            <li><span class="check-mark">*</span> custom-designed responsive website</li>
+            <li><span class="check-mark">*</span> lite branding — colors, fonts & simple logo</li>
+            <li><span class="check-mark">*</span> your own domain name</li>
+            <li><span class="check-mark">*</span> fast hosting with SSL security</li>
+            <li><span class="check-mark">*</span> mobile-first, SEO-optimized</li>
+            <li><span class="check-mark">*</span> live in under 7 days</li>
+            <li><span class="check-mark">*</span> unlimited edits — forever</li>
+          </ul>
+          <a href="#contact" class="btn btn-accent btn-lg btn-full"><span>lock in this price</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ink divider -->
+  <div class="ink-divider">
+    <svg viewBox="0 0 1200 12" preserveAspectRatio="none">
+      <path d="M0,4 C100,9 250,1 400,7 C550,12 700,2 850,8 C1000,3 1100,10 1200,5" stroke="#1A1A1A" stroke-width="2" fill="none" style="filter:url(#rough)" />
+    </svg>
+  </div>
+
+  <!-- Process -->
+  <section class="process section" id="process">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag animate-on-scroll">* how it works *</span>
+        <h2 class="animate-on-scroll">from "I need a site" to <span class="ink-underline">live in a week</span></h2>
+      </div>
+      <div class="process-timeline">
+        <div class="process-step animate-on-scroll">
+          <div class="step-stamp">01</div>
+          <div class="step-content">
+            <h3>tell us about your business</h3>
+            <p>fill out a quick form — what you do, who you serve, what vibe you're going for. takes like 5 minutes.</p>
+          </div>
+        </div>
+        <div class="process-step animate-on-scroll">
+          <div class="step-stamp">02</div>
+          <div class="step-content">
+            <h3>we design & build it</h3>
+            <p>we handle everything — your site, your colors, your logo. you just answer a few questions along the way.</p>
+          </div>
+        </div>
+        <div class="process-step animate-on-scroll">
+          <div class="step-stamp">03</div>
+          <div class="step-content">
+            <h3>you review, we tweak</h3>
+            <p>we'll show you the whole thing before it goes live. don't love something? we'll fix it. no extra charge.</p>
+          </div>
+        </div>
+        <div class="process-step animate-on-scroll">
+          <div class="step-stamp">04</div>
+          <div class="step-content">
+            <h3>launch day!</h3>
+            <p>we flip the switch, your site goes live, and you can start sending people to it. that's it — you're online.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ink divider -->
+  <div class="ink-divider flip">
+    <svg viewBox="0 0 1200 12" preserveAspectRatio="none">
+      <path d="M0,8 C150,3 300,11 500,5 C700,-1 850,10 1000,4 C1100,9 1170,2 1200,7" stroke="#1A1A1A" stroke-width="2" fill="none" style="filter:url(#rough)" />
+    </svg>
+  </div>
+
+  <!-- FAQ -->
+  <section class="faq section section-dark" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag animate-on-scroll">* FAQ *</span>
+        <h2 class="animate-on-scroll">got questions? <span class="ink-underline-light">cool, here you go.</span></h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item animate-on-scroll">
+          <button class="faq-question">
+            what kind of businesses do you work with?
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>mostly local small businesses — landscapers, restaurants, barbers, contractors, you name it. if you serve people in your area and need a website, we're your crew.</p>
+          </div>
+        </div>
+        <div class="faq-item animate-on-scroll">
+          <button class="faq-question">
+            what's included in the lite branding?
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>you get a color palette that actually matches, a pair of professional fonts, and a clean simple logo. enough to look legit on your site, your business cards, your socials — everywhere.</p>
+          </div>
+        </div>
+        <div class="faq-item animate-on-scroll">
+          <button class="faq-question">
+            what does the $39/month cover?
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>hosting on fast servers, SSL security, and small updates whenever you need them. think of it as rent for your spot on the internet — we keep everything running so you don't have to.</p>
+          </div>
+        </div>
+        <div class="faq-item animate-on-scroll">
+          <button class="faq-question">
+            how long does it actually take?
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>less than 7 days. we're not going to ghost you for a month — we'll give you a clear timeline upfront and actually stick to it.</p>
+          </div>
+        </div>
+        <div class="faq-item animate-on-scroll">
+          <button class="faq-question">
+            can I change stuff after we launch?
+            <span class="faq-toggle">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>yep — unlimited edits are included in your monthly plan. text, images, layout tweaks, whatever you need. we don't charge per change.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ink divider -->
+  <div class="ink-divider">
+    <svg viewBox="0 0 1200 12" preserveAspectRatio="none">
+      <path d="M0,6 C180,2 350,10 500,4 C650,0 800,11 950,6 C1080,1 1160,9 1200,5" stroke="#1A1A1A" stroke-width="2.5" fill="none" style="filter:url(#rough)" />
+    </svg>
+  </div>
+
+  <!-- Contact / Lead Capture -->
+  <section class="contact section" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag animate-on-scroll">* let's go *</span>
+        <h2 class="animate-on-scroll">ready to <span class="ink-underline">launch?</span></h2>
+        <p class="section-sub animate-on-scroll">fill this out and we'll hit you back within 24 hours. no pressure, just a conversation.</p>
+      </div>
+      <div class="contact-wrapper animate-on-scroll">
+        <div class="iframe-mask">
+          <iframe
+            src="https://polyester-waitress-9eb.notion.site/ebd//812da36417044a89a5409a6fea98828a"
+            class="notion-embed"
+            title="Lead capture form"
+            frameborder="0"
+            scrolling="no"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="ink-divider" style="margin-bottom: 0;">
+      <svg viewBox="0 0 1200 12" preserveAspectRatio="none">
+        <path d="M0,6 C150,2 300,10 450,5 C600,0 750,11 900,4 C1050,-1 1150,9 1200,6" stroke="#1A1A1A" stroke-width="2" fill="none" style="filter:url(#rough)" />
+      </svg>
+    </div>
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <img src="23493A84-E3C4-4219-BBD9-9E237121B502.png" alt="launchy" class="logo-img" />
+          <span class="logo-text">launchy</span>
+        </a>
+        <p>websites for local businesses that actually look good.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#services">services</a>
+        <a href="#pricing">pricing</a>
+        <a href="#process">process</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">contact</a>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 launchy. all rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!--
+    MASCOT ASSET IDEAS for future illustrations (same ink-on-cream stamp style):
+    - monkey looking through a telescope (for "SEO ready" or empty states)
+    - monkey riding a rocket (for hero alt or loading screen)
+    - monkey giving thumbs up (for success/confirmation pages)
+    - monkey with a paintbrush (for "lite branding" service card)
+    - monkey holding a wrench (for "ongoing support" card)
+    - monkey planting a flag on a moon (for "launch day" process step)
+    - monkey waving from inside a browser window (for "custom website" card)
+    - monkey sleeping on a cloud (for 404 page)
+    Each should follow SKILL.md: black ink on cream, chibi proportions, stamp texture,
+    floating pose, no gradients, generous negative space.
+  -->
+
+  <script src="script.js"></script>
+</body>
+</html>
