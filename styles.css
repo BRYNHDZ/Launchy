@@ -267,8 +267,8 @@ h3 { font-size: 1.2rem; }
 }
 
 .logo-img {
-  width: 50px;
-  height: 50px;
+  width: 128px;
+  height: 128px;
   border-radius: 50% 45% 55% 50%;
   object-fit: contain;
 }
@@ -438,16 +438,16 @@ h3 { font-size: 1.2rem; }
 
 .mascot-container {
   position: relative;
-  width: 420px;
-  height: 420px;
+  width: 600px;
+  height: 600px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .mascot {
-  width: 280px;
-  height: 280px;
+  width: 500px;
+  height: 500px;
   object-fit: contain;
   position: relative;
   z-index: 2;
@@ -460,10 +460,10 @@ h3 { font-size: 1.2rem; }
    so the zero-g drift reads as a target the monkey is flying after */
 .floating-banana {
   position: absolute;
-  width: 130px;
-  height: 130px;
-  top: -4%;
-  right: -2%;
+  width: 200px;
+  height: 200px;
+  top: 2%;
+  right: 8%;
   z-index: 3;
   pointer-events: none;
   transform-origin: 50% 50%;
@@ -2330,4 +2330,301 @@ h3 { font-size: 1.2rem; }
   /* Sequenced price shrink — go a little smaller on mobile */
   .price-old { font-size: 2.4rem; }
   .price-old.shrunk { font-size: 1rem; }
+
+  .mascot { width: 240px; height: 240px; }
+  .floating-banana { width: 70px; height: 70px; top: 5%; right: 10%; }
+
+  .space-float { display: none; }
+  .space-scene { display: none; }
+  .decor { display: none; }
 }
+
+/* ============================================
+   SPACE FLOATING ASSETS
+   ============================================ */
+
+.space-scene {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+  height: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.bike-divider {
+  position: relative;
+  overflow: visible;
+}
+
+.space-float {
+  position: absolute;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.35;
+}
+
+/* Hero — asteroid top right, earth bottom left */
+.asteroid-hero {
+  width: 150px;
+  top: 15%;
+  left: 3%;
+  animation: asteroid-tumble 5s linear infinite;
+}
+
+.earth-hero {
+  width: 138px;
+  bottom: 10%;
+  right: 5%;
+  animation: earth-spin 20s linear infinite;
+}
+
+/* Between services & featured — galaxy slowly rotates, UFO drifts */
+.galaxy-float {
+  width: 220px;
+  top: -110px;
+  right: 5%;
+  animation: galaxy-rotate 14s linear infinite;
+}
+
+.ufo-float {
+  width: 320px;
+  top: -160px;
+  left: 8%;
+  opacity: 0.65;
+  animation: ufo-drift 4s ease-in-out infinite;
+}
+
+/* Monkey on bike rides along the footer ink line */
+.bike-monkey-float {
+  position: absolute;
+  width: 100px;
+  bottom: -2px;
+  left: -100px;
+  opacity: 0.85;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 2;
+  animation: bike-ride 14s linear infinite;
+}
+
+/* Before contact — asteroid */
+.asteroid-contact {
+  width: 130px;
+  top: -65px;
+  left: 10%;
+  animation: asteroid-tumble 6s linear infinite reverse;
+}
+
+/* Rocket at "ready to launch" */
+.section-header-rocket {
+  position: relative;
+}
+
+.rocket-launch {
+  width: 160px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto -10px;
+  animation: rocket-blast 2.5s ease-in-out infinite;
+  filter: drop-shadow(0 4px 20px rgba(0,0,0,0.15));
+}
+
+/* Keyframes — DIALED TO 11 */
+@keyframes asteroid-tumble {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  20%  { transform: translate(30px, -15px) rotate(4deg); }
+  40%  { transform: translate(55px, -5px) rotate(-2deg); }
+  60%  { transform: translate(35px, 10px) rotate(3deg); }
+  80%  { transform: translate(10px, 5px) rotate(-1deg); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+@keyframes earth-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes galaxy-rotate {
+  0%   { transform: rotate(0deg) scale(1); }
+  25%  { transform: rotate(90deg) scale(1.2); }
+  50%  { transform: rotate(180deg) scale(0.9); }
+  75%  { transform: rotate(270deg) scale(1.15); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes ufo-drift {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  15%      { transform: translate(40px, -30px) rotate(8deg); }
+  30%      { transform: translate(-20px, -50px) rotate(-6deg); }
+  50%      { transform: translate(50px, -15px) rotate(12deg); }
+  70%      { transform: translate(-30px, -40px) rotate(-10deg); }
+  85%      { transform: translate(15px, -10px) rotate(5deg); }
+}
+
+@keyframes bike-ride {
+  0%   { transform: translateX(0) rotate(-2deg); }
+  25%  { transform: translateX(calc(25vw)) rotate(3deg); }
+  50%  { transform: translateX(calc(50vw)) rotate(-2deg); }
+  75%  { transform: translateX(calc(75vw)) rotate(3deg); }
+  100% { transform: translateX(calc(100vw + 200px)) rotate(-1deg); }
+}
+
+@keyframes rocket-blast {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  20%      { transform: translateY(-25px) rotate(1deg); }
+  40%      { transform: translateY(-40px) rotate(-1deg) scale(1.05); }
+  60%      { transform: translateY(-30px) rotate(2deg); }
+  80%      { transform: translateY(-10px) rotate(-1deg) scale(0.98); }
+}
+
+/* ============================================
+   SCATTERED SPACE DECOR
+   Absolute-positioned, pointer-events:none,
+   no layout impact
+   ============================================ */
+
+.has-space-decor {
+  position: relative;
+  overflow: hidden;
+}
+
+.decor {
+  position: absolute;
+  object-fit: contain;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- SERVICES section --- */
+.decor-banana-services {
+  width: 80px;
+  top: 12%;
+  right: 3%;
+  opacity: 0.2;
+  animation: decor-wobble-1 7s ease-in-out infinite;
+}
+.decor-asteroid-services {
+  width: 100px;
+  bottom: 8%;
+  left: 2%;
+  opacity: 0.15;
+  animation: decor-drift-1 9s ease-in-out infinite;
+}
+
+/* --- PRICING section --- */
+.decor-earth-pricing {
+  width: 110px;
+  top: 10%;
+  left: 4%;
+  opacity: 0.12;
+  animation: earth-spin 25s linear infinite;
+}
+.decor-galaxy-pricing {
+  width: 140px;
+  bottom: 5%;
+  right: 3%;
+  opacity: 0.1;
+  animation: galaxy-rotate 20s linear infinite reverse;
+}
+.decor-banana-pricing {
+  width: 60px;
+  top: 50%;
+  right: 8%;
+  opacity: 0.18;
+  animation: decor-wobble-2 5s ease-in-out infinite;
+}
+
+/* --- PROCESS section --- */
+.decor-ufo-process {
+  width: 150px;
+  top: 5%;
+  right: 2%;
+  opacity: 0.15;
+  animation: ufo-drift 6s ease-in-out infinite;
+}
+.decor-mascot-process {
+  width: 90px;
+  bottom: 10%;
+  left: 3%;
+  opacity: 0.1;
+  animation: decor-float-1 8s ease-in-out infinite;
+}
+.decor-asteroid-process {
+  width: 70px;
+  top: 45%;
+  left: 85%;
+  opacity: 0.12;
+  animation: decor-drift-1 11s ease-in-out infinite reverse;
+}
+
+/* --- FAQ section --- */
+.decor-galaxy-faq {
+  width: 160px;
+  top: 8%;
+  left: 2%;
+  opacity: 0.08;
+  animation: galaxy-rotate 18s linear infinite;
+}
+.decor-earth-faq {
+  width: 80px;
+  bottom: 12%;
+  right: 5%;
+  opacity: 0.12;
+  animation: earth-spin 30s linear infinite reverse;
+}
+.decor-rocket-faq {
+  width: 70px;
+  top: 40%;
+  right: 3%;
+  opacity: 0.15;
+  animation: decor-float-2 6s ease-in-out infinite;
+}
+
+/* --- CONTACT section --- */
+.decor-banana-contact {
+  width: 70px;
+  top: 15%;
+  right: 4%;
+  opacity: 0.18;
+  animation: decor-wobble-1 6s ease-in-out infinite 1s;
+}
+.decor-mascot-contact {
+  width: 100px;
+  bottom: 8%;
+  left: 3%;
+  opacity: 0.12;
+  animation: decor-float-1 10s ease-in-out infinite;
+}
+
+/* --- Decor keyframes --- */
+@keyframes decor-wobble-1 {
+  0%, 100% { transform: rotate(-5deg) translateY(0); }
+  30%      { transform: rotate(8deg) translateY(-10px); }
+  60%      { transform: rotate(-3deg) translateY(6px); }
+}
+
+@keyframes decor-wobble-2 {
+  0%, 100% { transform: rotate(3deg) translate(0, 0); }
+  25%      { transform: rotate(-6deg) translate(8px, -12px); }
+  50%      { transform: rotate(5deg) translate(-5px, -6px); }
+  75%      { transform: rotate(-2deg) translate(10px, 4px); }
+}
+
+@keyframes decor-drift-1 {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33%      { transform: translate(20px, -10px) rotate(5deg); }
+  66%      { transform: translate(-10px, 8px) rotate(-3deg); }
+}
+
+@keyframes decor-float-1 {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25%      { transform: translateY(-15px) rotate(3deg); }
+  50%      { transform: translateY(-8px) rotate(-2deg); }
+  75%      { transform: translateY(-20px) rotate(4deg); }
+}
+
+@keyframes decor-float-2 {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50%      { transform: translateY(-18px) rotate(3deg); }
