@@ -7,16 +7,20 @@
 // Multiple parallax layers of ink dots, constellations, and shooting stars
 (function initSpace() {
   const canvas = document.getElementById('starfield');
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d', { alpha: true });
   let w, h;
   let layers = [];         // parallax star layers
   let constellations = [];
   let shootingStars = [];
   let mouseX = 0, mouseY = 0;
+  let running = true;      // paused when tab hidden
 
   function resize() {
+    // Buffer matches CSS size — previously buffer was 3× innerHeight while
+    // displayed at 100vh, which wasted ~66% of every clearRect/fill. Parallax
+    // still works because stars wrap with modulo(h) on scroll.
     w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight * 3; // tall canvas for scroll
+    h = canvas.height = window.innerHeight;
     canvas.style.height = '100vh';
     seed();
   }
@@ -26,10 +30,12 @@
     constellations = [];
 
     // 3 parallax layers — back (slow, small), mid, front (fast, bigger dots)
+    // Counts reduced ~40% — at 0.03–0.15 opacity the difference is invisible
+    // but cuts per-frame ctx.arc/fill work significantly on low-end GPUs.
     const layerConfigs = [
-      { count: 180, sizeMin: 0.3, sizeMax: 1, opacityMin: 0.03, opacityMax: 0.07, speed: 0.1 },
-      { count: 80,  sizeMin: 0.6, sizeMax: 1.8, opacityMin: 0.05, opacityMax: 0.12, speed: 0.25 },
-      { count: 30,  sizeMin: 1.2, sizeMax: 3.5, opacityMin: 0.06, opacityMax: 0.15, speed: 0.45 },
+      { count: 110, sizeMin: 0.3, sizeMax: 1, opacityMin: 0.03, opacityMax: 0.07, speed: 0.1 },
+      { count: 50,  sizeMin: 0.6, sizeMax: 1.8, opacityMin: 0.05, opacityMax: 0.12, speed: 0.25 },
+      { count: 20,  sizeMin: 1.2, sizeMax: 3.5, opacityMin: 0.06, opacityMax: 0.15, speed: 0.45 },
     ];
 
     for (const cfg of layerConfigs) {
@@ -98,6 +104,7 @@
 
   let time = 0;
   function draw() {
+    if (!running) return; // paused while tab is hidden — rAF loop will resume on visibility
     time += 0.008;
     ctx.clearRect(0, 0, w, h);
 
@@ -139,7 +146,7 @@
       const pmx = mx * layer.speed * 3;
       const pmy = my * layer.speed * 3;
 
-      for (const s of layers === layer ? layer.stars : layer.stars) {
+      for (const s of layer.stars) {
         const twinkle = Math.sin(time * s.twinkleSpeed + s.twinklePhase);
         const alpha = s.baseOpacity * (0.5 + twinkle * 0.5);
         const pulse = s.pulseAmp > 0 ? 1 + Math.sin(time * 1.5 + s.twinklePhase) * s.pulseAmp : 1;
@@ -229,6 +236,17 @@
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(resize, 200);
+  });
+
+  // Pause the draw loop while the tab is hidden — browsers throttle rAF to ~1fps
+  // anyway, but this also skips any stutter on the frame when it resumes.
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      running = false;
+    } else if (!running) {
+      running = true;
+      requestAnimationFrame(draw);
+    }
   });
 })();
 

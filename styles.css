@@ -487,7 +487,8 @@ h3 { font-size: 1.2rem; }
   background: var(--ink);
   border-radius: 50%;
   opacity: 0.07;
-  filter: url(#rougher);
+  /* SVG turbulence filter removed — CPU-rasterized and this element is
+     transformed on every scroll frame, which re-ran the shader each frame */
   will-change: transform;
   pointer-events: none;
 }
@@ -501,8 +502,9 @@ h3 { font-size: 1.2rem; }
   border-radius: 50%;
   border: 2px dashed var(--ink);
   opacity: 0.08;
-  transition: transform 0.1s linear;
-  filter: url(#rougher);
+  /* No transform transition — JS already updates via rAF, and transitioning
+     under a CPU filter meant every scroll frame kicked off a 100ms re-raster.
+     SVG turbulence filter removed for the same reason. */
   will-change: transform;
   pointer-events: none;
 }
@@ -555,7 +557,8 @@ h3 { font-size: 1.2rem; }
   border-radius: 0 0 50% 50%;
   position: relative;
   overflow: hidden;
-  filter: url(#rough);
+  /* No SVG filter — child ::after animates `top` continuously, which would
+     force the filter to re-raster every frame the drip is visible */
 }
 
 .ink-drip::after {
@@ -2027,7 +2030,8 @@ h3 { font-size: 1.2rem; }
   border-radius: 50%;
   pointer-events: none;
   z-index: -1;
-  filter: url(#rougher);
+  /* SVG turbulence filter removed — 8 smudges × transform-every-scroll-frame
+     meant 8 CPU re-rasterizations per scroll event */
   will-change: transform;
 }
 
