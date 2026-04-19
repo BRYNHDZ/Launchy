@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow" />
+<title>blaztly · brand guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #EDE6DB;
+    --cream-light: #F2ECE2;
+    --ink: #1A1A1A;
+    --ink-light: #2E2E2E;
+    --accent: #FF6B35;
+    --accent-dark: #E25A28;
+    --gray-200: #D1C9BC;
+    --gray-400: #928B7F;
+    --gray-600: #5A5449;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    text-transform: lowercase;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* paper grain overlay on the whole page */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1  0 0 0 0 0.1  0 0 0 0 0.1  0 0 0 0.04 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.9;
+  }
+
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem 6rem; position: relative; z-index: 2; }
+
+  /* ============ HEADER ============ */
+  .brand-header {
+    display: flex; align-items: baseline; gap: 1.2rem; flex-wrap: wrap;
+    padding-bottom: 1.4rem;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 4rem;
+  }
+  .brand-logo {
+    font-family: 'Cherry Bomb One', cursive;
+    font-size: 2.8rem;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .brand-kicker {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--gray-600);
+    letter-spacing: 0.02em;
+  }
+  .brand-meta {
+    margin-left: auto;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--gray-600);
+  }
+
+  /* ============ INTRO ============ */
+  .intro {
+    max-width: 720px;
+    margin-bottom: 5rem;
+  }
+  .intro-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+  .intro h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 1.2rem;
+    letter-spacing: -0.01em;
+  }
+  .intro p {
+    font-size: 1.1rem;
+    color: var(--ink-light);
+    line-height: 1.55;
+    text-transform: none;
+    max-width: 620px;
+  }
+  .intro p + p { margin-top: 0.8rem; }
+
+  /* ============ TABLE OF CONTENTS ============ */
+  .toc {
+    background: var(--cream-light);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    padding: 1.6rem 1.8rem;
+    margin-bottom: 5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.5rem 2rem;
+  }
+  .toc-title {
+    grid-column: 1 / -1;
+    font-family: 'Caveat', cursive;
+    font-size: 1.6rem;
+    color: var(--gray-600);
+    margin-bottom: 0.4rem;
+  }
+  .toc a {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 0.98rem;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 0.25rem 0;
+    border-bottom: 1px dashed transparent;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .toc a::before {
+    content: '→';
+    color: var(--accent);
+    margin-right: 0.5rem;
+    font-weight: 700;
+  }
+  .toc a:hover { color: var(--accent); border-bottom-color: var(--gray-200); }
+
+  /* ============ SECTIONS ============ */
+  section.s {
+    margin-bottom: 5.5rem;
+    scroll-margin-top: 2rem;
+  }
+  .eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+  .s-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 2.2rem;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+  }
+  .s-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem;
+    color: var(--ink-light);
+    line-height: 1.55;
+    text-transform: none;
+    max-width: 640px;
+    margin-bottom: 2rem;
+  }
+
+  /* ============ PRINCIPLE ROWS ============ */
+  .principles { display: grid; gap: 1rem; }
+  .principle {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 1.4rem;
+    padding: 1.2rem 0;
+    border-top: 1.5px dashed var(--gray-200);
+    align-items: start;
+  }
+  .principle:first-child { border-top: none; padding-top: 0; }
+  .principle-label {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .principle-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    color: var(--ink-light);
+    line-height: 1.55;
+    text-transform: none;
+  }
+  .principle-body strong { color: var(--ink); }
+
+  /* ============ HIGHLIGHTER ============ */
+  .highlight {
+    background: linear-gradient(100deg, transparent 3%, rgba(255,107,53,0.55) 3%, rgba(255,107,53,0.55) 97%, transparent 97%);
+    padding: 0 0.15rem;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  /* ============ LOGO + MASCOT PANEL ============ */
+  .logo-panel {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 1.2rem;
+  }
+  .logo-card, .mascot-card {
+    background: var(--cream-light);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .logo-card .lockup {
+    font-family: 'Cherry Bomb One', cursive;
+    font-size: 5rem;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .card-caption {
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    color: var(--gray-600);
+    margin-top: 1rem;
+  }
+  .mascot-card img {
+    width: 170px;
+    height: 170px;
+    object-fit: contain;
+  }
+
+  /* ============ COLOR PALETTE ============ */
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.7rem;
+  }
+  .swatch {
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--cream-light);
+  }
+  .swatch-color { height: 90px; }
+  .swatch-meta { padding: 0.7rem 0.8rem; }
+  .swatch-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--ink);
+  }
+  .swatch-hex {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.74rem;
+    color: var(--gray-600);
+    margin-top: 0.15rem;
+    text-transform: none;
+  }
+  .swatch-use {
+    font-size: 0.78rem;
+    color: var(--gray-600);
+    margin-top: 0.25rem;
+    text-transform: none;
+  }
+
+  /* ============ TYPOGRAPHY ============ */
+  .type-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1.8rem;
+    padding: 1.4rem 0;
+    border-top: 1px dashed var(--gray-200);
+    align-items: center;
+  }
+  .type-row:first-child { border-top: none; }
+  .type-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.92rem;
+    color: var(--ink);
+    text-transform: none;
+  }
+  .type-label small {
+    display: block;
+    color: var(--gray-600);
+    font-weight: 400;
+    font-size: 0.78rem;
+    margin-top: 0.3rem;
+    text-transform: lowercase;
+    line-height: 1.4;
+  }
+  .sample-cherry {
+    font-family: 'Cherry Bomb One', cursive;
+    font-size: 3rem;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .sample-grotesk {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.7rem;
+    color: var(--ink);
+  }
+  .sample-dmsans {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem;
+    color: var(--ink-light);
+    line-height: 1.5;
+    text-transform: none;
+  }
+  .sample-caveat {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  /* ============ ORANGE USAGE ============ */
+  .orange-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 0.9rem;
+  }
+  .use-card {
+    background: var(--cream-light);
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    padding: 1.2rem 1.3rem;
+    min-height: 130px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .use-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--gray-600);
+    margin-bottom: 0.9rem;
+  }
+  .use-example { text-transform: lowercase; }
+  .use-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--cream);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.65rem 1.3rem;
+    border: 2px solid var(--accent);
+    border-radius: 999px;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+  .use-hero {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .use-section-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+  }
+  .check-row {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    margin-top: 0.3rem;
+    text-transform: lowercase;
+  }
+  .check-row .mark { color: var(--accent); font-weight: 700; margin-right: 0.4rem; }
+
+  /* ============ ILLUSTRATIONS ============ */
+  .illus-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .illus-card {
+    background: var(--cream-light);
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+  }
+  .illus-card img { width: 130px; height: 130px; object-fit: contain; }
+  .illus-card .caption {
+    font-family: 'Caveat', cursive;
+    font-size: 1.05rem;
+    color: var(--gray-600);
+    margin-top: 0.6rem;
+  }
+  .do-dont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .dd-panel {
+    background: var(--cream-light);
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    padding: 1.2rem 1.4rem;
+  }
+  .dd-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 0.6rem;
+  }
+  .dd-title.do::before { content: '✓ '; color: var(--accent); }
+  .dd-title.dont::before { content: '✗ '; color: var(--ink); }
+  .dd-panel ul { list-style: none; padding: 0; }
+  .dd-panel li {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--ink-light);
+    padding: 0.25rem 0;
+    text-transform: none;
+    line-height: 1.5;
+  }
+
+  /* ============ VOICE ============ */
+  .voice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .voice-panel {
+    background: var(--cream-light);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    padding: 1.6rem 1.8rem;
+  }
+  .voice-register {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+  .voice-desc {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--ink-light);
+    line-height: 1.55;
+    text-transform: none;
+    margin-bottom: 1rem;
+  }
+  .voice-example {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: var(--ink);
+    padding: 0.8rem 1rem;
+    background: var(--cream);
+    border-left: 4px solid var(--accent);
+    border-radius: 4px;
+  }
+  .voice-example .accent { color: var(--accent); }
+
+  /* ============ CAROUSEL EXAMPLE ============ */
+  .strip {
+    display: flex;
+    gap: 1.2rem;
+    overflow-x: auto;
+    padding: 1rem 0 1.5rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .strip::-webkit-scrollbar { height: 10px; }
+  .strip::-webkit-scrollbar-track { background: var(--gray-200); border-radius: 999px; }
+  .strip::-webkit-scrollbar-thumb { background: var(--gray-400); border-radius: 999px; }
+
+  .slide-wrap { flex: 0 0 auto; scroll-snap-align: start; display: flex; flex-direction: column; gap: 0.5rem; }
+  .slide-meta {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--gray-600);
+    padding-left: 0.3rem;
+  }
+
+  .slide {
+    width: 380px; height: 380px;
+    position: relative; overflow: hidden;
+    border-radius: 6px;
+    background: var(--cream);
+    filter: url(#paperNoise);
+    box-shadow: 0 6px 20px rgba(26,26,26,0.08), 0 1px 4px rgba(26,26,26,0.06);
+  }
+  .slide-inner { position: absolute; inset: 0; padding: 1.8rem 1.7rem; display: flex; flex-direction: column; }
+  .tag { font-family: 'Caveat', cursive; font-weight: 500; font-size: 1.1rem; color: var(--gray-600); align-self: flex-start; margin-bottom: 0.2rem; }
+  .asset { position: absolute; pointer-events: none; object-fit: contain; }
+
+  .big-num {
+    font-family: 'Caveat', cursive; font-weight: 700;
+    font-size: 4.6rem; color: var(--ink);
+    line-height: 0.95; margin-bottom: 0.1rem; display: inline-block;
+  }
+  .big-num::before {
+    content: 'no. ';
+    font-family: 'Caveat', cursive;
+    font-weight: 500; font-size: 1.35rem;
+    color: var(--gray-400);
+    vertical-align: super; margin-right: 0.2rem;
+  }
+  .cover-num {
+    font-family: 'Caveat', cursive; font-weight: 700;
+    font-size: 5.2rem; color: var(--ink);
+    line-height: 0.9; margin-top: auto; margin-bottom: 0.2rem;
+  }
+  .cover-hook {
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+    font-size: 1.5rem; line-height: 1.2; color: var(--ink); max-width: 92%;
+  }
+  .foot {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-top: 1rem; padding-top: 0.7rem; border-top: 1.5px dashed var(--gray-200);
+  }
+  .foot-brand { font-family: 'Cherry Bomb One', cursive; font-size: 1.1rem; color: var(--ink); letter-spacing: 0; }
+  .foot-cue { font-family: 'Caveat', cursive; font-weight: 500; font-size: 1.05rem; color: var(--ink-light); }
+  .tip-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.25rem; line-height: 1.2; color: var(--ink); margin-bottom: 0.6rem; }
+  .tip-body { font-family: 'DM Sans', sans-serif; font-size: 0.92rem; line-height: 1.5; color: var(--ink-light); text-transform: none; max-width: 92%; }
+  .scribble-arrow { position: absolute; width: 85px; height: 65px; opacity: 0.7; pointer-events: none; }
+  .cta-lead { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 2rem; line-height: 1.08; color: var(--ink); margin-top: auto; margin-bottom: 0.5rem; }
+  .cta-body { font-family: 'DM Sans', sans-serif; font-size: 0.92rem; line-height: 1.5; color: var(--ink-light); text-transform: none; margin-bottom: 1rem; max-width: 90%; }
+  .cta-btn {
+    align-self: flex-start; background: var(--accent); color: var(--cream);
+    font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.95rem;
+    padding: 0.8rem 1.4rem; border: 2px solid var(--accent);
+    border-radius: 999px; box-shadow: 4px 4px 0 var(--ink); display: inline-block;
+  }
+
+  /* ============ CLOSER ============ */
+  .closer {
+    border-top: 2px solid var(--ink);
+    padding-top: 2rem;
+    margin-top: 6rem;
+    display: flex; justify-content: space-between; align-items: baseline;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .closer-logo { font-family: 'Cherry Bomb One', cursive; font-size: 1.6rem; color: var(--ink); }
+  .closer-line { font-family: 'Caveat', cursive; font-size: 1.15rem; color: var(--gray-600); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 760px) {
+    .wrap { padding: 3rem 1.4rem 4rem; }
+    .intro h1 { font-size: 2.2rem; }
+    .s-title { font-size: 1.7rem; }
+    .logo-panel, .do-dont, .voice-grid { grid-template-columns: 1fr; }
+    .type-row { grid-template-columns: 1fr; gap: 0.4rem; }
+    .principle { grid-template-columns: 1fr; gap: 0.3rem; }
+    .principle-label { font-size: 1.2rem; }
+    .toc { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="paperNoise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0.95  0 0 0 0 0.92  0 0 0 0 0.86  0 0 0 0.05 0" result="grain"/>
+      <feComposite in="grain" in2="SourceGraphic" operator="over"/>
+    </filter>
+  </defs>
+</svg>
+
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="brand-header">
+    <div class="brand-logo">blaztly</div>
+    <div class="brand-kicker">brand guide</div>
+    <div class="brand-meta">v1 · 2026</div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="intro">
+    <div class="intro-eyebrow">who we are</div>
+    <h1>websites for lead-based local businesses. built <span class="highlight">with taste</span>, not templates.</h1>
+    <p>anyone can generate a website with ai now. that's why they all look the same. blaztly builds sites that look handmade — because they are. we're not anti-ai. we're anti-slop.</p>
+    <p>this document is how we stay consistent: colors, type, voice, social, the whole system. anyone building something for blaztly should read this first.</p>
+  </div>
+
+  <!-- TOC -->
+  <nav class="toc">
+    <div class="toc-title">what's inside</div>
+    <a href="#identity">identity</a>
+    <a href="#logo">logo & mascot</a>
+    <a href="#color">color</a>
+    <a href="#type">typography</a>
+    <a href="#orange">orange rules</a>
+    <a href="#illus">illustration</a>
+    <a href="#voice">voice & tone</a>
+    <a href="#ig">instagram</a>
+    <a href="#principles">principles</a>
+  </nav>
+
+  <!-- IDENTITY -->
+  <section class="s" id="identity">
+    <div class="eyebrow">01 · identity</div>
+    <h2 class="s-title">who blaztly is for.</h2>
+    <p class="s-sub">we build high-conversion websites for lead-based local service businesses. no e-commerce. no one-size-fits-all templates.</p>
+
+    <div class="principles">
+      <div class="principle">
+        <div class="principle-label">target fit</div>
+        <div class="principle-body">contractors, lawyers, coaches, agencies, service pros — anyone whose business runs on phone calls, bookings, and consultations. <strong>restaurants only</strong> if they use an embed-friendly ordering platform (chownow, toast, olo).</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">not a fit</div>
+        <div class="principle-body">e-commerce, marketplaces, anything where the website is a store. we're not saying never — we're saying not today.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">the edge</div>
+        <div class="principle-body">ai made everyone a web developer. taste made blaztly. our sites look <strong>handmade on purpose</strong> — because in a feed full of generated pages, craft is the signal.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">hero line</div>
+        <div class="principle-body" style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.25rem; color:var(--ink)">your business deserves a <span class="highlight">launchpad</span>.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGO & MASCOT -->
+  <section class="s" id="logo">
+    <div class="eyebrow">02 · logo & mascot</div>
+    <h2 class="s-title">the wordmark. the monkey.</h2>
+    <p class="s-sub">the blaztly wordmark is set in cherry bomb one. that's the only time cherry bomb is ever used. the mascot — a space-monkey astronaut — is our flagship illustration: inked, friendly, weightless.</p>
+
+    <div class="logo-panel">
+      <div class="logo-card">
+        <div class="lockup">blaztly</div>
+        <div class="card-caption">cherry bomb one · logo only</div>
+      </div>
+      <div class="mascot-card">
+        <img src="mascot.png" alt="blaztly mascot" />
+        <div class="card-caption">the astronaut monkey</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLOR -->
+  <section class="s" id="color">
+    <div class="eyebrow">03 · color</div>
+    <h2 class="s-title">cream, ink, and one spotlight.</h2>
+    <p class="s-sub">nine tokens. the base is always cream on ink. orange is a spotlight color — used only for calls-to-action and highlighted phrases. never as a fill, never as decoration.</p>
+
+    <div class="swatches">
+      <div class="swatch">
+        <div class="swatch-color" style="background:#EDE6DB"></div>
+        <div class="swatch-meta"><div class="swatch-name">cream</div><div class="swatch-hex">#EDE6DB</div><div class="swatch-use">primary background</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#F2ECE2"></div>
+        <div class="swatch-meta"><div class="swatch-name">cream-light</div><div class="swatch-hex">#F2ECE2</div><div class="swatch-use">cards, secondary</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#1A1A1A"></div>
+        <div class="swatch-meta"><div class="swatch-name">ink</div><div class="swatch-hex">#1A1A1A</div><div class="swatch-use">headlines, marks</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#2E2E2E"></div>
+        <div class="swatch-meta"><div class="swatch-name">ink-light</div><div class="swatch-hex">#2E2E2E</div><div class="swatch-use">body text</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#FF6B35"></div>
+        <div class="swatch-meta"><div class="swatch-name">accent</div><div class="swatch-hex">#FF6B35</div><div class="swatch-use">ctas, emphasis</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#E25A28"></div>
+        <div class="swatch-meta"><div class="swatch-name">accent-dark</div><div class="swatch-hex">#E25A28</div><div class="swatch-use">hover, pressed</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#D1C9BC"></div>
+        <div class="swatch-meta"><div class="swatch-name">gray-200</div><div class="swatch-hex">#D1C9BC</div><div class="swatch-use">borders, dividers</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#928B7F"></div>
+        <div class="swatch-meta"><div class="swatch-name">gray-400</div><div class="swatch-hex">#928B7F</div><div class="swatch-use">muted text</div></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="background:#5A5449"></div>
+        <div class="swatch-meta"><div class="swatch-name">gray-600</div><div class="swatch-hex">#5A5449</div><div class="swatch-use">subtle ui, captions</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TYPOGRAPHY -->
+  <section class="s" id="type">
+    <div class="eyebrow">04 · typography</div>
+    <h2 class="s-title">four families. one rule.</h2>
+    <p class="s-sub">cherry bomb is sacred — logo only. space grotesk carries titles and ui. dm sans handles body. caveat is our accent voice — handwritten labels, footer cues, marginalia.</p>
+
+    <div class="type-row">
+      <div class="type-label">cherry bomb one <small>display · logo only. never titles, never body.</small></div>
+      <div class="sample-cherry">blaztly</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">space grotesk <small>headings, ui, buttons · weights 400–700</small></div>
+      <div class="sample-grotesk">your business deserves a launchpad.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">dm sans <small>body copy · 400/500/600 + italic</small></div>
+      <div class="sample-dmsans">we build websites the old way — by hand, with care, with taste. in a world of ai slop, craft is the signal.</div>
+    </div>
+    <div class="type-row">
+      <div class="type-label">caveat <small>accent · handwritten labels, tags, cues, big numbers</small></div>
+      <div class="sample-caveat">no. 01 · swipe →</div>
+    </div>
+  </section>
+
+  <!-- ORANGE RULES -->
+  <section class="s" id="orange">
+    <div class="eyebrow">05 · orange rules</div>
+    <h2 class="s-title">orange is a spotlight, not a fill.</h2>
+    <p class="s-sub">the accent color has exactly two jobs: call-to-action (buttons, emphasis) and highlighter (one phrase per layout). that's it. if it's not a cta or a highlight, it's not orange.</p>
+
+    <div class="orange-grid">
+      <div class="use-card">
+        <div class="use-label">cta button</div>
+        <div class="use-example"><span class="use-btn">book a call →</span></div>
+      </div>
+      <div class="use-card">
+        <div class="use-label">highlighted phrase</div>
+        <div class="use-hero">your business deserves a <span class="highlight">launchpad</span>.</div>
+      </div>
+      <div class="use-card">
+        <div class="use-label">section label</div>
+        <div class="use-section-label">what we do</div>
+      </div>
+      <div class="use-card">
+        <div class="use-label">pricing checkmark</div>
+        <div>
+          <div class="check-row"><span class="mark">✓</span>custom illustration</div>
+          <div class="check-row"><span class="mark">✓</span>roi calculator</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="do-dont" style="margin-top:1.5rem">
+      <div class="dd-panel">
+        <div class="dd-title do">do</div>
+        <ul>
+          <li>use on one phrase per layout, max</li>
+          <li>fill cta buttons (orange bg, cream text)</li>
+          <li>use for section eyebrows / labels</li>
+          <li>hover state: shift to accent-dark</li>
+        </ul>
+      </div>
+      <div class="dd-panel">
+        <div class="dd-title dont">don't</div>
+        <ul>
+          <li>use as background color for large areas</li>
+          <li>color big display numbers orange</li>
+          <li>apply to illustrations (stay two-tone)</li>
+          <li>scatter multiple highlights in one layout</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ILLUSTRATION -->
+  <section class="s" id="illus">
+    <div class="eyebrow">06 · illustration</div>
+    <h2 class="s-title">hand-drawn, inked, two-tone.</h2>
+    <p class="s-sub">illustrations stay pure — ink on cream, never orange, never gradients. the stamp/linocut feel is what makes them read as human-made. the moment color enters, the illusion breaks.</p>
+
+    <div class="illus-grid">
+      <div class="illus-card"><img src="mascot.png" alt="mascot" /><div class="caption">mascot</div></div>
+      <div class="illus-card"><img src="rocket.png" alt="rocket" /><div class="caption">rocket</div></div>
+      <div class="illus-card"><img src="asteroid.png" alt="asteroid" /><div class="caption">asteroid</div></div>
+      <div class="illus-card"><img src="galaxy.png" alt="galaxy" /><div class="caption">galaxy</div></div>
+      <div class="illus-card"><img src="earth.png" alt="earth" /><div class="caption">earth</div></div>
+      <div class="illus-card"><img src="ufo%20cow.png" alt="ufo cow" /><div class="caption">ufo cow</div></div>
+    </div>
+
+    <div class="do-dont">
+      <div class="dd-panel">
+        <div class="dd-title do">do</div>
+        <ul>
+          <li>keep everything ink on cream</li>
+          <li>lean into rough edges, grain, imperfection</li>
+          <li>use scattered dots / stars as composition</li>
+          <li>let silhouettes carry the character</li>
+          <li>use ink marks (arrows, circles, squiggles) often</li>
+        </ul>
+      </div>
+      <div class="dd-panel">
+        <div class="dd-title dont">don't</div>
+        <ul>
+          <li>add color to illustrations</li>
+          <li>use gradients, drop shadows, or 3d effects</li>
+          <li>over-detail — iconic beats accurate</li>
+          <li>ground the character on a surface</li>
+          <li>straighten ink marks (imperfection is the point)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOICE -->
+  <section class="s" id="voice">
+    <div class="eyebrow">07 · voice & tone</div>
+    <h2 class="s-title">earnest about the customer. playful about blaztly.</h2>
+    <p class="s-sub">two registers, one brand. we take the customer's business seriously. we don't take ourselves too seriously. that's the split that keeps blaztly from feeling either corporate or flippant.</p>
+
+    <div class="voice-grid">
+      <div class="voice-panel">
+        <div class="voice-register">earnest · when speaking about the customer</div>
+        <div class="voice-desc">sincere, encouraging, customer-centric. space metaphors used with respect, not irony. this is the voice on the hero, pricing, sales pages — anywhere the customer is the subject.</div>
+        <div class="voice-example">your business deserves a <span class="accent">launchpad</span>.</div>
+      </div>
+      <div class="voice-panel">
+        <div class="voice-register">playful · when speaking about blaztly</div>
+        <div class="voice-desc">short, punchy, likes a twist. self-aware about the absurdity of having a monkey mascot. this is the voice on instagram captions, about pages, 404s — anywhere blaztly is the subject.</div>
+        <div class="voice-example">built by humans. <span class="accent">launched by monkeys.</span></div>
+      </div>
+    </div>
+
+    <div class="principles" style="margin-top:2rem">
+      <div class="principle">
+        <div class="principle-label">lowercase default</div>
+        <div class="principle-body">all marketing — site, ig, ads, logo, hero, buttons, body — is lowercase. it's the aesthetic.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">legibility wins</div>
+        <div class="principle-body">proper nouns keep their natural case only when legibility genuinely demands it (iOS, SaaS). otherwise lowercase them (chownow, google, webflow).</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">1:1 client comms</div>
+        <div class="principle-body">emails, dms, proposals, and direct client messages use normal sentence case. the lowercase rule is a brand-voice rule, not a texting habit.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">sentence shape</div>
+        <div class="principle-body">short. punchy. likes a twist. periods are powerful. never ramble when a punchline will do.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTAGRAM -->
+  <section class="s" id="ig">
+    <div class="eyebrow">08 · instagram</div>
+    <h2 class="s-title">show the what. sell the how.</h2>
+    <p class="s-sub">our primary ig format is the <strong>educational carousel</strong>. we teach the outcome — the tip, the concept, the what — publicly. the actual build, the taste, the how — clients pay for that. every post is a mini lead magnet that also demonstrates what we sell.</p>
+
+    <div class="strip">
+
+      <!-- Slide 1 -->
+      <div class="slide-wrap">
+        <div class="slide">
+          <img class="asset" src="mascot.png" style="width:140px; height:140px; top:22px; right:18px;" />
+          <div class="slide-inner">
+            <span class="tag">blaztly tips · 01 of 05</span>
+            <div class="cover-num">3</div>
+            <div class="cover-hook">signs your <span class="highlight">restaurant site</span> is losing you customers.</div>
+            <div class="foot"><div class="foot-brand">blaztly</div><div class="foot-cue">swipe →</div></div>
+          </div>
+        </div>
+        <div class="slide-meta">slide 1 · cover</div>
+      </div>
+
+      <!-- Slide 2 -->
+      <div class="slide-wrap">
+        <div class="slide">
+          <div class="slide-inner">
+            <span class="tag">tip</span>
+            <div class="big-num">01</div>
+            <div class="tip-title">it takes more than <span class="highlight">3 seconds</span> to load.</div>
+            <div class="tip-body">57% of mobile users bounce after 3s. every second of delay costs you ~7% of conversions. your slow site is silently leaking money every day.</div>
+            <svg class="scribble-arrow" viewBox="0 0 90 70" style="right:15px; bottom:90px; transform:rotate(18deg)">
+              <path d="M5,10 Q30,50 75,25 M65,10 L78,25 L62,40" stroke="#1A1A1A" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div class="foot"><div class="foot-brand">blaztly</div><div class="foot-cue">next →</div></div>
+          </div>
+        </div>
+        <div class="slide-meta">slide 2 · tip (copy leads)</div>
+      </div>
+
+      <!-- Slide 3 -->
+      <div class="slide-wrap">
+        <div class="slide">
+          <img class="asset" src="asteroid.png" style="width:160px; height:160px; top:18px; right:18px; opacity:0.95;" />
+          <div class="slide-inner">
+            <span class="tag">tip</span>
+            <div class="big-num">02</div>
+            <div class="tip-title">your menu is a <span class="highlight">pdf</span>.</div>
+            <div class="tip-body">pdfs are slow, unsearchable, broken on phones.</div>
+            <div class="foot"><div class="foot-brand">blaztly</div><div class="foot-cue">next →</div></div>
+          </div>
+        </div>
+        <div class="slide-meta">slide 3 · tip (ink leads)</div>
+      </div>
+
+      <!-- Slide 4 -->
+      <div class="slide-wrap">
+        <div class="slide">
+          <img class="asset" src="rocket.png" style="width:130px; height:130px; top:20px; right:18px;" />
+          <div class="slide-inner">
+            <span class="tag">your turn →</span>
+            <div class="cta-lead">we build sites that <span class="highlight">don't bleed</span> customers.</div>
+            <div class="cta-body">dm us, or book a 15-min audit — we'll look at yours for free.</div>
+            <div class="cta-btn">book a call →</div>
+            <div class="foot" style="margin-top:1rem"><div class="foot-brand">blaztly</div><div class="foot-cue">@blaztly</div></div>
+          </div>
+        </div>
+        <div class="slide-meta">slide 4 · cta</div>
+      </div>
+
+    </div>
+
+    <div class="principles" style="margin-top:1.5rem">
+      <div class="principle">
+        <div class="principle-label">each slide commits</div>
+        <div class="principle-body">either <strong>copy leads</strong> (lots of text, minimal marks) or <strong>ink leads</strong> (big art, sparse text). never both on the same slide. the feed's rhythm comes from alternating modes.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">big numbers</div>
+        <div class="principle-body">caveat 700 in ink, with <code style="background:var(--cream-light); padding:0.08rem 0.35rem; border-radius:4px; text-transform:none;">no.</code> superscript prefix on tip slides. numbers are never orange.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">layout stays straight</div>
+        <div class="principle-body">slides, buttons, and type are never tilted. only <strong>ink-drawn marks</strong> (scribbles, arrows, circles) can be crooked — because they are ink, and ink is imperfect by nature.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">one highlight, one cta</div>
+        <div class="principle-body">one orange highlighter per slide. one orange cta per carousel (on the last slide). orange scarcity is what makes it a spotlight.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="s" id="principles">
+    <div class="eyebrow">09 · principles</div>
+    <h2 class="s-title">the shortlist.</h2>
+    <p class="s-sub">if you remember nothing else from this guide, remember these.</p>
+
+    <div class="principles">
+      <div class="principle">
+        <div class="principle-label">anti-slop</div>
+        <div class="principle-body">we're not anti-ai. we're anti-slop. everything we ship should look like a human made a decision.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">cream + ink + one spotlight</div>
+        <div class="principle-body">every layout is built on cream and ink. orange is a spotlight used sparingly. warm grays handle structure.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">lowercase by default</div>
+        <div class="principle-body">marketing is lowercase. proper nouns get normal case only when legibility demands it. client emails are normal sentence case.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">cherry bomb = logo only</div>
+        <div class="principle-body">the display font exists for the wordmark. nowhere else. no exceptions.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">illustrations stay pure</div>
+        <div class="principle-body">ink on cream. no orange, no gradients, no 3d. hand-drawn character or don't use it.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">ink marks, often</div>
+        <div class="principle-body">scribbles, arrows, dashed circles, asterisks, wavy underlines. they signal "a human put this here." use them frequently.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">straight layouts, crooked ink</div>
+        <div class="principle-body">grids, buttons, type blocks — all square and aligned. only ink-drawn marks are allowed to tilt. don't fake imperfection; place it only where it would naturally occur.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">copy OR ink, never both</div>
+        <div class="principle-body">for any self-contained layout (carousel slide, social post, hero block), commit to one mode. don't split the viewer's attention.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">show the what, sell the how</div>
+        <div class="principle-body">teach publicly. sell the build. our content gives away recipes. clients pay for the dinner.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">earnest + playful</div>
+        <div class="principle-body">serious about the customer's business. not serious about our monkey. that's the voice split, everywhere.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSER -->
+  <div class="closer">
+    <div class="closer-logo">blaztly</div>
+    <div class="closer-line">built by humans. launched by monkeys.</div>
+  </div>
+
+</div>
+
+</body>
+</html>

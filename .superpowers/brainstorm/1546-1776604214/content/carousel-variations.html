@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>blaztly · carousel variations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #EDE6DB;
+    --cream-light: #F2ECE2;
+    --ink: #1A1A1A;
+    --ink-light: #2E2E2E;
+    --accent: #FF6B35;
+    --accent-dark: #E25A28;
+    --gray-200: #D1C9BC;
+    --gray-400: #928B7F;
+    --gray-600: #5A5449;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    text-transform: lowercase;
+  }
+  body { padding: 2.5rem 2rem 4rem; }
+  .wrap { max-width: 1400px; margin: 0 auto; }
+
+  .brand-header { display: flex; align-items: baseline; gap: 1rem; padding-bottom: 1.2rem; border-bottom: 2px solid var(--ink); margin-bottom: 2rem; }
+  .brand-logo { font-family: 'Cherry Bomb One', cursive; font-size: 2.4rem; color: var(--ink); line-height: 1; }
+  .brand-kicker { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 0.85rem; color: var(--gray-600); letter-spacing: 0.02em; }
+
+  h2.page-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 2rem; margin: 0 0 0.4rem 0; color: var(--ink); }
+  .page-sub { font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--gray-600); margin: 0 0 2rem 0; }
+
+  /* ============ VARIATION CARD ============ */
+  .variation { margin-bottom: 3.5rem; }
+  .v-head {
+    display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;
+    padding-bottom: 0.7rem;
+    border-bottom: 1.5px dashed var(--gray-200);
+    margin-bottom: 1.2rem;
+  }
+  .v-tag {
+    font-family: 'Cherry Bomb One', cursive;
+    font-size: 1.4rem;
+    color: var(--accent);
+    transform: rotate(-2deg);
+    display: inline-block;
+  }
+  .v-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.3rem; color: var(--ink); }
+  .v-caption { font-family: 'DM Sans', sans-serif; font-style: italic; font-size: 0.88rem; color: var(--gray-600); flex: 1; min-width: 240px; text-transform: none; }
+
+  .strip {
+    display: flex;
+    gap: 1.1rem;
+    overflow-x: auto;
+    padding: 1rem 0;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .strip::-webkit-scrollbar { height: 10px; }
+  .strip::-webkit-scrollbar-track { background: var(--gray-200); border-radius: 999px; }
+  .strip::-webkit-scrollbar-thumb { background: var(--gray-400); border-radius: 999px; }
+
+  .slide-wrap { flex: 0 0 auto; scroll-snap-align: start; display: flex; flex-direction: column; gap: 0.5rem; }
+  .slide-meta {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--gray-600);
+    padding-left: 0.3rem;
+  }
+
+  .slide {
+    width: 380px;
+    height: 380px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    box-shadow: 0 8px 24px rgba(26,26,26,0.08), 0 2px 6px rgba(26,26,26,0.06);
+  }
+  .slide.tilt-l { transform: rotate(-1.2deg); }
+  .slide.tilt-r { transform: rotate(1.4deg); }
+
+  /* ============ VARIATION A — ZINE ============ */
+  .zine {
+    background: var(--cream);
+    filter: url(#paperNoise);
+  }
+  .zine-inner {
+    position: absolute; inset: 0; padding: 1.6rem 1.5rem;
+    display: flex; flex-direction: column;
+  }
+  .zine-tag {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--gray-600);
+    letter-spacing: 0.02em;
+    transform: rotate(-2deg);
+    display: inline-block;
+    padding: 0.1rem 0.5rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    align-self: flex-start;
+    margin-bottom: 0.3rem;
+    background: var(--cream-light);
+  }
+  .zine-hook {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.9rem;
+    line-height: 1.1;
+    margin-top: auto;
+    color: var(--ink);
+  }
+  .zine-hook .big {
+    font-family: 'Cherry Bomb One', cursive;
+    font-size: 2.8rem;
+    color: var(--ink);
+    display: inline-block;
+    transform: rotate(-3deg);
+    margin-right: 0.2rem;
+  }
+  .zine-hook .highlight {
+    background: linear-gradient(100deg, transparent 4%, rgba(255,107,53,0.55) 4%, rgba(255,107,53,0.55) 96%, transparent 96%);
+    padding: 0 0.15rem;
+    display: inline;
+    transform: rotate(-0.5deg);
+  }
+  .zine-mascot {
+    position: absolute;
+    width: 170px; height: 170px;
+    top: 40px; right: -20px;
+    transform: rotate(8deg);
+    object-fit: contain;
+    pointer-events: none;
+  }
+  .zine-mascot.small { width: 110px; height: 110px; }
+  .zine-foot {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-top: 1rem;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--ink-light);
+  }
+  .zine-brand { font-family: 'Cherry Bomb One', cursive; font-size: 1.3rem; color: var(--ink); }
+
+  /* Zine tip slide */
+  .zine-num {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 4.4rem;
+    line-height: 1;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+    transform: rotate(-4deg);
+    display: inline-block;
+  }
+  .zine-num::before { content: 'no. '; font-size: 1.3rem; color: var(--gray-400); margin-right: 0.2rem; vertical-align: super; }
+  .zine-tip-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .zine-tip-title .highlight {
+    background: linear-gradient(100deg, transparent 3%, rgba(255,107,53,0.5) 3%, rgba(255,107,53,0.5) 97%, transparent 97%);
+    padding: 0 0.1rem;
+  }
+  .zine-tip-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--ink-light);
+    text-transform: none;
+  }
+  /* Hand-drawn arrow scribble */
+  .scribble-arrow {
+    position: absolute;
+    width: 80px; height: 60px;
+    right: 15px; bottom: 70px;
+    opacity: 0.6;
+    transform: rotate(15deg);
+    pointer-events: none;
+  }
+
+  /* Zine CTA */
+  .zine-cta-lead {
+    font-family: 'Cherry Bomb One', cursive;
+    font-size: 2.8rem;
+    line-height: 1.05;
+    color: var(--ink);
+    transform: rotate(-1deg);
+    display: inline-block;
+  }
+  .zine-cta-lead .accent { color: var(--accent); }
+  .zine-cta-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: var(--ink-light);
+    margin-top: 0.6rem;
+    line-height: 1.5;
+    text-transform: none;
+  }
+  .zine-cta-btn {
+    align-self: flex-start;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--cream);
+    background: var(--ink);
+    padding: 0.7rem 1.2rem;
+    border-radius: 999px;
+    margin-top: 0.8rem;
+    transform: rotate(-1.5deg);
+    display: inline-block;
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--accent);
+  }
+
+  /* ============ VARIATION B — INK POSTER ============ */
+  .poster {
+    background: var(--ink);
+    color: var(--cream);
+    position: relative;
+  }
+  .poster::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.93  0 0 0 0 0.90  0 0 0 0 0.86  0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity: 0.5;
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+  .poster-inner {
+    position: absolute; inset: 0; padding: 1.8rem 1.6rem;
+    display: flex; flex-direction: column;
+    z-index: 2;
+  }
+  .poster-tag {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    color: var(--accent);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .poster-tag::after {
+    content: ''; display: inline-block;
+    width: 40px; height: 2px; background: var(--accent);
+  }
+  .poster-hook {
+    font-family: 'Cherry Bomb One', cursive;
+    font-size: 3rem;
+    line-height: 0.95;
+    color: var(--cream);
+    margin-top: auto;
+    letter-spacing: -0.01em;
+  }
+  .poster-hook .accent { color: var(--accent); }
+  .poster-hook .huge {
+    font-size: 4.5rem;
+    display: block;
+    line-height: 0.85;
+  }
+  .poster-art {
+    position: absolute;
+    width: 180px; height: 180px;
+    filter: invert(1);
+    pointer-events: none;
+    opacity: 0.95;
+  }
+  .poster-art.cover { top: 18px; right: 10px; transform: rotate(-6deg); width: 180px; height: 180px; }
+  .poster-art.mid { top: 24px; right: 12px; width: 130px; height: 130px; transform: rotate(10deg); opacity: 0.35; }
+  .poster-art.cta { top: 20px; right: 15px; width: 160px; height: 160px; transform: rotate(6deg); }
+  .poster-foot {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-top: 1rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem; font-weight: 600;
+    color: var(--gray-400);
+    letter-spacing: 0.15em;
+  }
+  .poster-brand { font-family: 'Cherry Bomb One', cursive; font-size: 1.2rem; color: var(--cream); letter-spacing: 0; }
+
+  /* Poster tip */
+  .poster-num {
+    font-family: 'Cherry Bomb One', cursive;
+    font-size: 5.5rem;
+    line-height: 0.9;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+  }
+  .poster-tip-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.35rem;
+    line-height: 1.15;
+    color: var(--cream);
+    margin-bottom: 0.7rem;
+    max-width: 80%;
+  }
+  .poster-tip-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: rgba(237,230,219,0.75);
+    text-transform: none;
+    max-width: 90%;
+  }
+
+  /* Poster CTA */
+  .poster-cta-lead {
+    font-family: 'Cherry Bomb One', cursive;
+    font-size: 3.3rem;
+    line-height: 0.95;
+    color: var(--cream);
+    margin-top: auto;
+  }
+  .poster-cta-lead .accent { color: var(--accent); }
+  .poster-cta-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    color: rgba(237,230,219,0.75);
+    margin-top: 0.6rem;
+    line-height: 1.5;
+    text-transform: none;
+    max-width: 80%;
+  }
+  .poster-btn {
+    align-self: flex-start;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--accent);
+    padding: 0.8rem 1.4rem;
+    border-radius: 999px;
+    margin-top: 1rem;
+    display: inline-block;
+  }
+
+  /* Rules panel */
+  .rules-panel {
+    background: var(--cream-light);
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    padding: 1.2rem 1.4rem;
+    margin-top: 2rem;
+  }
+  .rules-panel h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin: 0 0 0.5rem 0;
+  }
+  .rules-panel .q {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--ink-light);
+    text-transform: none;
+  }
+
+  .hand-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .hand-underline::after {
+    content: '';
+    position: absolute;
+    left: -3px; right: -3px; bottom: -3px;
+    height: 4px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 6' preserveAspectRatio='none'><path d='M0,3 Q25,0 50,3 T100,3' stroke='%23FF6B35' stroke-width='2' fill='none'/></svg>") no-repeat center/100% 100%;
+  }
+</style>
+
+<!-- SVG filter definitions -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="paperNoise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0.95  0 0 0 0 0.92  0 0 0 0 0.86  0 0 0 0.06 0" result="grain"/>
+      <feComposite in="grain" in2="SourceGraphic" operator="over"/>
+    </filter>
+  </defs>
+</svg>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand-header">
+    <div class="brand-logo">blaztly</div>
+    <div class="brand-kicker">carousel · two variations</div>
+  </div>
+
+  <h2 class="page-title">two directions</h2>
+  <p class="page-sub">both lean hand-made, both use the real brand art. pick a direction (or mix) and i'll codify it.</p>
+
+
+  <!-- ========= VARIATION A — ZINE ========= -->
+  <section class="variation">
+    <div class="v-head">
+      <span class="v-tag">variation a</span>
+      <span class="v-title">zine / sketchbook</span>
+      <span class="v-caption">cream paper, highlighter orange, crooked elements, handwritten annotations. reads like a photocopied zine someone printed at a kinko's.</span>
+    </div>
+
+    <div class="strip">
+
+      <!-- Zine cover -->
+      <div class="slide-wrap">
+        <div class="slide zine tilt-l">
+          <img class="zine-mascot" src="mascot.png" alt="" />
+          <div class="zine-inner">
+            <span class="zine-tag">blaztly tips · 01 of 05</span>
+            <div class="zine-hook">
+              <span class="big">3</span> signs your <span class="highlight">restaurant site</span> is losing you customers.
+            </div>
+            <div class="zine-foot">
+              <div class="zine-brand">blaztly</div>
+              <div>swipe →</div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-meta">slide 1 · cover</div>
+      </div>
+
+      <!-- Zine tip -->
+      <div class="slide-wrap">
+        <div class="slide zine tilt-r">
+          <div class="zine-inner">
+            <div class="zine-num">01</div>
+            <div class="zine-tip-title">it takes more than <span class="highlight">3 seconds</span> to load.</div>
+            <div class="zine-tip-body">57% of mobile users bounce after 3s. every second of delay costs you ~7% of conversions. your slow site is silently leaking money every day.</div>
+            <svg class="scribble-arrow" viewBox="0 0 80 60">
+              <path d="M5,10 Q30,40 70,25 M60,15 L70,25 L62,38" stroke="#1A1A1A" stroke-width="2" fill="none" stroke-linecap="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="slide-meta">slide 2 · tip</div>
+      </div>
+
+      <!-- Zine CTA -->
+      <div class="slide-wrap">
+        <div class="slide zine tilt-l">
+          <img class="zine-mascot small" src="rocket.png" alt="" style="top:30px; right:-10px; transform:rotate(-12deg);" />
+          <div class="zine-inner">
+            <span class="zine-tag">your turn →</span>
+            <div style="margin-top:auto">
+              <div class="zine-cta-lead">we build sites that <span class="accent">don't bleed</span> customers.</div>
+              <div class="zine-cta-body">dm us, or book a 15-min audit — we'll look at yours for free.</div>
+              <div class="zine-cta-btn">book a call →</div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-meta">slide 3 · cta</div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ========= VARIATION B — INK POSTER ========= -->
+  <section class="variation">
+    <div class="v-head">
+      <span class="v-tag" style="transform:rotate(2deg)">variation b</span>
+      <span class="v-title">ink poster / stamped</span>
+      <span class="v-caption">heavy black ink field, cream reverse type, mascot art printed huge. reads like a show poster stapled to a telephone pole.</span>
+    </div>
+
+    <div class="strip">
+
+      <!-- Poster cover -->
+      <div class="slide-wrap">
+        <div class="slide poster">
+          <img class="poster-art cover" src="mascot.png" alt="" />
+          <div class="poster-inner">
+            <span class="poster-tag">blaztly tips · 01/05</span>
+            <div class="poster-hook">
+              <span class="huge accent">3</span> signs your<br/>restaurant site<br/>is <span class="accent">bleeding</span><br/>customers.
+            </div>
+            <div class="poster-foot">
+              <div class="poster-brand">blaztly</div>
+              <div>swipe →</div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-meta">slide 1 · cover</div>
+      </div>
+
+      <!-- Poster tip -->
+      <div class="slide-wrap">
+        <div class="slide poster">
+          <img class="poster-art mid" src="asteroid.png" alt="" />
+          <div class="poster-inner">
+            <span class="poster-tag">tip no. 01</span>
+            <div class="poster-num">01</div>
+            <div class="poster-tip-title">it takes more than 3 seconds to load.</div>
+            <div class="poster-tip-body">57% of mobile users bounce after 3s. every second of delay costs ~7% of conversions. your slow site is silently leaking money every single day.</div>
+            <div class="poster-foot" style="margin-top:auto">
+              <div class="poster-brand">blaztly</div>
+              <div>→</div>
+            </div>
+          </div>
+        </div>
+        <div class="slide-meta">slide 2 · tip</div>
+      </div>
+
+      <!-- Poster CTA -->
+      <div class="slide-wrap">
+        <div class="slide poster">
+          <img class="poster-art cta" src="rocket.png" alt="" />
+          <div class="poster-inner">
+            <span class="poster-tag">your turn</span>
+            <div class="poster-cta-lead">we build sites<br/>that <span class="accent">don't<br/>bleed</span> customers.</div>
+            <div class="poster-cta-body">dm us, or book a 15-min audit — we'll look at yours for free.</div>
+            <div class="poster-btn">book a call →</div>
+          </div>
+        </div>
+        <div class="slide-meta">slide 3 · cta</div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="rules-panel">
+    <h3>which direction?</h3>
+    <p class="q">both use the real brand art, both stay in-palette. <strong>variation a</strong> is softer, warmer, zine-y — easy to mass-produce, reads friendly in the feed. <strong>variation b</strong> is bolder, louder, hits harder in a thumb-scroll but every post competes with itself visually. you could also mix: use the poster style for hook/cover slides and zine for tip slides.</p>
+  </div>
+
+</div>
+</body>
+</html>

@@ -5,7 +5,8 @@
       "Read(//c/Users/HdzBr/AppData/Local/Claude/**)",
       "Read(//c/Users/HdzBr/AppData/**)",
       "Bash(git add:*)",
-      "Bash(git commit -m ':*)"
+      "Bash(git commit -m ':*)",
+      "Bash(start \"\" \"C:\\\\Users\\\\HdzBr\\\\.claude\\\\usage-data\\\\report.html\")"
     ]
   }
 }

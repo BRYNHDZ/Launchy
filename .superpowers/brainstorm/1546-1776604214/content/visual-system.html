@@ -1,0 +1,235 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+  .bz-preview { font-family: 'DM Sans', sans-serif; color: #1A1A1A; }
+  .bz-section { margin-top: 2rem; }
+  .bz-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #FF6B35;
+    margin-bottom: 0.6rem;
+  }
+  .bz-h { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.15rem; margin: 0 0 0.4rem 0; color: #1A1A1A; }
+  .bz-note { font-size: 0.85rem; color: #5A5449; line-height: 1.5; }
+
+  /* Swatches */
+  .bz-swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.5rem; }
+  .bz-swatch { border: 2px solid #1A1A1A; border-radius: 6px; overflow: hidden; }
+  .bz-swatch-color { height: 70px; }
+  .bz-swatch-meta { padding: 0.5rem 0.6rem; background: #F2ECE2; }
+  .bz-swatch-name { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.78rem; }
+  .bz-swatch-hex { font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; color: #5A5449; }
+  .bz-swatch-use { font-size: 0.7rem; color: #5A5449; margin-top: 0.15rem; }
+
+  /* Type samples */
+  .bz-type-row { display: grid; grid-template-columns: 160px 1fr; gap: 1.2rem; padding: 0.9rem 0; border-top: 1px dashed #D1C9BC; align-items: center; }
+  .bz-type-row:first-child { border-top: none; }
+  .bz-type-label { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.78rem; }
+  .bz-type-label small { display: block; color: #5A5449; font-weight: 400; font-size: 0.7rem; margin-top: 0.2rem; }
+  .bz-sample-cherry { font-family: 'Cherry Bomb One', cursive; font-size: 2rem; color: #1A1A1A; line-height: 1; }
+  .bz-sample-grotesk { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.4rem; color: #1A1A1A; }
+  .bz-sample-dmsans { font-family: 'DM Sans', sans-serif; font-size: 1rem; color: #2E2E2E; }
+
+  /* Orange usage map */
+  .bz-orange-map { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.8rem; }
+  .bz-use { background: #F2ECE2; border: 2px solid #1A1A1A; border-radius: 6px; padding: 0.9rem 1rem; }
+  .bz-use-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #5A5449;
+    margin-bottom: 0.6rem;
+  }
+  .bz-hero-line { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; line-height: 1.25; }
+  .bz-hero-line .accent { position: relative; display: inline-block; color: #FF6B35; }
+  .bz-hero-line .accent::after { content: ''; position: absolute; bottom: -2px; left: -2px; right: -2px; height: 0.18em; background: #FF6B35; z-index: -1; opacity: 0.25; }
+  .bz-btn { display: inline-block; background: #FF6B35; color: #EDE6DB; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.85rem; padding: 0.6rem 1.2rem; border: 2px solid #FF6B35; border-radius: 999px; letter-spacing: 0.02em; }
+  .bz-check { color: #FF6B35; font-weight: 700; margin-right: 0.4rem; }
+  .bz-check-item { font-family: 'DM Sans', sans-serif; font-size: 0.92rem; margin: 0.3rem 0; }
+  .bz-section-label { font-family: 'Space Grotesk', sans-serif; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #FF6B35; }
+  .bz-nav-sample { display: flex; gap: 1.2rem; font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 0.85rem; }
+  .bz-nav-sample a { text-decoration: none; color: #1A1A1A; }
+  .bz-nav-sample a.hover { color: #FF6B35; }
+  .bz-orbit-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #FF6B35; vertical-align: middle; margin: 0 0.3rem; }
+
+  /* Split: illustration vs web */
+  .bz-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .bz-split-panel { border: 2px solid #1A1A1A; border-radius: 8px; padding: 1.2rem; }
+  .bz-split-panel.illus { background: #EDE6DB; }
+  .bz-split-panel.web { background: #EDE6DB; }
+  .bz-split-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem; }
+  .bz-split-rule { font-size: 0.85rem; color: #5A5449; line-height: 1.5; }
+  .bz-split-chips { margin-top: 0.8rem; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .bz-chip { font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 600; padding: 0.25rem 0.6rem; border: 1.5px solid #1A1A1A; border-radius: 999px; background: #F2ECE2; }
+  .bz-chip.orange { background: #FF6B35; color: #EDE6DB; border-color: #FF6B35; }
+  .bz-chip.strike { background: transparent; color: #928B7F; text-decoration: line-through; }
+</style>
+
+<h2>Blaztly Visual System</h2>
+<p class="subtitle">Colors, type, and where the orange actually lives</p>
+
+<div class="bz-preview">
+
+  <div class="bz-section">
+    <div class="bz-eyebrow">Color Palette</div>
+    <div class="bz-swatches">
+      <div class="bz-swatch">
+        <div class="bz-swatch-color" style="background:#EDE6DB"></div>
+        <div class="bz-swatch-meta">
+          <div class="bz-swatch-name">cream</div>
+          <div class="bz-swatch-hex">#EDE6DB</div>
+          <div class="bz-swatch-use">primary bg</div>
+        </div>
+      </div>
+      <div class="bz-swatch">
+        <div class="bz-swatch-color" style="background:#F2ECE2"></div>
+        <div class="bz-swatch-meta">
+          <div class="bz-swatch-name">cream-light</div>
+          <div class="bz-swatch-hex">#F2ECE2</div>
+          <div class="bz-swatch-use">cards / secondary</div>
+        </div>
+      </div>
+      <div class="bz-swatch">
+        <div class="bz-swatch-color" style="background:#1A1A1A"></div>
+        <div class="bz-swatch-meta">
+          <div class="bz-swatch-name">ink</div>
+          <div class="bz-swatch-hex">#1A1A1A</div>
+          <div class="bz-swatch-use">headlines, marks</div>
+        </div>
+      </div>
+      <div class="bz-swatch">
+        <div class="bz-swatch-color" style="background:#2E2E2E"></div>
+        <div class="bz-swatch-meta">
+          <div class="bz-swatch-name">ink-light</div>
+          <div class="bz-swatch-hex">#2E2E2E</div>
+          <div class="bz-swatch-use">body text</div>
+        </div>
+      </div>
+      <div class="bz-swatch">
+        <div class="bz-swatch-color" style="background:#FF6B35"></div>
+        <div class="bz-swatch-meta">
+          <div class="bz-swatch-name">accent</div>
+          <div class="bz-swatch-hex">#FF6B35</div>
+          <div class="bz-swatch-use">CTAs, emphasis</div>
+        </div>
+      </div>
+      <div class="bz-swatch">
+        <div class="bz-swatch-color" style="background:#E25A28"></div>
+        <div class="bz-swatch-meta">
+          <div class="bz-swatch-name">accent-dark</div>
+          <div class="bz-swatch-hex">#E25A28</div>
+          <div class="bz-swatch-use">hover / pressed</div>
+        </div>
+      </div>
+      <div class="bz-swatch">
+        <div class="bz-swatch-color" style="background:#D1C9BC"></div>
+        <div class="bz-swatch-meta">
+          <div class="bz-swatch-name">gray-200</div>
+          <div class="bz-swatch-hex">#D1C9BC</div>
+          <div class="bz-swatch-use">borders</div>
+        </div>
+      </div>
+      <div class="bz-swatch">
+        <div class="bz-swatch-color" style="background:#928B7F"></div>
+        <div class="bz-swatch-meta">
+          <div class="bz-swatch-name">gray-400</div>
+          <div class="bz-swatch-hex">#928B7F</div>
+          <div class="bz-swatch-use">muted text</div>
+        </div>
+      </div>
+      <div class="bz-swatch">
+        <div class="bz-swatch-color" style="background:#5A5449"></div>
+        <div class="bz-swatch-meta">
+          <div class="bz-swatch-name">gray-600</div>
+          <div class="bz-swatch-hex">#5A5449</div>
+          <div class="bz-swatch-use">subtle UI</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bz-section">
+    <div class="bz-eyebrow">Typography</div>
+    <div class="bz-type-row">
+      <div class="bz-type-label">Cherry Bomb One <small>display / logo / playful moments</small></div>
+      <div class="bz-sample-cherry">Blaztly</div>
+    </div>
+    <div class="bz-type-row">
+      <div class="bz-type-label">Space Grotesk <small>headings, UI, buttons (400–700)</small></div>
+      <div class="bz-sample-grotesk">Your business deserves a launchpad.</div>
+    </div>
+    <div class="bz-type-row">
+      <div class="bz-type-label">DM Sans <small>body copy (400/500/600 + italic)</small></div>
+      <div class="bz-sample-dmsans">We build websites the old way — by hand, with care, with taste. In a world of AI slop, craft is the signal.</div>
+    </div>
+  </div>
+
+  <div class="bz-section">
+    <div class="bz-eyebrow">Where Orange Lives</div>
+    <p class="bz-note" style="margin-bottom:0.8rem">Orange is a <strong>spotlight color</strong>, not a fill. It only appears on things that are meant to catch the eye. Everything else lives in cream + ink + warm grays.</p>
+    <div class="bz-orange-map">
+      <div class="bz-use">
+        <div class="bz-use-label">Hero Emphasis</div>
+        <div class="bz-hero-line">Your business deserves a <span class="accent">launchpad</span>.</div>
+      </div>
+      <div class="bz-use">
+        <div class="bz-use-label">Primary CTA</div>
+        <div><span class="bz-btn">Book a call →</span></div>
+      </div>
+      <div class="bz-use">
+        <div class="bz-use-label">Section Label</div>
+        <div class="bz-section-label">What we do</div>
+      </div>
+      <div class="bz-use">
+        <div class="bz-use-label">Nav Hover</div>
+        <div class="bz-nav-sample"><a>Home</a><a>Work</a><a class="hover">About</a><a>Contact</a></div>
+      </div>
+      <div class="bz-use">
+        <div class="bz-use-label">Pricing Check</div>
+        <div>
+          <div class="bz-check-item"><span class="bz-check">✓</span>Custom illustration</div>
+          <div class="bz-check-item"><span class="bz-check">✓</span>ROI calculator</div>
+        </div>
+      </div>
+      <div class="bz-use">
+        <div class="bz-use-label">Orbit / Decorative</div>
+        <div>
+          <span class="bz-orbit-dot"></span>
+          <span style="font-family:'Space Grotesk',sans-serif;font-size:0.85rem;color:#5A5449;">floating particles, orbit markers</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bz-section">
+    <div class="bz-eyebrow">The Illustration / Web Split</div>
+    <div class="bz-split">
+      <div class="bz-split-panel illus">
+        <div class="bz-split-title">Illustrations</div>
+        <div class="bz-split-rule">Strict two-tone. Ink on cream. Preserves the stamp/linocut purity.</div>
+        <div class="bz-split-chips">
+          <span class="bz-chip">cream</span>
+          <span class="bz-chip" style="background:#1A1A1A;color:#EDE6DB;border-color:#1A1A1A">ink</span>
+          <span class="bz-chip strike">orange</span>
+          <span class="bz-chip strike">gradients</span>
+        </div>
+      </div>
+      <div class="bz-split-panel web">
+        <div class="bz-split-title">Web / UI / Social</div>
+        <div class="bz-split-rule">Full palette. Orange for emphasis and action. Warm grays for structure.</div>
+        <div class="bz-split-chips">
+          <span class="bz-chip">cream</span>
+          <span class="bz-chip" style="background:#1A1A1A;color:#EDE6DB;border-color:#1A1A1A">ink</span>
+          <span class="bz-chip orange">orange</span>
+          <span class="bz-chip">grays</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

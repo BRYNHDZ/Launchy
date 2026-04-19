@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>blaztly · carousel example</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #EDE6DB;
+    --cream-light: #F2ECE2;
+    --ink: #1A1A1A;
+    --ink-light: #2E2E2E;
+    --accent: #FF6B35;
+    --accent-dark: #E25A28;
+    --gray-200: #D1C9BC;
+    --gray-400: #928B7F;
+    --gray-600: #5A5449;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    text-transform: lowercase;
+  }
+  body { padding: 2.5rem 2rem 4rem; }
+  .wrap { max-width: 1400px; margin: 0 auto; }
+
+  .brand-header { display: flex; align-items: baseline; gap: 1rem; padding-bottom: 1.2rem; border-bottom: 2px solid var(--ink); margin-bottom: 2rem; }
+  .brand-logo { font-family: 'Cherry Bomb One', cursive; font-size: 2.4rem; color: var(--ink); line-height: 1; }
+  .brand-kicker { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 0.85rem; color: var(--gray-600); letter-spacing: 0.02em; }
+
+  h2.page-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 2rem; margin: 0 0 0.4rem 0; color: var(--ink); }
+  .page-sub { font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--gray-600); margin: 0 0 2rem 0; }
+
+  .eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+
+  /* Carousel strip */
+  .carousel-strip {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 0.5rem 0 1.5rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .carousel-strip::-webkit-scrollbar { height: 10px; }
+  .carousel-strip::-webkit-scrollbar-track { background: var(--gray-200); border-radius: 999px; }
+  .carousel-strip::-webkit-scrollbar-thumb { background: var(--gray-400); border-radius: 999px; }
+
+  .slide-wrap { flex: 0 0 auto; scroll-snap-align: start; display: flex; flex-direction: column; gap: 0.5rem; }
+  .slide-meta {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem; font-weight: 600;
+    color: var(--gray-600);
+    letter-spacing: 0.14em;
+  }
+
+  /* A slide is a 1:1 IG post */
+  .slide {
+    width: 360px;
+    height: 360px;
+    background: var(--cream);
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    padding: 1.6rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .slide-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.65rem; font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 0.9rem;
+  }
+
+  /* Cover slide */
+  .cover-hook {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.9rem;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-top: auto;
+  }
+  .cover-hook .num {
+    color: var(--accent);
+    font-family: 'Cherry Bomb One', cursive;
+    font-size: 2.4rem;
+  }
+  .cover-footer {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-top: 1.2rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem; font-weight: 600;
+    color: var(--gray-600);
+    letter-spacing: 0.08em;
+  }
+  .cover-footer .brand { font-family: 'Cherry Bomb One', cursive; font-size: 1.1rem; color: var(--ink); letter-spacing: 0; }
+
+  /* Tip slides */
+  .tip-num {
+    font-family: 'Cherry Bomb One', cursive;
+    font-size: 4.5rem;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .tip-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 0.6rem;
+  }
+  .tip-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    line-height: 1.45;
+    color: var(--ink-light);
+    text-transform: none; /* body copy reads easier sentence-cased inside slide body */
+  }
+  .tip-footer {
+    margin-top: auto;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem; font-weight: 600;
+    color: var(--gray-600);
+    letter-spacing: 0.08em;
+    padding-top: 0.8rem;
+    border-top: 1.5px dashed var(--gray-200);
+  }
+  .tip-footer .brand { font-family: 'Cherry Bomb One', cursive; font-size: 0.95rem; color: var(--ink); letter-spacing: 0; }
+
+  /* CTA slide */
+  .cta-slide { justify-content: space-between; }
+  .cta-lead {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 2.2rem;
+    line-height: 1.05;
+    color: var(--ink);
+  }
+  .cta-lead .accent { color: var(--accent); }
+  .cta-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--ink-light);
+    margin-top: 0.6rem;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--cream);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 0.8rem 1.4rem;
+    border-radius: 999px;
+    align-self: flex-start;
+    margin-top: 0.8rem;
+  }
+
+  /* Decorative dots (stamp-aesthetic particles) */
+  .dots { position: absolute; pointer-events: none; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink); position: absolute; }
+  .dot.small { width: 4px; height: 4px; }
+  .dot.tiny { width: 3px; height: 3px; }
+  .dot.orange { background: var(--accent); }
+
+  /* Mascot placeholder box (until you drop real art in) */
+  .mascot-box {
+    position: absolute;
+    width: 88px; height: 88px;
+    border: 2px dashed var(--gray-400);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.6rem;
+    color: var(--gray-400);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-align: center;
+  }
+
+  /* Annotations under the strip */
+  .notes {
+    background: var(--cream-light);
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    padding: 1.2rem 1.4rem;
+    margin-top: 2rem;
+  }
+  .notes h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    margin: 0 0 0.6rem 0;
+    color: var(--ink);
+  }
+  .notes ul { margin: 0; padding-left: 1.2rem; }
+  .notes li { font-size: 0.92rem; line-height: 1.55; color: var(--ink-light); margin-bottom: 0.3rem; }
+  .notes li strong { color: var(--ink); }
+  .notes li code {
+    background: var(--cream);
+    padding: 0.08rem 0.35rem;
+    border-radius: 4px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85em;
+    text-transform: none;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand-header">
+    <div class="brand-logo">blaztly</div>
+    <div class="brand-kicker">carousel · example</div>
+  </div>
+
+  <h2 class="page-title">ig carousel template</h2>
+  <p class="page-sub">show the what. sell the how. scroll the strip below to see a full 5-slide carousel.</p>
+
+  <div class="eyebrow">sample post — "3 signs your restaurant site is losing you customers"</div>
+
+  <div class="carousel-strip">
+
+    <!-- Slide 1: Cover -->
+    <div class="slide-wrap">
+      <div class="slide">
+        <div class="dots">
+          <div class="dot" style="top:40px; left:280px;"></div>
+          <div class="dot small" style="top:70px; left:310px;"></div>
+          <div class="dot tiny orange" style="top:90px; left:290px;"></div>
+          <div class="dot tiny" style="top:60px; left:260px;"></div>
+        </div>
+        <div class="slide-label">blaztly tips · 01 of 05</div>
+        <div class="mascot-box" style="top:1.2rem; left:1.4rem;">[mascot]</div>
+        <div class="cover-hook"><span class="num">3</span> signs your restaurant site is losing you customers</div>
+        <div class="cover-footer">
+          <div class="brand">blaztly</div>
+          <div>swipe →</div>
+        </div>
+      </div>
+      <div class="slide-meta">slide 1 · cover (hook)</div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide-wrap">
+      <div class="slide">
+        <div class="dots">
+          <div class="dot tiny" style="top:30px; right:40px;"></div>
+          <div class="dot orange tiny" style="top:55px; right:60px;"></div>
+          <div class="dot tiny" style="top:75px; right:30px;"></div>
+        </div>
+        <div class="tip-num">01</div>
+        <div class="tip-title">it takes more than 3 seconds to load.</div>
+        <div class="tip-body">57% of mobile users bounce after 3s. every second of delay costs you ~7% of conversions. your slow site is silently leaking money every single day.</div>
+        <div class="tip-footer"><div class="brand">blaztly</div><div>→</div></div>
+      </div>
+      <div class="slide-meta">slide 2 · tip (the "what")</div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide-wrap">
+      <div class="slide">
+        <div class="dots">
+          <div class="dot tiny" style="bottom:110px; right:30px;"></div>
+          <div class="dot tiny orange" style="bottom:130px; right:55px;"></div>
+        </div>
+        <div class="tip-num">02</div>
+        <div class="tip-title">your menu is a pdf.</div>
+        <div class="tip-body">pdfs are slow, unsearchable, and broken on phones. your menu is the most-visited page on your site. treat it like a product, not a printout.</div>
+        <div class="tip-footer"><div class="brand">blaztly</div><div>→</div></div>
+      </div>
+      <div class="slide-meta">slide 3 · tip</div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide-wrap">
+      <div class="slide">
+        <div class="dots">
+          <div class="dot tiny" style="top:40px; right:35px;"></div>
+          <div class="dot tiny" style="top:60px; right:60px;"></div>
+        </div>
+        <div class="tip-num">03</div>
+        <div class="tip-title">there's no obvious way to order.</div>
+        <div class="tip-body">customers want one tap, not a scavenger hunt. a visible "order now" button above the fold is non-negotiable — on every page, every device.</div>
+        <div class="tip-footer"><div class="brand">blaztly</div><div>→</div></div>
+      </div>
+      <div class="slide-meta">slide 4 · tip</div>
+    </div>
+
+    <!-- Slide 5: CTA -->
+    <div class="slide-wrap">
+      <div class="slide cta-slide">
+        <div class="dots">
+          <div class="dot" style="top:50px; left:40px;"></div>
+          <div class="dot orange" style="top:75px; left:65px;"></div>
+          <div class="dot tiny" style="top:95px; left:45px;"></div>
+          <div class="dot tiny" style="top:45px; left:90px;"></div>
+        </div>
+        <div class="mascot-box" style="top:1.2rem; right:1.4rem;">[mascot]</div>
+        <div>
+          <div class="slide-label">your turn.</div>
+          <div class="cta-lead">we build restaurant sites that <span class="accent">don't bleed customers</span>.</div>
+          <div class="cta-body">dm us, or book a 15-min call and we'll audit yours for free.</div>
+        </div>
+        <div class="cta-btn">book a call →</div>
+      </div>
+      <div class="slide-meta">slide 5 · cta (sell the "how")</div>
+    </div>
+
+  </div>
+
+  <div class="notes">
+    <h3>carousel anatomy — the rules</h3>
+    <ul>
+      <li><strong>cover (slide 1):</strong> big hook with a number if possible. numbers are lowercase or use cherry bomb. always has <code>blaztly</code> wordmark + "swipe →" cue in footer.</li>
+      <li><strong>tips (slides 2–n):</strong> one idea per slide. orange number in cherry bomb. space grotesk title, dm sans body. body copy can use sentence case since legibility matters in long text on a small screen.</li>
+      <li><strong>cta (last slide):</strong> orange-highlighted phrase in the lead line. soft-sell cta. optional mascot appearance. "your turn." style closers work well.</li>
+      <li><strong>every slide:</strong> cream bg, ink type, 2px ink border (optional), 3–4 scattered stamp dots (mix black + 1 orange). <code>blaztly</code> wordmark in footer.</li>
+      <li><strong>lowercase default applies</strong> — except body paragraphs on tip slides, where sentence case is ok if legibility demands it.</li>
+      <li><strong>mascot:</strong> appears on cover + cta slides. stays two-tone (ink on cream). never on middle tip slides — those are pure info.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>

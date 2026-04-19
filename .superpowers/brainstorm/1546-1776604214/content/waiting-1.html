@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>blaztly · continuing in terminal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; background: #EDE6DB; color: #1A1A1A; font-family: 'Space Grotesk', sans-serif; }
+  .center { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; text-transform: lowercase; }
+  .logo { font-family: 'Cherry Bomb One', cursive; font-size: 3rem; line-height: 1; }
+  .msg { color: #5A5449; font-size: 0.95rem; letter-spacing: 0.04em; }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #FF6B35; animation: pulse 1.4s ease-in-out infinite; margin: 0 2px; }
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes pulse { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 1; transform: scale(1.3); } }
+</style>
+</head>
+<body>
+<div class="center">
+  <div class="logo">blaztly</div>
+  <div class="msg">continuing in terminal <span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+</div>
+</body>
+</html>

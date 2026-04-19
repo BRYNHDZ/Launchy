@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>blaztly · carousel v6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Caveat:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #EDE6DB;
+    --cream-light: #F2ECE2;
+    --ink: #1A1A1A;
+    --ink-light: #2E2E2E;
+    --accent: #FF6B35;
+    --gray-200: #D1C9BC;
+    --gray-400: #928B7F;
+    --gray-600: #5A5449;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    text-transform: lowercase;
+  }
+  body { padding: 2.5rem 2rem 4rem; }
+  .wrap { max-width: 1400px; margin: 0 auto; }
+
+  .brand-header { display: flex; align-items: baseline; gap: 1rem; padding-bottom: 1.2rem; border-bottom: 2px solid var(--ink); margin-bottom: 2rem; }
+  .brand-logo { font-family: 'Cherry Bomb One', cursive; font-size: 2.4rem; color: var(--ink); line-height: 1; }
+  .brand-kicker { font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-size: 0.85rem; color: var(--gray-600); letter-spacing: 0.02em; }
+
+  h2.page-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 2rem; margin: 0 0 0.4rem 0; color: var(--ink); }
+  .page-sub { font-family: 'DM Sans', sans-serif; font-size: 1rem; color: var(--gray-600); margin: 0 0 1.6rem 0; }
+
+  .strip {
+    display: flex;
+    gap: 1.4rem;
+    overflow-x: auto;
+    padding: 1rem 0;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .strip::-webkit-scrollbar { height: 10px; }
+  .strip::-webkit-scrollbar-track { background: var(--gray-200); border-radius: 999px; }
+  .strip::-webkit-scrollbar-thumb { background: var(--gray-400); border-radius: 999px; }
+
+  .slide-wrap { flex: 0 0 auto; scroll-snap-align: start; display: flex; flex-direction: column; gap: 0.6rem; }
+  .slide-meta {
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    color: var(--gray-600);
+    padding-left: 0.3rem;
+  }
+
+  /* Slide — cream, straight, MORE breathing room */
+  .slide {
+    width: 420px;
+    height: 420px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    background: var(--cream);
+    filter: url(#paperNoise);
+    box-shadow: 0 6px 20px rgba(26,26,26,0.08), 0 1px 4px rgba(26,26,26,0.06);
+  }
+  .slide-inner {
+    position: absolute; inset: 0;
+    padding: 2.4rem 2.2rem;   /* ← bigger padding for breathing room */
+    display: flex; flex-direction: column;
+  }
+
+  /* Caveat tag (top-left) */
+  .tag {
+    font-family: 'Caveat', cursive;
+    font-weight: 500;
+    font-size: 1.15rem;
+    color: var(--gray-600);
+    align-self: flex-start;
+    margin-bottom: 0.4rem;
+  }
+
+  /* Asset / mascot — smaller, cleaner, doesn't crowd */
+  .asset { position: absolute; pointer-events: none; object-fit: contain; }
+
+  /* BIG NUMBERS — caveat, INK, no. prefix on tip slides */
+  .big-num {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 5rem;
+    color: var(--ink);
+    line-height: 0.95;
+    margin-bottom: 0.1rem;
+    display: inline-block;
+  }
+  .big-num::before {
+    content: 'no. ';
+    font-family: 'Caveat', cursive;
+    font-weight: 500;
+    font-size: 1.4rem;
+    color: var(--gray-400);
+    vertical-align: super;
+    margin-right: 0.2rem;
+  }
+
+  .cover-num {
+    font-family: 'Caveat', cursive;
+    font-weight: 700;
+    font-size: 6rem;
+    color: var(--ink);
+    line-height: 0.9;
+    margin-top: auto;
+    margin-bottom: 0.3rem;
+  }
+  .cover-hook {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.55rem;
+    line-height: 1.2;
+    color: var(--ink);
+    max-width: 92%;
+  }
+
+  /* Orange highlighter (one of only two places orange is allowed) */
+  .highlight {
+    background: linear-gradient(100deg, transparent 3%, rgba(255,107,53,0.55) 3%, rgba(255,107,53,0.55) 97%, transparent 97%);
+    padding: 0 0.15rem;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  /* Footer */
+  .foot {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-top: 1rem;
+    padding-top: 0.7rem;
+    border-top: 1.5px dashed var(--gray-200);
+  }
+  .foot-brand { font-family: 'Cherry Bomb One', cursive; font-size: 1.15rem; color: var(--ink); letter-spacing: 0; }
+  .foot-cue { font-family: 'Caveat', cursive; font-weight: 500; font-size: 1.1rem; color: var(--ink-light); }
+
+  /* Tip content */
+  .tip-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    line-height: 1.22;
+    color: var(--ink);
+    margin-bottom: 0.65rem;
+    max-width: 95%;
+  }
+  .tip-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--ink-light);
+    text-transform: none;
+    max-width: 88%;
+  }
+
+  /* INK-DRAWN MARKS — used often, allowed to be crooked */
+  .ink-mark { position: absolute; pointer-events: none; opacity: 0.8; }
+  .ink-mark path { stroke: var(--ink); fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* CTA slide */
+  .cta-lead {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 2.3rem;
+    line-height: 1.08;
+    color: var(--ink);
+    margin-top: auto;
+    margin-bottom: 0.5rem;
+  }
+  .cta-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--ink-light);
+    text-transform: none;
+    margin-bottom: 1rem;
+    max-width: 88%;
+  }
+  .cta-btn {
+    align-self: flex-start;
+    background: var(--accent);
+    color: var(--cream);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0.9rem 1.5rem;
+    border: 2px solid var(--accent);
+    border-radius: 999px;
+    box-shadow: 4px 4px 0 var(--ink);
+    display: inline-block;
+  }
+
+  .rules-panel {
+    background: var(--cream-light);
+    border: 2px solid var(--ink);
+    border-radius: 8px;
+    padding: 1.3rem 1.5rem;
+    margin-top: 2rem;
+  }
+  .rules-panel h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; margin: 0 0 0.6rem 0; }
+  .rules-panel ul { margin: 0; padding-left: 1.2rem; }
+  .rules-panel li { font-family: 'DM Sans', sans-serif; font-size: 0.94rem; line-height: 1.6; color: var(--ink-light); text-transform: none; margin-bottom: 0.3rem; }
+  .rules-panel li strong { color: var(--ink); text-transform: lowercase; }
+  .rules-panel code { background: var(--cream); padding: 0.08rem 0.35rem; border-radius: 4px; font-family: 'Space Grotesk', sans-serif; font-size: 0.85em; }
+</style>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="paperNoise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0.95  0 0 0 0 0.92  0 0 0 0 0.86  0 0 0 0.05 0" result="grain"/>
+      <feComposite in="grain" in2="SourceGraphic" operator="over"/>
+    </filter>
+  </defs>
+</svg>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand-header">
+    <div class="brand-logo">blaztly</div>
+    <div class="brand-kicker">carousel · v6 (whitespace + ink marks)</div>
+  </div>
+
+  <h2 class="page-title">carousel template</h2>
+  <p class="page-sub">bigger padding. fewer elements. hand-drawn ink accents on every slide.</p>
+
+  <div class="strip">
+
+    <!-- Slide 1 — Cover -->
+    <div class="slide-wrap">
+      <div class="slide">
+        <img class="asset" src="mascot.png" style="width:130px; height:130px; top:30px; right:30px;" />
+        <!-- ink-drawn asterisk spark -->
+        <svg class="ink-mark" viewBox="0 0 40 40" style="top:175px; right:55px; width:32px; height:32px; transform:rotate(-12deg);">
+          <path d="M20 5 L20 35 M5 20 L35 20 M10 10 L30 30 M30 10 L10 30" stroke-width="2"/>
+        </svg>
+        <div class="slide-inner">
+          <span class="tag">blaztly tips · 01 of 05</span>
+          <div class="cover-num">3</div>
+          <!-- tiny hand-drawn underline under the "3" -->
+          <svg class="ink-mark" viewBox="0 0 80 10" style="position:relative; margin-top:-20px; margin-bottom:10px; width:90px; height:12px; opacity:0.55; transform:rotate(-2deg);">
+            <path d="M2 5 Q20 2, 40 6 T78 4" stroke-width="2.2"/>
+          </svg>
+          <div class="cover-hook">signs your <span class="highlight">restaurant site</span> is losing you customers.</div>
+          <div class="foot">
+            <div class="foot-brand">blaztly</div>
+            <div class="foot-cue">swipe →</div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-meta">slide 1 · cover</div>
+    </div>
+
+    <!-- Slide 2 — Tip (more whitespace, ink scribble) -->
+    <div class="slide-wrap">
+      <div class="slide">
+        <!-- scattered ink dots -->
+        <svg class="ink-mark" viewBox="0 0 40 40" style="top:30px; right:40px; width:30px; height:30px; opacity:0.5;">
+          <circle cx="8" cy="10" r="1.5" fill="#1A1A1A"/>
+          <circle cx="22" cy="6" r="1" fill="#1A1A1A"/>
+          <circle cx="18" cy="20" r="1.2" fill="#1A1A1A"/>
+        </svg>
+        <div class="slide-inner">
+          <span class="tag">tip</span>
+          <div class="big-num">01</div>
+          <div class="tip-title">it takes more than <span class="highlight">3 seconds</span> to load.</div>
+          <div class="tip-body">57% of mobile users bounce after 3s. every second of delay costs you ~7% of conversions.</div>
+          <!-- big ink arrow bottom-right -->
+          <svg class="ink-mark" viewBox="0 0 100 80" style="right:25px; bottom:80px; width:100px; height:80px; transform:rotate(18deg);">
+            <path d="M10 15 Q35 60, 85 30 M70 15 L88 30 L72 48" stroke-width="2.4"/>
+          </svg>
+          <div class="foot">
+            <div class="foot-brand">blaztly</div>
+            <div class="foot-cue">next →</div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-meta">slide 2 · tip</div>
+    </div>
+
+    <!-- Slide 3 — Tip with asset + circle annotation -->
+    <div class="slide-wrap">
+      <div class="slide">
+        <img class="asset" src="asteroid.png" style="width:115px; height:115px; top:26px; right:28px; opacity:0.9;" />
+        <!-- hand-drawn circle around the asset -->
+        <svg class="ink-mark" viewBox="0 0 130 130" style="top:18px; right:20px; width:130px; height:130px; opacity:0.45;">
+          <path d="M20 65 Q20 20, 65 20 Q115 20, 112 65 Q112 115, 65 112 Q20 112, 20 65 Z" stroke-width="2" stroke-dasharray="4,3"/>
+        </svg>
+        <div class="slide-inner">
+          <span class="tag">tip</span>
+          <div class="big-num">02</div>
+          <div class="tip-title">your menu is a <span class="highlight">pdf</span>.</div>
+          <div class="tip-body">pdfs are slow, unsearchable, and broken on phones. treat your menu like a product, not a printout.</div>
+          <!-- small ink squiggle -->
+          <svg class="ink-mark" viewBox="0 0 80 20" style="left:30px; bottom:90px; width:80px; height:20px; opacity:0.55;">
+            <path d="M2 10 Q12 2, 22 10 T42 10 T62 10 T78 10" stroke-width="2"/>
+          </svg>
+          <div class="foot">
+            <div class="foot-brand">blaztly</div>
+            <div class="foot-cue">next →</div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-meta">slide 3 · tip w/ asset</div>
+    </div>
+
+    <!-- Slide 4 — CTA -->
+    <div class="slide-wrap">
+      <div class="slide">
+        <img class="asset" src="rocket.png" style="width:130px; height:130px; top:26px; right:30px;" />
+        <!-- hand-drawn sparkle near rocket -->
+        <svg class="ink-mark" viewBox="0 0 30 30" style="top:35px; right:170px; width:24px; height:24px; opacity:0.55; transform:rotate(-8deg);">
+          <path d="M15 2 L15 28 M2 15 L28 15 M6 6 L24 24 M24 6 L6 24" stroke-width="1.8"/>
+        </svg>
+        <!-- ink arrow pointing to button -->
+        <svg class="ink-mark" viewBox="0 0 70 60" style="left:145px; bottom:75px; width:70px; height:60px; opacity:0.55; transform:rotate(35deg);">
+          <path d="M5 10 Q25 40, 60 25 M48 10 L62 25 L50 40" stroke-width="2"/>
+        </svg>
+        <div class="slide-inner">
+          <span class="tag">your turn →</span>
+          <div class="cta-lead">we build sites that <span class="highlight">don't bleed</span> customers.</div>
+          <div class="cta-body">dm us, or book a 15-min audit — free, no pressure.</div>
+          <div class="cta-btn">book a call →</div>
+          <div class="foot" style="margin-top:1rem">
+            <div class="foot-brand">blaztly</div>
+            <div class="foot-cue">@blaztly</div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-meta">slide 4 · cta</div>
+    </div>
+
+  </div>
+
+  <div class="rules-panel">
+    <h3>what changed in v6</h3>
+    <ul>
+      <li><strong>whitespace ++</strong> — slide padding bumped (2.4rem), body copy trimmed, fewer elements per slide. the eye gets to rest.</li>
+      <li><strong>ink marks on every slide:</strong> a sparkle asterisk + squiggly underline (cover), scattered ink dots + a big arrow (tip 1), dashed ink circle around the asset + wavy squiggle (tip 2), sparkle + arrow pointing to the cta (cta slide).</li>
+      <li><strong>ink marks can be crooked</strong> (-12°, 18°, 35°) because they ARE ink — imperfection is their point. layout/type/buttons still stay straight.</li>
+      <li><strong>orange still lives in two places only</strong> — the highlighter, and the cta button. numbers, tags, footer cues, ink marks = all ink or neutrals.</li>
+    </ul>
+  </div>
+
+</div>
+</body>
+</html>
