@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /valdocuts.html
+Disallow: /nardoblends.html
+
+Sitemap: https://blaztly.com/sitemap.xml

@@ -1,108 +1,148 @@
-# Blaztly Brand Session — Handoff
+# Blaztly Session — Handoff (2026-04-19)
 
-**Session date:** 2026-04-19
-**Goal:** codify the Blaztly brand into (1) a human-readable brand guide page on the site and (2) a reusable Claude skill that works in both Claude Code and Claude.ai.
-
----
-
-## What was decided
-
-### Identity
-- **Blaztly** = website-building agency (project folder still named `Launchy`, ignore — brand is Blaztly).
-- **Target:** lead-based local service businesses — contractors, lawyers, coaches, agencies, service pros.
-- **Not a fit:** e-commerce. Restaurants only with embed-friendly ordering platforms (ChowNow, Toast TakeOut, Olo Rails). No Square/bare Clover iframes.
-- **Positioning:** AI made everyone a web developer — taste made Blaztly. Anti-slop, not anti-AI.
-- **Hero line:** *your business deserves a launchpad.*
-- **Tagline energy:** *built by humans. launched by monkeys.*
-
-### Visual system (all already in `styles.css`)
-- **Palette:** `--cream` `#EDE6DB`, `--cream-light` `#F2ECE2`, `--ink` `#1A1A1A`, `--ink-light` `#2E2E2E`, `--accent` `#FF6B35`, `--accent-dark` `#E25A28`, `--gray-200/400/600` warm grays.
-- **Fonts:** Cherry Bomb One (LOGO ONLY), Space Grotesk (UI/display), DM Sans (body), Caveat (accent/handwritten).
-- **Orange = spotlight.** Two emphasis treatments:
-  - **Anchor** (`.ink-underline`) — orange text + wobbly hand-drawn underline. Hero/display scale only.
-  - **Marker** (`.highlight`) — ink text + orange marker stroke behind. Body/carousel/annotations only.
-  - **Never both in one layout.**
-
-### Voice
-- **Earnest** when speaking about the customer. **Playful** when speaking about Blaztly itself.
-- **Lowercase default** across all marketing. Proper nouns lowercase when legibility allows. Normal sentence case for 1:1 client comms only.
-- Short, punchy, likes a twist.
-
-### Illustrations
-- Hand-drawn, inked, **strict two-tone only** (no orange, no gradients).
-- Assets at project root: `mascot.png`, `rocket.png`, `asteroid.png`, `galaxy.png`, `earth.png`, `ufo cow.png`, `Banana.png`.
-
-### Instagram
-- **Core principle:** *show the what, sell the how.* Teach the outcome publicly, sell the build.
-- **Primary format:** educational carousels.
-- **Slide commitment rule:** each slide leans copy OR ink, never both.
-- **Big numbers:** Caveat 700 **ink** (never orange), with `no.` superscript prefix on tip slides.
-- **Straight layouts, crooked ink:** only ink-drawn marks (scribbles, arrows, circles) may tilt. Grids/buttons/type stay aligned.
-- **Cover → tips → CTA** structure. Last slide = orange CTA button (`book a call →`).
+**Goal this session:** expand the portfolio section on the main site, ship the two unlive portfolio subpages with animations that fit each client's vibe, reword the pricing section to reflect multi-tier reality, complete full on-page SEO, and scope out a Google Business Profile setup for Blaztly itself.
 
 ---
 
-## Deliverables built
+## What shipped
 
-### 1. `brand-guide.html` (project root)
-- Live at `/brand-guide` once deployed to Netlify (Netlify strips `.html` by default).
-- `<meta name="robots" content="noindex,nofollow">` — search engines won't index it.
-- No link from `index.html` — intentionally not discoverable via navigation.
-- 9 sections + TOC: identity, logo & mascot, color, typography, orange rules (both treatments), illustration, voice, Instagram (carousel + rules), principles.
+### 1. Recent work / portfolio section (index.html)
+Replaced the single-item "featured callout" with a proper portfolio layout:
+- **Amigo spotlight** — biggest highlight (`★ featured build ★` stamp, dashed ink border, rotates slightly, drop shadow). Linked to https://amigolandscaping.com
+- **4-card grid** below the spotlight:
+  - `erikblendz.com` — live, orange "* live *" tag, external link
+  - `hairbymayel.com` — live, orange "* live *" tag, external link
+  - `valdocuts` — dashed ink-bordered "* portfolio *" tag, internal link → `/valdocuts.html`
+  - `nardoblends` — dashed ink-bordered "* portfolio *" tag, internal link → `/nardoblends.html`
 
-### 2. `~/.claude/skills/blaztly-brand-guide/SKILL.md` (global Claude Code skill)
-- Auto-registered — shows up in every Claude Code session.
-- Full frontmatter: `name: blaztly-brand-guide` + description that triggers on any Blaztly-related work.
-- Contains copy-paste CSS for `.ink-underline`, `.highlight`, CTA button, eyebrow, big-num, root tokens.
-- Checklist for "before shipping a Blaztly asset" at the bottom.
+CSS: new `.work-hero`, `.work-card`, `.work-card-tag-live`, `.work-card-tag-portfolio` blocks in `styles.css`. Old `.featured-*` rules removed. Mobile media query updated.
 
-### 3. Memory updated
-- `C:\Users\HdzBr\.claude\projects\c--Users-HdzBr-OneDrive-Desktop-Projects-Launchy\memory\user_profile.md` — now names Blaztly (was Launchy), points to both skills.
+### 2. Portfolio subpages
+Both created fresh at project root with `<meta name="robots" content="noindex, nofollow">` (excluded from search, also excluded via robots.txt).
+
+**`valdocuts.html` — premium / elegant**
+- Tailwind CDN + Great Vibes + Playfair + Montserrat
+- Animations:
+  - Hero "Valdo" reveals letter-by-letter (slow cursive fade-up)
+  - Gold hairline divider draws outward under the name
+  - Tagline / body / CTAs cascade in with soft ease
+  - Service rows: gold left-border grows top-down on hover
+  - Book Appointment button: gold shimmer sweep on hover
+  - Stars sparkle once on load
+  - Scroll-reveal on sections below the fold
+- Respects `prefers-reduced-motion`
+
+**`nardoblends.html` — SRT / aggressive**
+- Tailwind CDN + Kanit + Inter + FontAwesome
+- Red (`#DC0000`) is strictly on the `//` slash marks and the top RPM scroll-progress bar. **Nowhere else.** (User explicit: "less makes it stronger.")
+- Animations:
+  - Hero `//NARDO` slams in from the left (opacity + translateX, hard ease, no bounce, no letter stagger — user pushed back on earlier letter-by-letter version as "goofy")
+  - RPM progress bar at top grows with scroll
+  - Service rows: slide-in from left, staggered
+  - Book Now button: black L→R sweep on hover (not red)
+  - Gallery borders on hover: black (not red)
+  - Image-reveal on the hero portrait
+- Phone in footer is `tel:` only, "(Text Preferred)" copy removed
+
+### 3. Pricing section reword (index.html)
+Prior copy implied there was only one plan. Reframed to reflect that the launch package is a starting tier:
+- h2: `one plan. no confusion.` → `simple starter pricing.`
+- sub: dropped `no packages to compare`; now `the launch package covers everything a new site needs. no surprise invoices.`
+- label: `one-time setup` → `one-time setup — starts at`
+- **Features list now includes:**
+  - `basic contact form — leads straight to your inbox`
+  - `google business profile setup`
+
+Positive framing throughout — no mention of upsell tiers or CRM connections even though they exist.
+
+### 4. On-page SEO pass — complete
+**`<head>` additions:**
+- Keyword-rich title, meta description, author, robots, theme-color, canonical (`https://blaztly.com/`)
+- Favicon + apple-touch-icon pointing to `mascot.png`
+- Open Graph (type/site_name/title/description/url/image/image:alt/locale)
+- Twitter Card (summary_large_image)
+
+**Three JSON-LD schema blocks:**
+- `ProfessionalService` — name, description, logo, email `contact@blaztly.com`, phone `+1-218-583-7714`, `sameAs` → `https://www.instagram.com/blaztly`, `makesOffer` with $700 Launch Package
+- `WebSite` — baseline
+- `FAQPage` — all 5 FAQ questions mapped for rich-snippet eligibility
+
+**Footer contact row added:**
+- `contact@blaztly.com` · `@blaztly` · `(218) 583-7714` — styled with Space Grotesk, separators hide on mobile.
+
+**Crawl files at project root:**
+- `robots.txt` — allows everything except the portfolio subpages (already `noindex`); references sitemap
+- `sitemap.xml` — single entry for `/` (portfolio pages excluded since they're noindex)
 
 ---
 
-## Outstanding items / next steps
+## Decisions made this session
 
-### 1. Upload skill to Claude.ai (user handles)
-- Settings → Capabilities → Skills → upload the `blaztly-brand-guide` folder.
-- Source folder: `C:\Users\HdzBr\.claude\skills\blaztly-brand-guide\`
+- **Red restraint on Nardo:** only `//` slashes + top RPM bar. Explicitly stripped from: hero left-border, stars, location icon, Book Now shadow, hover states, gallery borders, selection color. Saved as feedback memory.
+- **Booksy stays as Nardo's CTA.** User hates marketplaces but doesn't want SMS-to-book or a manual alternative there. Also hates Square iframes. Wants something custom eventually but won't pick for clients.
+- **GBP strategy: local only, not nationwide.** Web design is a remote service but GBP ranks by proximity — going wide dilutes. Lead with local GBP for inbound, use outbound/Instagram/content for nationwide.
+- **Nardo hero description** is a placeholder (`Professional barber based in West Chicago, IL. Booking through Booksy.`). Earlier attempt ("Clean cuts, sharp lines, zero filler...") was called cringe. User open to removing the paragraph entirely if we wanted to let the heading + location carry it.
 
-### 2. Create `.gitignore`
-- No `.gitignore` exists yet in the project.
-- Should at minimum contain:
-  ```
-  .superpowers/
-  .DS_Store
-  node_modules/
-  *.log
-  ```
-- `.superpowers/` holds brainstorm session files — shouldn't be committed. Currently uncommitted and will stay that way if a gitignore is added before the next `git add`.
+---
 
-### 3. Optional: bundle brand assets into the Claude.ai skill
-- To give the Claude.ai version of the skill direct access to the mascot/rocket/asteroid PNGs, copy them into `~/.claude/skills/blaztly-brand-guide/` alongside `SKILL.md` before uploading.
-- Not needed for Claude Code (skill references them at the project path).
+## Outstanding / next up
 
-### 4. Deploy
-- Push branch and Netlify will auto-deploy `brand-guide.html` → `/brand-guide`.
-- Nothing else in the index changed — safe push.
+### Blaztly's own Google Business Profile
+Walked through the full setup with the user; he's paused before video verification. Notes for when he resumes:
+
+- **Business name:** Blaztly
+- **Primary category:** Website Designer
+- **Additional categories:** Marketing Agency, Graphic Designer, Web Hosting Company, Advertising Agency
+- **Location type:** service-area (hide physical address)
+- **Service area:** West Chicago + Wheaton + Naperville + Aurora + Geneva + St. Charles + Batavia + Elmhurst (approved list — user is in West Chicago, IL)
+- **Hours:** Mon–Fri 9a–6p CT, + optionally Sat 10a–2p; enable "By appointment only" attribute
+- **Description:** finalized version (no em dashes, no pricing, no monkey line):
+  > Blaztly builds hand-crafted websites for local service businesses like contractors, lawyers, coaches, and service pros. Our launch package includes custom design, lite branding, domain, fast hosting, a basic contact form, and Google Business Profile setup. Sites go live in under 7 days. We handle unlimited edits forever. No templates. No slop. Every site is designed by humans for the business behind it.
+- **Services to list (~9):** Custom Website Design, Website Hosting & Support, Lite Branding Package, Logo Design, Domain Setup, Google Business Profile Setup, Contact Form Setup, SEO Setup, Website Edits & Updates
+- **Photos to upload:** logo (mascot.png), headshot.png, cover = clean screenshot of amigolandscaping.com, plus shots of erikblendz/hairbymayel/valdocuts/nardoblends
+- **Verification:** video verify required. 2-min single-take: outside/neighborhood → walk to desk → laptop showing blaztly.com loaded, contact@blaztly.com inbox, Netlify panel for blaztly.com, domain registrar, any physical proof (business card, printed logo, mail addressed to him, bank/Stripe dashboard).
+
+### Phone number
+User's current `+1-218-583-7714` is a cold-outreach dialer line and likely to go bad. Plan: get a free **Google Voice** number for the main client-facing line, keep the dialer for outreach only. When swapped, update in two spots:
+- `index.html` head — JSON-LD `telephone` field
+- `index.html` footer contact row — `tel:` link
+
+### Deploy
+All changes are local. Netlify will auto-deploy on push. No build step.
+
+### Still-open items from prior session
+- `.gitignore` still missing at project root. Should include `.superpowers/`, `.DS_Store`, `node_modules/`, `*.log`.
+- `SKILL.md` (the old illustration-only skill at project root) is superseded by the global `blaztly-brand-guide` skill — can be deleted.
 
 ---
 
 ## Files changed this session
 
-- **Created:** `brand-guide.html` (project root) — full brand guide page.
-- **Created:** `C:\Users\HdzBr\.claude\skills\blaztly-brand-guide\SKILL.md` — the skill.
-- **Updated:** user profile memory to reflect Blaztly as the brand.
-- **Untouched:** `index.html`, `styles.css`, `script.js`, `SKILL.md` (the old illustration-only skill at project root — can stay or be deleted later since `blaztly-brand-guide` supersedes it).
+**Modified:**
+- `index.html` — portfolio section, pricing rewording, SEO meta + JSON-LD, footer contact row
+- `styles.css` — `.work-*` blocks (replacing `.featured-*`), footer contact styles, mobile adjustments
+
+**Created:**
+- `valdocuts.html` — premium portfolio page with elegant animations
+- `nardoblends.html` — SRT-energy portfolio page with restrained red accent
+- `robots.txt` — allow all except portfolio subpages, links sitemap
+- `sitemap.xml` — single `/` entry
+
+**Untouched this session:**
+- `script.js`, `brand-guide.html`, `SKILL.md`, skill folder, all PNGs
 
 ---
 
-## How to resume the next session
+## Memory updates
 
-Open the project. Say *"continue from the Blaztly brand handoff"* or reference this file. The brand guide is locked — next sessions should be about **using** the brand (building the IG carousel as an image, writing posts, updating the site to match the guide, etc.), not re-deciding it.
+- Added `feedback_accent_restraint.md` — rule: signature accent color goes on 1–2 anchor spots only; scattering across CTAs/borders/stars/hovers dilutes impact. Indexed in MEMORY.md.
 
-If anything in the brand rules ever feels wrong in practice, update it in both:
-1. `brand-guide.html` (the living spec)
-2. `~/.claude/skills/blaztly-brand-guide/SKILL.md` (the agent-readable spec)
+---
 
-Keep them in sync.
+## How to resume
+
+Open the project. Say *"pick up from the 2026-04-19 handoff"* or reference this file. The two highest-priority next moves are:
+1. **Finish Blaztly's own GBP** (video verification → go live) — copy is already drafted in this doc.
+2. **Swap the dialer phone for a Google Voice number** — two-file update described above.
+
+If the user decides he wants to build something custom to replace Booksy for client booking flows (he hinted at it), that's a separate scoped effort — not a quick win.

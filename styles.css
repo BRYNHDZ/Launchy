@@ -1822,6 +1822,30 @@ h3 { font-size: 1.2rem; }
 
 .footer-links a:hover { color: var(--accent); }
 
+.footer-contact {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.footer-contact a {
+  color: var(--ink-light);
+  transition: var(--transition);
+  position: relative;
+}
+
+.footer-contact a:hover { color: var(--accent); }
+
+.footer-contact-sep {
+  color: var(--gray-400);
+  font-size: 0.78rem;
+}
+
 .footer-bottom p {
   font-size: 0.78rem;
   color: var(--gray-400);
@@ -2381,6 +2405,8 @@ h3 { font-size: 1.2rem; }
 
   /* Footer mobile */
   .footer-links { gap: 16px; }
+  .footer-contact { gap: 8px; font-size: 0.82rem; }
+  .footer-contact-sep { display: none; }
 
   /* Hide smudges on small screens — too cluttered */
   .ink-smudge { display: none; }
