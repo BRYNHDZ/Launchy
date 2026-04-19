@@ -196,7 +196,31 @@
   }
   .principle-body strong { color: var(--ink); }
 
-  /* ============ HIGHLIGHTER ============ */
+  /* ============ ORANGE EMPHASIS — TWO TREATMENTS ============ */
+
+  /* Treatment 1 — "anchor": orange text + wobbly hand-drawn underline.
+     Used on hero-scale display copy. Same as styles.css .ink-underline */
+  .ink-underline {
+    position: relative;
+    display: inline-block;
+    color: var(--accent);
+  }
+  .ink-underline::after {
+    content: '';
+    position: absolute;
+    bottom: 0.05em;
+    left: -4px;
+    right: -4px;
+    height: 0.18em;
+    background: var(--accent);
+    opacity: 0.3;
+    border-radius: 40% 60% 50% 40% / 80% 60% 100% 50%;
+    transform: rotate(-0.5deg);
+    filter: url(#rough);
+  }
+
+  /* Treatment 2 — "marker": ink text + orange marker stroke behind.
+     Used in body/carousels/annotations. */
   .highlight {
     background: linear-gradient(100deg, transparent 3%, rgba(255,107,53,0.55) 3%, rgba(255,107,53,0.55) 97%, transparent 97%);
     padding: 0 0.15rem;
@@ -586,6 +610,10 @@
       <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0.95  0 0 0 0 0.92  0 0 0 0 0.86  0 0 0 0.05 0" result="grain"/>
       <feComposite in="grain" in2="SourceGraphic" operator="over"/>
     </filter>
+    <filter id="rough">
+      <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="3" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="3"/>
+    </filter>
   </defs>
 </svg>
 
@@ -601,7 +629,7 @@
   <!-- INTRO -->
   <div class="intro">
     <div class="intro-eyebrow">who we are</div>
-    <h1>websites for lead-based local businesses. built <span class="highlight">with taste</span>, not templates.</h1>
+    <h1>websites for lead-based local businesses. built <span class="ink-underline">with taste</span>, not templates.</h1>
     <p>anyone can generate a website with ai now. that's why they all look the same. blaztly builds sites that look handmade — because they are. we're not anti-ai. we're anti-slop.</p>
     <p>this document is how we stay consistent: colors, type, voice, social, the whole system. anyone building something for blaztly should read this first.</p>
   </div>
@@ -641,7 +669,7 @@
       </div>
       <div class="principle">
         <div class="principle-label">hero line</div>
-        <div class="principle-body" style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.25rem; color:var(--ink)">your business deserves a <span class="highlight">launchpad</span>.</div>
+        <div class="principle-body" style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.25rem; color:var(--ink)">your business deserves a <span class="ink-underline">launchpad</span>.</div>
       </div>
     </div>
   </section>
@@ -738,16 +766,43 @@
   <section class="s" id="orange">
     <div class="eyebrow">05 · orange rules</div>
     <h2 class="s-title">orange is a spotlight, not a fill.</h2>
-    <p class="s-sub">the accent color has exactly two jobs: call-to-action (buttons, emphasis) and highlighter (one phrase per layout). that's it. if it's not a cta or a highlight, it's not orange.</p>
+    <p class="s-sub">the accent color has a handful of jobs: calls-to-action, section labels, checkmarks, and emphasizing one key word per layout. it has <strong>two emphasis treatments</strong> — anchor (hero copy) and marker (body/carousel). never both in one layout.</p>
 
+    <!-- The two emphasis treatments — anchor vs marker -->
+    <div class="voice-grid" style="margin-bottom:1.5rem">
+      <div class="voice-panel">
+        <div class="voice-register">anchor · <span style="font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:0.85rem; color:var(--gray-600); text-transform:lowercase;">.ink-underline</span></div>
+        <div class="voice-desc">orange text with a wobbly hand-drawn underline beneath it. used for hero copy and big display moments — when the word IS the headline. feels bold, confident, brand-forward.</div>
+        <div class="voice-example">your business deserves a <span class="ink-underline">launchpad</span>.</div>
+      </div>
+      <div class="voice-panel">
+        <div class="voice-register">marker · <span style="font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:0.85rem; color:var(--gray-600); text-transform:lowercase;">.highlight</span></div>
+        <div class="voice-desc">ink text with an orange marker stroke behind it. used in body copy, carousel slides, and annotations — when the word is inside a sentence you're reading. feels hand-annotated, zine-y.</div>
+        <div class="voice-example">57% of mobile users bounce after <span class="highlight">3 seconds</span>.</div>
+      </div>
+    </div>
+
+    <div class="principles" style="margin-bottom:2rem">
+      <div class="principle">
+        <div class="principle-label">when to anchor</div>
+        <div class="principle-body">hero headlines, section titles, display-scale type. the emphasized word stands on its own visually. one per hero, max.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">when to marker</div>
+        <div class="principle-body">body copy, carousel slides, tips, captions. the emphasized phrase sits inside a block of reading. one per block, max.</div>
+      </div>
+      <div class="principle">
+        <div class="principle-label">never both</div>
+        <div class="principle-body">never use anchor and marker in the same layout. pick one based on what the surrounding copy is doing.</div>
+      </div>
+    </div>
+
+    <!-- Other orange uses -->
+    <div class="eyebrow" style="margin-top:2rem">other orange uses</div>
     <div class="orange-grid">
       <div class="use-card">
         <div class="use-label">cta button</div>
         <div class="use-example"><span class="use-btn">book a call →</span></div>
-      </div>
-      <div class="use-card">
-        <div class="use-label">highlighted phrase</div>
-        <div class="use-hero">your business deserves a <span class="highlight">launchpad</span>.</div>
       </div>
       <div class="use-card">
         <div class="use-label">section label</div>
@@ -760,16 +815,25 @@
           <div class="check-row"><span class="mark">✓</span>roi calculator</div>
         </div>
       </div>
+      <div class="use-card">
+        <div class="use-label">nav hover state</div>
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:1rem;">
+          <span style="color:var(--ink); margin-right:1rem">home</span>
+          <span style="color:var(--ink); margin-right:1rem">work</span>
+          <span style="color:var(--accent); margin-right:1rem">about</span>
+          <span style="color:var(--ink);">contact</span>
+        </div>
+      </div>
     </div>
 
     <div class="do-dont" style="margin-top:1.5rem">
       <div class="dd-panel">
         <div class="dd-title do">do</div>
         <ul>
-          <li>use on one phrase per layout, max</li>
+          <li>use one emphasis per layout, max</li>
           <li>fill cta buttons (orange bg, cream text)</li>
           <li>use for section eyebrows / labels</li>
-          <li>hover state: shift to accent-dark</li>
+          <li>hover state shifts to accent-dark</li>
         </ul>
       </div>
       <div class="dd-panel">
@@ -778,7 +842,7 @@
           <li>use as background color for large areas</li>
           <li>color big display numbers orange</li>
           <li>apply to illustrations (stay two-tone)</li>
-          <li>scatter multiple highlights in one layout</li>
+          <li>mix anchor and marker in one layout</li>
         </ul>
       </div>
     </div>
