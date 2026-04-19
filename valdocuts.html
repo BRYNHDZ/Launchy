@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valdo Cuts — Hales Corners</title>
+
+    <meta name="robots" content="noindex, nofollow">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        .font-cursive { font-family: 'Great Vibes', cursive; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+        .font-sans { font-family: 'Montserrat', sans-serif; }
+        html { scroll-behavior: smooth; }
+
+        /* --- Hero letter-by-letter cursive reveal (slow, elegant) --- */
+        .hero-name {
+            display: inline-block;
+        }
+        .hero-name .char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(16px);
+            animation: letterRise 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes letterRise {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Gold hairline: draws outward from center after hero name --- */
+        .hero-divider {
+            display: block;
+            height: 1px;
+            background: #C5A059;
+            opacity: 0.8;
+            margin: 0.25rem auto 1.25rem;
+            width: 0;
+            animation: drawDivider 1.1s cubic-bezier(0.22, 1, 0.36, 1) 1.1s forwards;
+        }
+
+        @media (min-width: 768px) {
+            .hero-divider { margin-left: 0; margin-right: 0; }
+        }
+
+        @keyframes drawDivider {
+            to { width: 80px; }
+        }
+
+        /* --- Italic tagline + body fade in after divider --- */
+        .hero-tag, .hero-body, .hero-ctas, .hero-badge {
+            opacity: 0;
+            animation: softFade 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        .hero-badge  { animation-delay: 0.2s; }
+        .hero-tag    { animation-delay: 1.7s; }
+        .hero-body   { animation-delay: 2.0s; }
+        .hero-ctas   { animation-delay: 2.3s; }
+
+        @keyframes softFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Portrait oval: slow grow + settle --- */
+        .hero-portrait {
+            opacity: 0;
+            transform: scale(0.96);
+            animation: portraitIn 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+        }
+        @keyframes portraitIn {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- Scroll-reveal for sections below the fold --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Service row: gold left-border grows in on hover --- */
+        .service-row {
+            position: relative;
+            transition: background 0.5s ease, box-shadow 0.5s ease;
+        }
+        .service-row::before {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0; left: 0;
+            width: 2px;
+            background: #C5A059;
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .service-row:hover::before { transform: scaleY(1); }
+
+        /* --- Book button: gold shimmer sweeps across on hover --- */
+        .btn-book {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .btn-book::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                110deg,
+                transparent 20%,
+                rgba(197, 160, 89, 0.55) 50%,
+                transparent 80%
+            );
+            transform: translateX(-120%);
+            transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .btn-book:hover::after { transform: translateX(120%); }
+        .btn-book > * { position: relative; z-index: 2; }
+
+        /* --- Stars: one-time sparkle on load --- */
+        .star-sparkle { animation: sparkle 3s ease-in-out 2.5s 1; }
+        @keyframes sparkle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50%      { transform: scale(1.12); opacity: 0.9; }
+        }
+
+        /* Respect reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+                animation-delay: 0s !important;
+            }
+            .hero-divider { width: 80px; }
+            .reveal { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-[#F5F2EA] font-sans text-[#1A3C28] selection:bg-[#C5A059] selection:text-white">
+
+    <header id="main-header" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-8 px-6 flex justify-between items-center">
+        <span class="text-3xl font-cursive">Valdo</span>
+
+        <nav class="hidden md:flex items-center space-x-8">
+           <a href="#about" class="text-xs uppercase tracking-widest hover:text-[#C5A059] transition-colors font-semibold">About</a>
+           <a href="#services" class="text-xs uppercase tracking-widest hover:text-[#C5A059] transition-colors font-semibold">Menu</a>
+           <a href="#work" class="text-xs uppercase tracking-widest hover:text-[#C5A059] transition-colors font-semibold">Work</a>
+           <a href="https://booksy.com/en-us/1103445_valdo-cuts_barber-shop_39946_hales-corners" target="_blank" rel="noreferrer" class="flex items-center gap-2 text-xs uppercase tracking-widest font-bold border-b-2 border-[#1A3C28] pb-1 hover:text-[#C5A059] hover:border-[#C5A059] transition-all">
+             Book Now <i data-lucide="external-link" width="14"></i>
+           </a>
+        </nav>
+
+        <button id="menu-btn" class="md:hidden z-50 relative">
+            <i id="menu-icon" data-lucide="menu" width="24"></i>
+        </button>
+    </header>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-[#F5F2EA] z-40 flex flex-col items-center justify-center space-y-8 hidden opacity-0 transition-opacity duration-300">
+        <a href="#about" class="mobile-link font-serif text-3xl italic">About</a>
+        <a href="#services" class="mobile-link font-serif text-3xl italic">Menu</a>
+        <a href="#work" class="mobile-link font-serif text-3xl italic">Work</a>
+        <a href="https://booksy.com/en-us/1103445_valdo-cuts_barber-shop_39946_hales-corners" class="text-[#C5A059] text-xl font-bold tracking-widest uppercase border-b-2 border-[#C5A059]">Book Now</a>
+    </div>
+
+    <main class="min-h-screen flex flex-col justify-center px-6 pt-28 pb-10 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center">
+
+           <div class="text-center md:text-left">
+              <div class="hero-badge inline-block mb-6">
+                 <div class="flex items-center gap-2 text-[#C5A059] text-xs tracking-[0.2em] uppercase font-bold border border-[#C5A059]/30 px-4 py-2 rounded-full">
+                    <i data-lucide="star" width="10" fill="currentColor"></i>
+                    <span>Private Suite</span>
+                 </div>
+              </div>
+
+              <h1 class="text-[5rem] md:text-[8rem] font-cursive leading-[0.85] mb-2 hero-name" aria-label="Valdo">
+                <span class="char" style="animation-delay:0.20s">V</span><span class="char" style="animation-delay:0.35s">a</span><span class="char" style="animation-delay:0.50s">l</span><span class="char" style="animation-delay:0.65s">d</span><span class="char" style="animation-delay:0.80s">o</span>
+              </h1>
+
+              <span class="hero-divider" aria-hidden="true"></span>
+
+              <p class="hero-tag font-serif text-2xl md:text-3xl italic mb-8 opacity-80 leading-relaxed text-[#C5A059]">
+                "by appointment. by reputation."
+              </p>
+
+              <p class="hero-body text-sm md:text-base leading-loose mb-10 font-light opacity-70 max-w-md mx-auto md:mx-0">
+                Every appointment begins with a detailed consultation. I don't just cut hair — I take the time to understand your head shape, hair texture, and lifestyle to curate a look that fits you perfectly.
+              </p>
+
+              <div class="hero-ctas space-y-8">
+                <div class="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
+                  <a href="https://booksy.com/en-us/1103445_valdo-cuts_barber-shop_39946_hales-corners" target="_blank" class="btn-book bg-[#1A3C28] text-[#F5F2EA] px-10 py-4 rounded-full font-serif italic text-lg hover:bg-[#1A3C28] transition-all shadow-xl w-full sm:w-auto text-center hover:-translate-y-1">
+                    <span>Book Appointment</span>
+                  </a>
+                  <div class="flex gap-6 opacity-60 px-4">
+                    <a href="https://www.instagram.com/valdocuts/" class="hover:text-[#C5A059] transition-colors"><i data-lucide="instagram" width="20"></i></a>
+                    <a href="#" class="hover:text-[#C5A059] transition-colors">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+                        </svg>
+                    </a>
+                    <a href="#" class="hover:text-[#C5A059] transition-colors"><i data-lucide="facebook" width="20"></i></a>
+                  </div>
+                </div>
+
+                <div class="border-l-4 border-[#C5A059] pl-6 py-2 text-left bg-white/50 rounded-r-lg max-w-sm mx-auto md:mx-0">
+                   <div class="flex items-center gap-2 mb-1">
+                      <i data-lucide="map-pin" width="16" class="text-[#C5A059]"></i>
+                      <span class="text-xs uppercase tracking-widest font-bold text-[#1A3C28]">Location</span>
+                   </div>
+                   <p class="font-serif text-xl italic text-[#1A3C28]">10731 W Forest Home Ave</p>
+                   <p class="text-sm opacity-70">Suite 119, Hales Corners, WI</p>
+                </div>
+              </div>
+           </div>
+
+           <div class="hero-portrait flex justify-center md:justify-end relative">
+              <div class="absolute w-[300px] h-[300px] bg-[#1A3C28] rounded-full opacity-5 blur-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
+
+              <div class="relative w-80 h-[32rem]">
+                 <div class="absolute inset-0 border border-[#C5A059] rounded-full translate-x-3 translate-y-3"></div>
+                 <div class="absolute inset-0 bg-[#E5E0D5] rounded-full overflow-hidden shadow-2xl">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center opacity-30 text-[#1A3C28]">
+                       <i data-lucide="scissors" width="48" class="mb-4"></i>
+                       <span class="font-cursive text-3xl">Valdo</span>
+                    </div>
+                 </div>
+
+                 <div class="absolute bottom-10 -left-6 bg-[#F5F2EA] py-3 px-6 rounded-full shadow-lg border border-[#C5A059]/20 flex items-center gap-3">
+                    <div class="flex flex-col">
+                       <span class="text-[10px] uppercase tracking-widest opacity-50">100+ Reviews</span>
+                       <span class="font-bold text-[#1A3C28] text-lg leading-none">4.94</span>
+                    </div>
+                    <div class="w-px h-8 bg-[#C5A059]/30"></div>
+                    <div class="flex text-[#C5A059] gap-0.5 star-sparkle">
+                       <i data-lucide="star" width="14" fill="currentColor"></i>
+                       <i data-lucide="star" width="14" fill="currentColor"></i>
+                       <i data-lucide="star" width="14" fill="currentColor"></i>
+                       <i data-lucide="star" width="14" fill="currentColor"></i>
+                       <i data-lucide="star" width="14" fill="currentColor"></i>
+                    </div>
+                 </div>
+              </div>
+           </div>
+        </div>
+    </main>
+
+    <section id="services" class="py-24 bg-[#EBE7DD]/40 relative">
+         <div class="max-w-3xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 reveal">
+               <div class="flex justify-center mb-4 text-[#C5A059]"><i data-lucide="scissors" width="24"></i></div>
+               <h2 class="font-cursive text-6xl mb-4 text-[#1A3C28]">The Menu</h2>
+               <p class="text-xs uppercase tracking-[0.2em] opacity-60">Precision &bull; Detail &bull; Experience</p>
+            </div>
+
+            <div class="grid gap-6">
+               <div class="service-row reveal bg-[#F5F2EA] p-8 rounded-sm shadow-sm hover:shadow-lg group">
+                   <div class="flex flex-col sm:flex-row sm:items-baseline justify-between mb-3">
+                      <span class="font-serif text-2xl italic group-hover:text-[#C5A059] transition-colors">VIP Experience</span>
+                      <span class="font-bold text-[#1A3C28] mt-2 sm:mt-0">$125</span>
+                   </div>
+                   <p class="text-sm font-light leading-relaxed opacity-70 max-w-lg">The ultimate relaxation. Hair wash, full haircut & beard, facial exfoliation, hot towel, and black mask treatment.</p>
+               </div>
+
+               <div class="service-row reveal bg-[#F5F2EA] p-8 rounded-sm shadow-sm hover:shadow-lg group">
+                   <div class="flex flex-col sm:flex-row sm:items-baseline justify-between mb-3">
+                      <span class="font-serif text-2xl italic group-hover:text-[#C5A059] transition-colors">Male Haircut</span>
+                      <span class="font-bold text-[#1A3C28] mt-2 sm:mt-0">$50</span>
+                   </div>
+                   <p class="text-sm font-light leading-relaxed opacity-70 max-w-lg">Detailed consultation, precision shear work, razor finish, and styling. Perfect for maintaining your signature look.</p>
+               </div>
+
+               <div class="service-row reveal bg-[#F5F2EA] p-8 rounded-sm shadow-sm hover:shadow-lg group">
+                   <div class="flex flex-col sm:flex-row sm:items-baseline justify-between mb-3">
+                      <span class="font-serif text-2xl italic group-hover:text-[#C5A059] transition-colors">Haircut & Facial Hair</span>
+                      <span class="font-bold text-[#1A3C28] mt-2 sm:mt-0">$60</span>
+                   </div>
+                   <p class="text-sm font-light leading-relaxed opacity-70 max-w-lg">The complete package. Includes full haircut service plus a detailed beard trim, shape-up, and razor line.</p>
+               </div>
+
+               <div class="service-row reveal bg-[#F5F2EA] p-8 rounded-sm shadow-sm hover:shadow-lg group">
+                   <div class="flex flex-col sm:flex-row sm:items-baseline justify-between mb-3">
+                      <span class="font-serif text-2xl italic group-hover:text-[#C5A059] transition-colors">Line Up & Edge</span>
+                      <span class="font-bold text-[#1A3C28] mt-2 sm:mt-0">$25</span>
+                   </div>
+                   <p class="text-sm font-light leading-relaxed opacity-70 max-w-lg">Crisp hairline restoration with razor detailing. Does not include fading or length reduction.</p>
+               </div>
+
+               <div class="service-row reveal bg-[#F5F2EA] p-8 rounded-sm shadow-sm hover:shadow-lg group">
+                   <div class="flex flex-col sm:flex-row sm:items-baseline justify-between mb-3">
+                      <span class="font-serif text-2xl italic group-hover:text-[#C5A059] transition-colors">Holiday / After Hours</span>
+                      <span class="font-bold text-[#1A3C28] mt-2 sm:mt-0">$100</span>
+                   </div>
+                   <p class="text-sm font-light leading-relaxed opacity-70 max-w-lg">Any service provided outside of traditional working hours or on holidays. Please contact directly to book.</p>
+               </div>
+            </div>
+         </div>
+    </section>
+
+    <section id="work" class="py-24 px-6 max-w-7xl mx-auto">
+         <div class="text-center mb-16 reveal">
+            <h2 class="font-serif text-5xl mb-4 text-[#1A3C28]">Recent Work</h2>
+            <a href="https://www.instagram.com/valdocuts/" class="text-xs uppercase tracking-widest opacity-60 hover:text-[#C5A059] transition-colors">@Valdocuts</a>
+         </div>
+
+         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="reveal aspect-square bg-zinc-200 relative group overflow-hidden shadow-lg rounded-sm">
+               <div class="absolute inset-0 bg-[#E5E0D5] flex items-center justify-center">
+                  <i data-lucide="instagram" width="32" class="opacity-20 text-[#1A3C28]"></i>
+               </div>
+               <div class="absolute inset-0 bg-[#1A3C28]/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center text-[#F5F2EA]">
+                  <span class="font-cursive text-4xl mb-2">Valdo</span>
+                  <span class="border border-[#F5F2EA] px-6 py-2 uppercase tracking-widest text-xs hover:bg-[#F5F2EA] hover:text-[#1A3C28] transition-colors cursor-pointer">View Post</span>
+               </div>
+            </div>
+            <div class="reveal aspect-square bg-zinc-200 relative group overflow-hidden shadow-lg rounded-sm">
+                <div class="absolute inset-0 bg-[#E5E0D5] flex items-center justify-center">
+                   <i data-lucide="instagram" width="32" class="opacity-20 text-[#1A3C28]"></i>
+                </div>
+                <div class="absolute inset-0 bg-[#1A3C28]/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center text-[#F5F2EA]">
+                   <span class="font-cursive text-4xl mb-2">Valdo</span>
+                   <span class="border border-[#F5F2EA] px-6 py-2 uppercase tracking-widest text-xs hover:bg-[#F5F2EA] hover:text-[#1A3C28] transition-colors cursor-pointer">View Post</span>
+                </div>
+             </div>
+             <div class="reveal aspect-square bg-zinc-200 relative group overflow-hidden shadow-lg rounded-sm">
+                <div class="absolute inset-0 bg-[#E5E0D5] flex items-center justify-center">
+                   <i data-lucide="instagram" width="32" class="opacity-20 text-[#1A3C28]"></i>
+                </div>
+                <div class="absolute inset-0 bg-[#1A3C28]/90 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center text-[#F5F2EA]">
+                   <span class="font-cursive text-4xl mb-2">Valdo</span>
+                   <span class="border border-[#F5F2EA] px-6 py-2 uppercase tracking-widest text-xs hover:bg-[#F5F2EA] hover:text-[#1A3C28] transition-colors cursor-pointer">View Post</span>
+                </div>
+             </div>
+         </div>
+    </section>
+
+    <footer class="py-16 px-6 text-center bg-[#1A3C28] text-[#F5F2EA]">
+         <div class="max-w-md mx-auto space-y-8">
+            <div class="w-16 h-px bg-[#C5A059] mx-auto opacity-50"></div>
+
+            <div class="space-y-6">
+               <div class="space-y-2">
+                  <p class="font-serif text-xl italic text-[#C5A059]">The Studio</p>
+                  <p class="font-light opacity-90">10731 W Forest Home Ave, Suite 119</p>
+                  <p class="text-sm opacity-60 uppercase tracking-wider">Hales Corners, WI</p>
+               </div>
+
+               <div class="space-y-2">
+                  <p class="font-serif text-xl italic text-[#C5A059]">Direct</p>
+                  <p class="font-light opacity-90">(414) 639-1523</p>
+                  <div class="flex items-center justify-center gap-4 mt-2 opacity-50">
+                     <i data-lucide="smartphone" width="16"></i>
+                     <span class="text-xs uppercase tracking-widest">Text Preferred</span>
+                  </div>
+               </div>
+            </div>
+
+            <div class="pt-8 opacity-40">
+               <p class="font-cursive text-3xl mb-2">Valdo</p>
+               <p class="text-[10px] uppercase tracking-widest">&copy; 2025 Osvaldo Sanchez-Arellano</p>
+            </div>
+         </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        /* Mobile menu */
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+        let isMenuOpen = false;
+
+        menuBtn.addEventListener('click', () => {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                mobileMenu.classList.remove('hidden');
+                setTimeout(() => mobileMenu.classList.remove('opacity-0'), 10);
+                menuIcon.setAttribute('data-lucide', 'x');
+            } else {
+                mobileMenu.classList.add('opacity-0');
+                setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+                menuIcon.setAttribute('data-lucide', 'menu');
+            }
+            lucide.createIcons();
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                isMenuOpen = false;
+                mobileMenu.classList.add('opacity-0');
+                setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+                menuIcon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            });
+        });
+
+        /* Header scroll */
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('bg-[#F5F2EA]/95', 'shadow-sm', 'py-4');
+                header.classList.remove('bg-transparent', 'py-8');
+            } else {
+                header.classList.remove('bg-[#F5F2EA]/95', 'shadow-sm', 'py-4');
+                header.classList.add('bg-transparent', 'py-8');
+            }
+        });
+
+        /* Scroll-reveal with stagger inside a shared parent */
+        const revealIO = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transitionDelay = (i % 5) * 80 + 'ms';
+                    entry.target.classList.add('in-view');
+                    revealIO.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.reveal').forEach(el => revealIO.observe(el));
+    </script>
+</body>
+</html>

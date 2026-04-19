@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nardo Blends — Professional Barber in West Chicago.">
+    <meta name="robots" content="noindex, nofollow">
+    <title>// NARDO | West Chicago</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Kanit:ital,wght@0,400;0,500;0,800;0,900;1,800;1,900&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        black: '#000000',
+                        white: '#FFFFFF',
+                        subtle: '#F7F7F7',
+                        srt:   '#DC0000',
+                    },
+                    fontFamily: {
+                        brand: ['"Kanit"', 'sans-serif'],
+                        sans:  ['"Inter"', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'slash-pattern': "url(\"data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20L20 0H10L0 10V20Z' fill='%23000000' fill-opacity='0.03'/%3E%3C/svg%3E\")",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::selection { background: black; color: white; }
+
+        /* --- Slash mark (reused for header + hero) --- */
+        .slash-mark {
+            color: #DC0000;
+            display: inline-block;
+            transform: skewX(-15deg);
+            margin-right: 0.15em;
+        }
+
+        /* --- RPM scroll-progress bar pinned to top --- */
+        .rpm-bar {
+            position: fixed;
+            top: 0; left: 0;
+            height: 3px;
+            width: 0%;
+            background: #DC0000;
+            z-index: 100;
+            box-shadow: 0 0 12px rgba(220, 0, 0, 0.6);
+            transition: width 0.08s linear;
+        }
+
+        /* --- Hero entrance: single hard wipe-right, no bounce --- */
+        .hero-title {
+            clip-path: inset(0 100% 0 0);
+            animation: wipeRight 0.45s cubic-bezier(0.77, 0, 0.175, 1) 0.2s forwards;
+        }
+        @keyframes wipeRight {
+            to { clip-path: inset(0 0 0 0); }
+        }
+
+        /* --- Hero support elements: clean quick fade --- */
+        .hero-support {
+            opacity: 0;
+            animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Image reveal --- */
+        .image-reveal {
+            clip-path: inset(0 0 100% 0);
+            animation: reveal 0.9s cubic-bezier(0.77, 0, 0.175, 1) 0.4s forwards;
+        }
+        @keyframes reveal { to { clip-path: inset(0 0 0 0); } }
+
+        /* --- Scroll-reveal: rows slide in from the left, fast --- */
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-28px);
+            transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal-left.in { opacity: 1; transform: translateX(0); }
+
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal-up.in { opacity: 1; transform: translateY(0); }
+
+        /* --- Book button: black L→R sweep on hover --- */
+        .btn-book {
+            position: relative;
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .btn-book::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #1a1a1a;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.28s cubic-bezier(0.65, 0, 0.35, 1);
+            z-index: -1;
+        }
+        .btn-book:hover::before { transform: scaleX(1); }
+        .btn-book:hover { color: white; }
+
+        /* --- Service row number: tick darker on hover --- */
+        .service-row:hover .service-num { color: #000; }
+        .service-num { transition: color 0.25s ease; }
+
+        /* --- Stars pulse once on load --- */
+        .stars-pulse { animation: pulseStars 1.1s ease-out 1.2s 1; }
+        @keyframes pulseStars {
+            0%, 100% { transform: scale(1); }
+            40%      { transform: scale(1.14); }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+                animation-delay: 0s !important;
+            }
+            .hero-title { clip-path: none; }
+            .hero-support { opacity: 1; transform: none; }
+            .image-reveal { clip-path: none; }
+            .reveal-left, .reveal-up { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body class="bg-white text-black font-sans antialiased overflow-x-hidden">
+
+    <div id="rpm" class="rpm-bar"></div>
+
+    <div class="fixed inset-0 bg-slash-pattern pointer-events-none z-0 opacity-50"></div>
+
+    <nav class="relative z-10 w-full px-6 py-8 md:px-12 flex justify-between items-center max-w-7xl mx-auto">
+        <a href="#" class="font-brand font-black italic text-xl uppercase tracking-tighter hover:opacity-50 transition-opacity flex items-center">
+            <span class="slash-mark text-lg">//</span>NB
+        </a>
+        <a href="https://booksy.com/en-us/997595_nardo-blends_barber-shop_122870_west-chicago" target="_blank" class="btn-book text-xs font-bold uppercase tracking-widest border border-black px-4 py-2 transition-colors">
+            Book Appointment
+        </a>
+    </nav>
+
+    <main class="relative z-10 max-w-7xl mx-auto px-6 md:px-12 pb-24">
+
+        <section class="flex flex-col md:flex-row gap-12 md:gap-24 min-h-[85vh] items-center pt-8 md:pt-12">
+
+            <div class="w-full md:w-1/2 flex flex-col justify-center order-1">
+                <div class="relative mb-8">
+                    <h1 class="hero-title font-brand font-black italic text-6xl sm:text-7xl md:text-9xl leading-[0.85] uppercase tracking-tighter whitespace-nowrap flex flex-row items-baseline relative">
+                        <span class="slash-mark text-5xl sm:text-6xl md:text-8xl">//</span>
+                        <span>NARDO</span>
+                    </h1>
+                </div>
+
+                <div class="hero-support max-w-md mb-8 border-l-4 border-black pl-6 py-2" style="animation-delay:0.7s">
+                    <p class="text-black font-medium leading-relaxed text-lg">
+                        Clean cuts, sharp lines, zero filler. Booked by regulars, trusted by first-timers — West Chicago's chair since day one.
+                    </p>
+                </div>
+
+                <div class="hero-support flex items-center gap-3 mb-10 text-xs font-bold uppercase tracking-widest text-gray-500" style="animation-delay:0.8s">
+                    <i class="fa-solid fa-location-dot text-black text-lg"></i>
+                    <span>West Chicago, IL</span>
+                </div>
+
+                <div class="hero-support flex flex-col items-start gap-8" style="animation-delay:0.9s">
+                    <a href="https://booksy.com/en-us/997595_nardo-blends_barber-shop_122870_west-chicago" target="_blank" class="btn-book group relative bg-black text-white px-12 py-5 font-brand font-black italic text-2xl uppercase tracking-wider overflow-hidden shadow-[8px_8px_0px_0px_rgba(0,0,0,0.2)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
+                        <span class="relative z-10">Book Now</span>
+                    </a>
+
+                    <div class="flex items-center gap-4 text-sm">
+                        <div class="stars-pulse flex text-black text-xs gap-1 origin-left">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="font-bold uppercase text-xs tracking-wide">5.0 Rating</span>
+                            <span class="text-gray-500 text-[10px] uppercase tracking-widest">137+ reviews on Booksy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-1/2 h-[50vh] md:h-[75vh] relative order-2 image-reveal">
+                <div class="absolute top-4 left-4 w-full h-full border-2 border-black z-0 hidden md:block"></div>
+
+                <div class="relative w-full h-full bg-subtle z-10 border-2 border-black md:border-0">
+                    <img src="https://images.unsplash.com/photo-1634480667822-b9b5962e7838?auto=format&fit=crop&q=80&w=800" alt="Professional Portrait" class="w-full h-full object-cover grayscale contrast-125">
+
+                    <div class="absolute bottom-0 right-0 bg-white border-t-2 border-l-2 border-black px-4 py-2">
+                        <span class="font-brand font-black italic text-xl uppercase tracking-tight">Leonardo Carrillo</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 md:py-32 max-w-3xl">
+            <div class="flex items-end gap-4 mb-12 reveal-up">
+                <h2 class="font-brand font-black italic text-4xl uppercase tracking-tight"><span class="slash-mark">//</span>Services</h2>
+                <div class="h-1 flex-grow bg-black mb-2"></div>
+            </div>
+
+            <div class="space-y-0">
+
+                <div class="service-row reveal-left group relative flex flex-col gap-2 cursor-default py-8 border-b border-gray-200 hover:border-black transition-colors">
+                    <div class="flex justify-between items-baseline">
+                        <div class="flex items-baseline gap-4">
+                            <span class="service-num font-mono text-xs font-bold text-gray-400">01</span>
+                            <h3 class="font-brand font-black italic text-4xl uppercase tracking-tight group-hover:translate-x-2 transition-transform duration-300">Haircut</h3>
+                        </div>
+                        <span class="font-mono font-bold text-xl">$40+</span>
+                    </div>
+                    <p class="text-gray-500 font-medium text-sm pl-8 md:pl-10">Precision cut tailored to your style. Eyebrows included upon request.</p>
+                </div>
+
+                <div class="service-row reveal-left group relative flex flex-col gap-2 cursor-default py-8 border-b border-gray-200 hover:border-black transition-colors">
+                    <div class="flex justify-between items-baseline">
+                         <div class="flex items-baseline gap-4">
+                            <span class="service-num font-mono text-xs font-bold text-gray-400">02</span>
+                            <h3 class="font-brand font-black italic text-4xl uppercase tracking-tight group-hover:translate-x-2 transition-transform duration-300">Haircut & Beard</h3>
+                        </div>
+                        <span class="font-mono font-bold text-xl">$45</span>
+                    </div>
+                    <p class="text-gray-500 font-medium text-sm pl-8 md:pl-10">The complete service. Full haircut with detailed beard sculpting and razor finish.</p>
+                </div>
+
+                <div class="service-row reveal-left group relative flex flex-col gap-2 cursor-default py-8 border-b border-gray-200 hover:border-black transition-colors">
+                    <div class="flex justify-between items-baseline">
+                         <div class="flex items-baseline gap-4">
+                            <span class="service-num font-mono text-xs font-bold text-gray-400">03</span>
+                            <h3 class="font-brand font-black italic text-4xl uppercase tracking-tight group-hover:translate-x-2 transition-transform duration-300">Kids Cut</h3>
+                        </div>
+                        <span class="font-mono font-bold text-xl">$35</span>
+                    </div>
+                    <p class="text-gray-500 font-medium text-sm pl-8 md:pl-10">Under 12 years old. Professional patience and precision.</p>
+                </div>
+
+                <div class="reveal-up pt-12 text-center md:text-left">
+                    <a href="https://booksy.com/en-us/997595_nardo-blends_barber-shop_122870_west-chicago" target="_blank" class="btn-book inline-block text-xs font-black uppercase tracking-widest bg-black text-white px-6 py-3 transition-colors">
+                        View Full Service List
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="pb-24">
+            <div class="flex items-end gap-4 mb-12 reveal-up">
+                <h2 class="font-brand font-black italic text-4xl uppercase tracking-tight"><span class="slash-mark">//</span>Selected Work</h2>
+                <div class="h-1 flex-grow bg-black mb-2"></div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <div class="reveal-up aspect-[4/5] bg-gray-100 border-2 border-transparent hover:border-black transition-all p-1">
+                    <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                </div>
+                <div class="reveal-up aspect-[4/5] bg-gray-100 border-2 border-transparent hover:border-black transition-all p-1">
+                    <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                </div>
+                <div class="reveal-up aspect-[4/5] bg-gray-100 border-2 border-transparent hover:border-black transition-all p-1">
+                    <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&q=80&w=400" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                </div>
+                <div class="reveal-up aspect-[4/5] bg-black text-white flex flex-col items-center justify-center border-2 border-black p-4 group cursor-pointer hover:bg-white hover:text-black transition-colors">
+                    <a href="https://instagram.com" class="text-center w-full h-full flex flex-col items-center justify-center">
+                        <i class="fa-brands fa-instagram text-4xl mb-4 group-hover:scale-110 transition-transform"></i>
+                        <span class="block font-brand font-black italic text-xl uppercase mb-1">View Feed</span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest opacity-60">@nardo.blends</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="border-t-4 border-black pt-12 pb-12 flex flex-col md:flex-row justify-between items-start gap-8">
+            <div>
+                <span class="font-brand font-black italic text-3xl uppercase tracking-tighter block mb-2"><span class="slash-mark">//</span>NARDO</span>
+                <p class="text-xs font-bold uppercase tracking-widest text-gray-500">Professional Barber</p>
+            </div>
+
+            <div class="flex flex-col md:items-end gap-1">
+                <p class="font-bold uppercase tracking-wide text-sm">103 Turner Ct, West Chicago, IL</p>
+                <a href="tel:+16304735099" class="text-sm text-gray-500 hover:text-black hover:underline">(630) 473-5099</a>
+                <div class="mt-4 flex gap-4">
+                    <a href="https://instagram.com" class="text-xs font-bold uppercase tracking-widest hover:bg-black hover:text-white px-2 py-1 transition-colors">Instagram</a>
+                    <a href="https://booksy.com/en-us/997595_nardo-blends_barber-shop_122870_west-chicago" class="text-xs font-bold uppercase tracking-widest hover:bg-black hover:text-white px-2 py-1 transition-colors">Booksy</a>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        /* RPM scroll-progress bar */
+        const rpm = document.getElementById('rpm');
+        const setRpm = () => {
+            const h = document.documentElement;
+            const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+            rpm.style.width = Math.min(100, Math.max(0, pct)) + '%';
+        };
+        document.addEventListener('scroll', setRpm, { passive: true });
+        setRpm();
+
+        /* Staggered scroll reveal */
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transitionDelay = (i % 4) * 70 + 'ms';
+                    entry.target.classList.add('in');
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal-left, .reveal-up').forEach(el => io.observe(el));
+    </script>
+</body>
+</html>
