@@ -45,7 +45,7 @@
             color: #DC0000;
             display: inline-block;
             transform: skewX(-15deg);
-            margin-right: 0.15em;
+            margin-right: 0.3em;
         }
 
         /* --- RPM scroll-progress bar pinned to top --- */
@@ -60,13 +60,14 @@
             transition: width 0.08s linear;
         }
 
-        /* --- Hero entrance: single hard wipe-right, no bounce --- */
+        /* --- Hero entrance: slam in from the left, hard ease, no bounce --- */
         .hero-title {
-            clip-path: inset(0 100% 0 0);
-            animation: wipeRight 0.45s cubic-bezier(0.77, 0, 0.175, 1) 0.2s forwards;
+            opacity: 0;
+            transform: translateX(-24px);
+            animation: slamIn 0.4s cubic-bezier(0.77, 0, 0.175, 1) 0.2s forwards;
         }
-        @keyframes wipeRight {
-            to { clip-path: inset(0 0 0 0); }
+        @keyframes slamIn {
+            to { opacity: 1; transform: translateX(0); }
         }
 
         /* --- Hero support elements: clean quick fade --- */
@@ -138,8 +139,7 @@
                 transition-duration: 0.01ms !important;
                 animation-delay: 0s !important;
             }
-            .hero-title { clip-path: none; }
-            .hero-support { opacity: 1; transform: none; }
+            .hero-title, .hero-support { opacity: 1; transform: none; }
             .image-reveal { clip-path: none; }
             .reveal-left, .reveal-up { opacity: 1; transform: none; }
         }
@@ -174,7 +174,7 @@
 
                 <div class="hero-support max-w-md mb-8 border-l-4 border-black pl-6 py-2" style="animation-delay:0.7s">
                     <p class="text-black font-medium leading-relaxed text-lg">
-                        Clean cuts, sharp lines, zero filler. Booked by regulars, trusted by first-timers — West Chicago's chair since day one.
+                        Professional barber based in West Chicago, IL. Booking through Booksy.
                     </p>
                 </div>
 
