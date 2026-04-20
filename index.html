@@ -615,15 +615,14 @@
               <span class="form-step-dot active" data-step="1">01</span>
               <span class="form-step-dot" data-step="2">02</span>
               <span class="form-step-dot" data-step="3">03</span>
-              <span class="form-step-dot" data-step="4">04</span>
             </div>
           </div>
 
           <!-- STEP 1 — the biz -->
           <div class="form-step active" data-step="1">
             <span class="form-step-tag">* step one *</span>
-            <h3 class="form-step-title">what are we launching?</h3>
-            <p class="form-step-sub">the fun stuff first — tell us about your business.</p>
+            <h3 class="form-step-title">tell us about your business</h3>
+            <p class="form-step-sub">the fun stuff first — who you are and what you do.</p>
 
             <label class="form-field">
               <span class="form-label">your business name</span>
@@ -635,118 +634,36 @@
               <input type="text" name="business-type" required data-step-field="1" />
             </label>
 
-            <div class="form-field">
-              <span class="form-label">pick your vibe</span>
-              <div class="vibe-grid">
-                <label class="vibe-card">
-                  <input type="radio" name="vibe" value="clean & modern" />
-                  <span class="vibe-emoji">◇</span>
-                  <span class="vibe-name">clean & modern</span>
-                </label>
-                <label class="vibe-card">
-                  <input type="radio" name="vibe" value="warm & local" />
-                  <span class="vibe-emoji">☼</span>
-                  <span class="vibe-name">warm & local</span>
-                </label>
-                <label class="vibe-card">
-                  <input type="radio" name="vibe" value="bold & loud" />
-                  <span class="vibe-emoji">✱</span>
-                  <span class="vibe-name">bold & loud</span>
-                </label>
-                <label class="vibe-card">
-                  <input type="radio" name="vibe" value="playful & fun" />
-                  <span class="vibe-emoji">♪</span>
-                  <span class="vibe-name">playful & fun</span>
-                </label>
-              </div>
-              <input type="text" name="vibe-custom" class="custom-input" placeholder="or describe your own" />
-            </div>
-          </div>
-
-          <!-- STEP 2 — the dream -->
-          <div class="form-step" data-step="2">
-            <span class="form-step-tag">* step two *</span>
-            <h3 class="form-step-title">paint us the picture</h3>
-            <p class="form-step-sub">we're not copy-pasting a template. help us get it right.</p>
-
-            <div class="form-field">
-              <span class="form-label">pick a color mood</span>
-              <div class="color-grid">
-                <label class="color-swatch" style="--c1:#2C5F2D; --c2:#97BC62;">
-                  <input type="radio" name="color-mood" value="earthy & natural" data-step-field="2" />
-                  <span class="color-circles"><span></span><span></span></span>
-                  <span class="color-name">earthy & natural</span>
-                </label>
-                <label class="color-swatch" style="--c1:#FF6B35; --c2:#FFD166;">
-                  <input type="radio" name="color-mood" value="bold & bright" data-step-field="2" />
-                  <span class="color-circles"><span></span><span></span></span>
-                  <span class="color-name">bold & bright</span>
-                </label>
-                <label class="color-swatch" style="--c1:#0F3460; --c2:#16C79A;">
-                  <input type="radio" name="color-mood" value="cool & calm" data-step-field="2" />
-                  <span class="color-circles"><span></span><span></span></span>
-                  <span class="color-name">cool & calm</span>
-                </label>
-                <label class="color-swatch" style="--c1:#1A1A1A; --c2:#EDE6DB;">
-                  <input type="radio" name="color-mood" value="classic b&w" data-step-field="2" />
-                  <span class="color-circles"><span></span><span></span></span>
-                  <span class="color-name">classic b&w</span>
-                </label>
-                <label class="color-swatch" style="--c1:#6A0572; --c2:#F15BB5;">
-                  <input type="radio" name="color-mood" value="vibrant & fun" data-step-field="2" />
-                  <span class="color-circles"><span></span><span></span></span>
-                  <span class="color-name">vibrant & fun</span>
-                </label>
-                <label class="color-swatch" style="--c1:#C44536; --c2:#E8C547;">
-                  <input type="radio" name="color-mood" value="retro & warm" data-step-field="2" />
-                  <span class="color-circles"><span></span><span></span></span>
-                  <span class="color-name">retro & warm</span>
-                </label>
-              </div>
-              <input type="text" name="color-custom" class="custom-input" placeholder="or enter your own" />
-            </div>
+            <label class="form-field">
+              <span class="form-label">do you already have a website?</span>
+              <select name="existing-site" required data-step-field="1">
+                <option value="">pick one</option>
+                <option value="no, starting fresh">no — starting fresh</option>
+                <option value="yes but it's bad">yes, but it's kinda bad</option>
+                <option value="just socials">just socials right now</option>
+                <option value="yes, it's fine">yeah, just want a refresh</option>
+              </select>
+            </label>
 
             <label class="form-field">
               <span class="form-label">what's one thing you wish people knew about your business?</span>
               <textarea name="unique-thing" rows="3"></textarea>
             </label>
-
-            <label class="form-field">
-              <span class="form-label">do you already have a website?</span>
-              <select name="existing-site">
-                <option value="">pick one</option>
-                <option value="no, starting fresh">no — starting fresh</option>
-                <option value="yes but it's bad">yes but it's kinda bad</option>
-                <option value="just socials">just socials right now</option>
-                <option value="yes, it's fine">yeah, it's fine — just want a refresh</option>
-              </select>
-            </label>
-
-            <label class="form-field">
-              <span class="form-label">already use a CRM or email tool?</span>
-              <input type="text" name="crm-tool" placeholder="e.g. mailchimp, hubspot, google sheets. leave blank if none." />
-              <span class="form-hint">a CRM is a tool that keeps your leads and customers in one place (mailchimp, hubspot, constant contact, etc.). if you don't have one or aren't sure what that means, leave it blank. your launch package already includes a basic contact form that sends new leads straight to your inbox.</span>
-            </label>
           </div>
 
-          <!-- STEP 3 — the math -->
-          <div class="form-step" data-step="3">
-            <span class="form-step-tag">* step three *</span>
+          <!-- STEP 2 — the math -->
+          <div class="form-step" data-step="2">
+            <span class="form-step-tag">* step two *</span>
             <h3 class="form-step-title">let's run the numbers</h3>
-            <p class="form-step-sub">stay with us — this is where it gets good.</p>
+            <p class="form-step-sub">optional — but here's what a new site could actually mean.</p>
 
             <label class="form-field">
-              <span class="form-label">in one month, how much does one client spend on average?</span>
+              <span class="form-label">how much does your average customer spend in one month?</span>
               <div class="input-prefix">
                 <span class="prefix-symbol">$</span>
                 <input type="number" name="avg-customer-value" id="avgCustomerValue" placeholder="" min="0" step="1" />
               </div>
               <span class="form-hint">ballpark is fine — total monthly spend per client, across all visits/jobs/orders.</span>
-            </label>
-
-            <label class="form-field">
-              <span class="form-label">roughly how many customers do you serve a month?</span>
-              <input type="number" name="customers-per-month" id="customersPerMonth" placeholder="" min="0" step="1" />
             </label>
 
             <!-- Live ROI display -->
@@ -759,25 +676,25 @@
               </div>
               <div class="roi-content">
                 <span class="roi-label">the math</span>
-                <p class="roi-text" id="roiText">enter your numbers above and watch the magic →</p>
+                <p class="roi-text" id="roiText">drop your average monthly spend above →</p>
               </div>
             </div>
           </div>
 
-          <!-- STEP 4 — your info -->
-          <div class="form-step" data-step="4">
+          <!-- STEP 3 — your info -->
+          <div class="form-step" data-step="3">
             <span class="form-step-tag">* last step *</span>
             <h3 class="form-step-title">where do we send the good news?</h3>
             <p class="form-step-sub">we'll hit you back within 24 hours. no spam, ever.</p>
 
             <label class="form-field">
               <span class="form-label">your name</span>
-              <input type="text" name="name" required data-step-field="4" />
+              <input type="text" name="name" required data-step-field="3" />
             </label>
 
             <label class="form-field">
               <span class="form-label">email</span>
-              <input type="email" name="email" required data-step-field="4" />
+              <input type="email" name="email" required data-step-field="3" />
             </label>
 
             <label class="form-field">
@@ -787,7 +704,7 @@
 
             <label class="form-field">
               <span class="form-label">when do you want to go live?</span>
-              <select name="timeline" required data-step-field="4">
+              <select name="timeline" required data-step-field="3">
                 <option value="">pick a timeline</option>
                 <option value="ASAP">ASAP — yesterday if possible</option>
                 <option value="within a month">within a month</option>

@@ -715,9 +715,8 @@ function animateCount(el, duration = 1500) {
     }
   });
 
-  // Live ROI calculator
+  // Live ROI calculator — honest range
   const avgInput = document.getElementById('avgCustomerValue');
-  const cpmInput = document.getElementById('customersPerMonth');
   const roiText = document.getElementById('roiText');
   const roiBox = document.getElementById('roiBox');
 
@@ -725,40 +724,18 @@ function animateCount(el, duration = 1500) {
     const avg = parseFloat(avgInput.value) || 0;
     if (avg <= 0) {
       roiBox.classList.remove('active');
-      roiText.innerHTML = 'enter your numbers above and watch the magic →';
+      roiText.innerHTML = 'drop your average monthly spend above →';
       return;
     }
     roiBox.classList.add('active');
 
-    const setupCost = 400;
-    const monthlyCost = 39;
-    const clientsForSetup = Math.max(1, Math.ceil(setupCost / avg));
-    const clientsForMonthly = Math.max(1, Math.ceil(monthlyCost / avg));
+    const low = avg * 2 * 12;
+    const high = avg * 4 * 12;
 
-    let html = `if your new site brings in just <strong>${clientsForSetup} new customer${clientsForSetup > 1 ? 's' : ''}</strong>, it pays for itself. `;
-    html += `<strong>${clientsForMonthly} customer${clientsForMonthly > 1 ? 's' : ''} a month</strong> covers hosting forever.`;
-
-    const cpm = parseFloat(cpmInput.value) || 0;
-    if (cpm > 0) {
-      const newCustomers = Math.max(1, Math.round(cpm * 0.1));
-      const extraRevenue = newCustomers * avg;
-      html += `<br/><br/>and here's the fun part: if your site brings you just <strong>10% more customers</strong>, that's <strong>${newCustomers} extra ${newCustomers > 1 ? 'people' : 'person'} a month</strong>. at $${avg.toLocaleString()} each, that's an extra <strong>$${extraRevenue.toLocaleString()}/mo</strong> in your pocket.`;
-    }
-    roiText.innerHTML = html;
+    roiText.innerHTML = `if your new site brings you just <strong>2–4 new customers a month</strong>, that's an extra <strong>$${low.toLocaleString()}–$${high.toLocaleString()} a year</strong> in your pocket.`;
   }
 
   if (avgInput) avgInput.addEventListener('input', updateROI);
-  if (cpmInput) cpmInput.addEventListener('input', updateROI);
-
-  // Vibe/color card clicks animate
-  form.querySelectorAll('.vibe-card input, .color-swatch input').forEach((input) => {
-    input.addEventListener('change', () => {
-      const parent = input.closest('.vibe-card, .color-swatch');
-      parent.classList.remove('pop');
-      void parent.offsetWidth;
-      parent.classList.add('pop');
-    });
-  });
 
   // Submit via fetch so we can show a success state without leaving the page
   form.addEventListener('submit', async (e) => {
