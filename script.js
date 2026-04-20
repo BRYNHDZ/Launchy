@@ -538,54 +538,6 @@ function animateCount(el, duration = 1500) {
   els.forEach((el) => io.observe(el));
 })();
 
-// --- Pricing reveal sequence ---
-// 1) Card shows just "$1,000" (timer, save, monthly all hidden)
-// 2) Orange strike draws across the $1,000
-// 3) $1,000 shrinks and scoots to the side
-// 4) $400 pops in
-// 5) Timer, save, divider, and monthly block fade in
-(function initPriceSequence() {
-  const card = document.querySelector('.pricing-card');
-  if (!card) return;
-
-  const sequencedItem = card.querySelector('.price-item-sequenced');
-  if (!sequencedItem) return;
-
-  const oldEl = sequencedItem.querySelector('.price-old');
-  const newEl = sequencedItem.querySelector('.price-current.price-reveal');
-  const saveEl = sequencedItem.querySelector('.price-save.reveal-late');
-  // Everything else that should appear AFTER the pop (timer, divider, monthly)
-  const afterEls = Array.from(card.querySelectorAll('.reveal-late'))
-    .filter((el) => el !== saveEl);
-
-  let played = false;
-
-  function play() {
-    if (played) return;
-    played = true;
-
-    // Hold for a beat so $1,000 registers, then strike
-    setTimeout(() => oldEl.classList.add('strike'), 700);
-
-    // Strike finishes (~500ms draw) → shrink old, pop new, fade save
-    setTimeout(() => {
-      oldEl.classList.add('shrunk');
-      newEl.classList.add('revealed');
-      if (saveEl) saveEl.classList.add('revealed');
-    }, 1250);
-
-    // After the pop, reveal the timer + divider + monthly (staggered)
-    afterEls.forEach((el, i) => {
-      setTimeout(() => el.classList.add('revealed'), 1850 + i * 160);
-    });
-  }
-
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => { if (e.isIntersecting) play(); });
-  }, { threshold: 0.3 });
-  io.observe(card);
-})();
-
 // --- Word-by-word hero reveal ---
 // Splits the hero h1 into words and staggers them in
 (function initHeroReveal() {
@@ -840,34 +792,3 @@ function animateCount(el, duration = 1500) {
   goToStep(1, true);
 })();
 
-// --- Countdown timer to April 30, 2026 ---
-(function initCountdown() {
-  const deadline = new Date('2026-04-30T23:59:59').getTime();
-  const daysEl = document.getElementById('cd-days');
-  const hoursEl = document.getElementById('cd-hours');
-  const minsEl = document.getElementById('cd-mins');
-  const secsEl = document.getElementById('cd-secs');
-
-  if (!daysEl) return;
-
-  function pad(n) { return n < 10 ? '0' + n : n; }
-
-  function tick() {
-    const now = Date.now();
-    const diff = Math.max(0, deadline - now);
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-    daysEl.textContent = pad(days);
-    hoursEl.textContent = pad(hours);
-    minsEl.textContent = pad(mins);
-    secsEl.textContent = pad(secs);
-
-    if (diff > 0) requestAnimationFrame(tick);
-  }
-
-  tick();
-})();
