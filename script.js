@@ -640,6 +640,18 @@ function animateCount(el, duration = 1500) {
   function validateStep(n) {
     const required = form.querySelectorAll(`[data-step-field="${n}"][required]`);
     let ok = true;
+    form.querySelectorAll(`.form-step[data-step="${n}"] [data-required-group]`).forEach((wrap) => {
+      const name = wrap.getAttribute('data-required-group');
+      const group = wrap.querySelectorAll(`[name="${name}"]`);
+      const checked = Array.from(group).some((c) => c.checked);
+      const field = wrap.closest('.form-field');
+      if (!checked) {
+        ok = false;
+        field?.classList.add('error');
+      } else {
+        field?.classList.remove('error');
+      }
+    });
     required.forEach((field) => {
       if (field.type === 'radio') {
         const group = form.querySelectorAll(`[name="${field.name}"]`);
