@@ -724,7 +724,7 @@ function animateCount(el, duration = 1500) {
     const avg = parseFloat(avgInput.value) || 0;
     if (avg <= 0) {
       roiBox.classList.remove('active');
-      roiText.innerHTML = 'drop your average monthly spend above →';
+      roiText.innerHTML = 'enter your average monthly spend above.';
       return;
     }
     roiBox.classList.add('active');
@@ -732,7 +732,7 @@ function animateCount(el, duration = 1500) {
     const low = avg * 2 * 12;
     const high = avg * 4 * 12;
 
-    roiText.innerHTML = `if your new site brings you just <strong>2 to 4 new customers a month</strong>, that's an extra <strong>$${low.toLocaleString()} to $${high.toLocaleString()} a year</strong> in your pocket.`;
+    roiText.innerHTML = `if your new site brings you just <strong>2 to 4 new customers a month</strong>, that is an extra <strong>$${low.toLocaleString()} to $${high.toLocaleString()} a year</strong>.`;
   }
 
   if (avgInput) avgInput.addEventListener('input', updateROI);
@@ -747,7 +747,7 @@ function animateCount(el, duration = 1500) {
     formData.forEach((v, k) => body.append(k, v));
 
     submitBtn.disabled = true;
-    submitBtn.querySelector('span').textContent = 'launching...';
+    submitBtn.querySelector('span').textContent = 'sending...';
 
     try {
       await fetch('/', {
@@ -760,8 +760,8 @@ function animateCount(el, duration = 1500) {
       successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } catch (err) {
       submitBtn.disabled = false;
-      submitBtn.querySelector('span').textContent = 'send it →';
-      alert('something went wrong. please try again or email us directly.');
+      submitBtn.querySelector('span').textContent = 'send my info';
+      alert('something went wrong. please try again, or email us.');
     }
   });
 
