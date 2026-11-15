@@ -732,7 +732,7 @@ function animateCount(el, duration = 1500) {
     const low = avg * 2 * 12;
     const high = avg * 4 * 12;
 
-    roiText.innerHTML = `if your new site brings you just <strong>2–4 new customers a month</strong>, that's an extra <strong>$${low.toLocaleString()}–$${high.toLocaleString()} a year</strong> in your pocket.`;
+    roiText.innerHTML = `if your new site brings you just <strong>2 to 4 new customers a month</strong>, that's an extra <strong>$${low.toLocaleString()} to $${high.toLocaleString()} a year</strong> in your pocket.`;
   }
 
   if (avgInput) avgInput.addEventListener('input', updateROI);
@@ -761,7 +761,7 @@ function animateCount(el, duration = 1500) {
     } catch (err) {
       submitBtn.disabled = false;
       submitBtn.querySelector('span').textContent = 'send it →';
-      alert('something went wrong — please try again or email us directly.');
+      alert('something went wrong. please try again or email us directly.');
     }
   });
 
