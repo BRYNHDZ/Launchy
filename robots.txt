@@ -4,5 +4,7 @@ Disallow: /valdocuts.html
 Disallow: /nardoblends.html
 Disallow: /juxtstudio.html
 Disallow: /juxtstudio/
+Disallow: /samandson.html
+Disallow: /samandson/
 
 Sitemap: https://blaztly.com/sitemap.xml
