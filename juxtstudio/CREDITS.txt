@@ -1,0 +1,4 @@
+Design system adapted from "Frisor" barbershop template by Opencals (MIT): https://github.com/letsopencals/template-frisor
+See LICENSE-frisor-MIT.txt. Booking, cart, checkout and sign-in code were not used; all booking goes to Booksy.
+Fonts: Archivo (variable, wide + heavy), SIL Open Font License 1.1 (fonts/OFL-archivo.txt).
+Photos and logo: from the business's own Booksy page.
