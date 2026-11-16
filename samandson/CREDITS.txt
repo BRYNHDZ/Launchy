@@ -1,0 +1,4 @@
+Sam & Son Painting preview site.
+- Photos and logo: Sam & Son Painting (from their Google listings and flyer). Logo cut out and upscaled from the flyer; colors unchanged.
+- Font: Figtree by Erik Kennedy, SIL Open Font License 1.1 (https://openfontlicense.org).
+- Code: plain static HTML/CSS, no template.
