@@ -2,5 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /valdocuts.html
 Disallow: /nardoblends.html
+Disallow: /juxtstudio.html
+Disallow: /juxtstudio/
 
 Sitemap: https://blaztly.com/sitemap.xml
