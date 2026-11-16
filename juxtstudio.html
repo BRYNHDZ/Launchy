@@ -8,8 +8,8 @@
 <meta name="description" content="Juxt Studio is a barbershop at 103 Turner Ct in West Chicago, IL. Haircuts, beards and designs.">
 <meta name="theme-color" content="#0a0a0a">
 <link rel="preload" href="juxtstudio/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="juxtstudio/styles.css?v=12">
-<script>document.documentElement.classList.add('js')</script>
+<link rel="stylesheet" href="juxtstudio/styles.css?v=15">
+<script>(function(r){r.classList.add('js');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){r.classList.add('mo');setTimeout(function(){if(!r.classList.contains('go'))r.classList.remove('mo')},2500)}})(document.documentElement)</script>
 <!-- Layout ideas adapted from Frisor by Opencals (MIT). See /juxtstudio/LICENSE-frisor-MIT.txt and /juxtstudio/CREDITS.txt -->
 </head>
 <body>
@@ -42,7 +42,7 @@
     <div class="sec-head reveal"><span class="num">01</span><div class="bar"><span class="label">The Barbers</span></div></div>
     <div class="team-rows">
       <article class="b-row reveal">
-        <div class="b-photo"><img class="bw" src="juxtstudio/img/brandon.webp" alt="Brandon Magana" width="900" height="900" loading="lazy"></div>
+        <div class="b-photo"><div class="zm"><img class="bw" src="juxtstudio/img/brandon.webp" alt="Brandon Magana" width="900" height="900" loading="lazy"><img class="clr" src="juxtstudio/img/brandon.webp" alt="" aria-hidden="true" width="900" height="900" loading="lazy"></div></div>
         <div class="b-text"><span class="num">01</span><h3>Brandon Magana</h3><p class="label b-role">Barber</p><p class="b-line">A short line about Brandon will go here.</p><a class="link" href="https://booksy.com/en-us/1183480_brandon-blendz_barber-shop_122870_west-chicago" target="_blank" rel="noopener">Book with Brandon <span class="arr" aria-hidden="true"></span></a></div>
       </article>
       <article class="b-row reveal">
@@ -66,7 +66,7 @@
     <div class="sec-head reveal"><span class="num">02</span><div class="bar"><span class="label">The Studio</span></div></div>
     <div class="studio">
       <div class="copy reveal">
-        <img class="mono" src="juxtstudio/img/monogram.png" alt="" width="119" height="196">
+        <span class="mono neon breathe" aria-hidden="true"><img class="g g2" src="juxtstudio/img/monogram.png" alt="" width="119" height="196"><img class="g g1" src="juxtstudio/img/monogram.png" alt="" width="119" height="196"><img class="base" src="juxtstudio/img/monogram.png" alt="" width="119" height="196"></span>
         <h2 class="t h2">About the shop</h2>
         <p class="muted">A few lines about the shop will go here. Who we are, how we work, and what to expect when you come in.</p>
         <p class="muted">A second short line can go here.</p>
@@ -114,9 +114,6 @@
     <div class="small"><span>&copy; 2026 Juxt Studio</span><span>Preview only</span></div>
   </div>
 </footer>
-<script>
-(function(){var els=document.querySelectorAll('.reveal');if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
-var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});els.forEach(function(e){io.observe(e)});setTimeout(function(){els.forEach(function(e){e.classList.add('in')})},4000)})();
-</script>
+<script src="juxtstudio/motion.js?v=15" defer></script>
 </body>
 </html>
