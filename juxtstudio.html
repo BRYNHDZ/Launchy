@@ -8,7 +8,7 @@
 <meta name="description" content="Juxt Studio is a barbershop at 103 Turner Ct in West Chicago, IL. Haircuts, beards and designs.">
 <meta name="theme-color" content="#0a0a0a">
 <link rel="preload" href="juxtstudio/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="juxtstudio/styles.css?v=1">
+<link rel="stylesheet" href="juxtstudio/styles.css?v=11">
 <script>document.documentElement.classList.add('js')</script>
 <!-- Layout ideas adapted from Frisor by Opencals (MIT). See /juxtstudio/LICENSE-frisor-MIT.txt and /juxtstudio/CREDITS.txt -->
 </head>
@@ -26,7 +26,7 @@
 
 <main id="main">
 <section class="hero" id="top">
-  <div class="hero-media"><img src="juxtstudio/img/hero-brandon.webp" alt="Brandon Magana at Juxt Studio" width="1800" height="1800" fetchpriority="high"></div>
+  <div class="hero-media"><picture><source media="(max-width: 959px)" srcset="juxtstudio/img/hero-action-m.webp"><img src="juxtstudio/img/hero-action.webp" alt="A barber cutting hair in front of a crowd" width="1020" height="1160" fetchpriority="high"></picture></div>
   <div class="hero-text">
     <div class="wrap">
       <p class="label">West Chicago, IL</p>
@@ -40,15 +40,23 @@
 <section class="band" id="barbers">
   <div class="wrap">
     <div class="sec-head reveal"><span class="num">01</span><div class="bar"><span class="label">The Barbers</span></div></div>
-    <div class="team reveal">
-      <article class="barber">
-        <div class="photo"><img class="bw" src="juxtstudio/img/brandon.webp" alt="Brandon Magana" width="900" height="900" loading="lazy"></div>
-        <h3>Brandon Magana</h3><p>Barber</p>
-        <a class="link" href="https://booksy.com/en-us/1183480_brandon-blendz_barber-shop_122870_west-chicago" target="_blank" rel="noopener">Book with Brandon <span class="arr" aria-hidden="true"></span></a>
+    <div class="team-rows">
+      <article class="b-row reveal">
+        <div class="b-photo"><img class="bw" src="juxtstudio/img/brandon.webp" alt="Brandon Magana" width="900" height="900" loading="lazy"></div>
+        <div class="b-text"><span class="num">01</span><h3>Brandon Magana</h3><p class="label b-role">Barber</p><p class="b-line">A short line about Brandon will go here.</p><a class="link" href="https://booksy.com/en-us/1183480_brandon-blendz_barber-shop_122870_west-chicago" target="_blank" rel="noopener">Book with Brandon <span class="arr" aria-hidden="true"></span></a></div>
       </article>
-      <article class="barber"><div class="empty"><span class="label ph">Photo</span></div><h3 class="ph">Barber name</h3><p>Barber</p><span class="link ph" aria-disabled="true">Booking link <span class="arr" aria-hidden="true"></span></span></article>
-      <article class="barber"><div class="empty"><span class="label ph">Photo</span></div><h3 class="ph">Barber name</h3><p>Barber</p><span class="link ph" aria-disabled="true">Booking link <span class="arr" aria-hidden="true"></span></span></article>
-      <article class="barber"><div class="empty"><span class="label ph">Photo</span></div><h3 class="ph">Barber name</h3><p>Barber</p><span class="link ph" aria-disabled="true">Booking link <span class="arr" aria-hidden="true"></span></span></article>
+      <article class="b-row reveal">
+        <div class="b-photo empty"><span class="label ph">Photo</span></div>
+        <div class="b-text"><span class="num">02</span><h3 class="ph">Barber name</h3><p class="label b-role">Barber</p><p class="b-line ph">A short line about this barber will go here.</p><span class="link ph" aria-disabled="true">Booking link <span class="arr" aria-hidden="true"></span></span></div>
+      </article>
+      <article class="b-row reveal">
+        <div class="b-photo empty"><span class="label ph">Photo</span></div>
+        <div class="b-text"><span class="num">03</span><h3 class="ph">Barber name</h3><p class="label b-role">Barber</p><p class="b-line ph">A short line about this barber will go here.</p><span class="link ph" aria-disabled="true">Booking link <span class="arr" aria-hidden="true"></span></span></div>
+      </article>
+      <article class="b-row reveal">
+        <div class="b-photo empty"><span class="label ph">Photo</span></div>
+        <div class="b-text"><span class="num">04</span><h3 class="ph">Barber name</h3><p class="label b-role">Barber</p><p class="b-line ph">A short line about this barber will go here.</p><span class="link ph" aria-disabled="true">Booking link <span class="arr" aria-hidden="true"></span></span></div>
+      </article>
     </div>
   </div>
 </section>
