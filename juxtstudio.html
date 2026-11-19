@@ -9,6 +9,7 @@
 <meta name="theme-color" content="#0a0a0a">
 <link rel="preload" href="juxtstudio/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="juxtstudio/styles.css?v=15">
+<link rel="stylesheet" href="juxtstudio/booking.css?v=1">
 <script>(function(r){r.classList.add('js');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){r.classList.add('mo');setTimeout(function(){if(!r.classList.contains('go'))r.classList.remove('mo')},2500)}})(document.documentElement)</script>
 <!-- Layout ideas adapted from Frisor by Opencals (MIT). See /juxtstudio/LICENSE-frisor-MIT.txt and /juxtstudio/CREDITS.txt -->
 </head>
@@ -20,7 +21,7 @@
     <nav class="nav" aria-label="Main">
       <a href="#barbers">Barbers</a><a href="#studio">Studio</a><a href="#visit">Visit</a>
     </nav>
-    <a class="btn-line" href="#barbers">Book</a>
+    <a class="btn-line" href="#book" data-book>Book</a>
   </div>
 </header>
 
@@ -43,7 +44,7 @@
     <div class="team-rows">
       <article class="b-row reveal">
         <div class="b-photo"><div class="zm"><img class="bw" src="juxtstudio/img/brandon.webp" alt="Brandon Magana" width="900" height="900" loading="lazy"><img class="clr" src="juxtstudio/img/brandon.webp" alt="" aria-hidden="true" width="900" height="900" loading="lazy"></div></div>
-        <div class="b-text"><span class="num">01</span><h3>Brandon Magana</h3><p class="label b-role">Barber</p><p class="b-line">A short line about Brandon will go here.</p><a class="link" href="https://booksy.com/en-us/1183480_brandon-blendz_barber-shop_122870_west-chicago" target="_blank" rel="noopener">Book with Brandon <span class="arr" aria-hidden="true"></span></a></div>
+        <div class="b-text"><span class="num">01</span><h3>Brandon Magana</h3><p class="label b-role">Barber</p><p class="b-line">A short line about Brandon will go here.</p><a class="link" href="#book" data-book data-barber="Brandon Magana">Book with Brandon <span class="arr" aria-hidden="true"></span></a></div>
       </article>
       <article class="b-row reveal">
         <div class="b-photo empty"><span class="label ph">Photo</span></div>
@@ -115,5 +116,6 @@
   </div>
 </footer>
 <script src="juxtstudio/motion.js?v=15" defer></script>
+<script src="juxtstudio/booking.js?v=1" defer></script>
 </body>
 </html>
