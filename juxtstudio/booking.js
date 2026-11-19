@@ -9,12 +9,9 @@
   var TZ = 'America/Chicago';
   var DAYS = 3; // today + the next 2 days
   var MIN_LEAD_MS = 60 * 60 * 1000;
-  // Generic placeholder prices — the live Juxt page does not list services or prices.
+  // Brandon's haircut price (Bryan, Nov 18, 2026). Duration not confirmed; 45 min is a placeholder.
   var SERVICES = [
-    { id: 'haircut', name: 'Haircut', priceCents: 4500, durationMin: 45 },
-    { id: 'fade', name: 'Fade', priceCents: 4000, durationMin: 45 },
-    { id: 'beard', name: 'Beard Trim', priceCents: 2500, durationMin: 30 },
-    { id: 'combo', name: 'Haircut + Beard', priceCents: 6500, durationMin: 60 }
+    { id: 'haircut', name: 'Haircut', priceCents: 10000, durationMin: 45 }
   ];
 
   var triggers = document.querySelectorAll('[data-book]');
